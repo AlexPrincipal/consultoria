@@ -3,30 +3,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Linkedin } from 'lucide-react';
+import { teamMembers } from '@/lib/team';
 
-const teamMembers = [
-  {
-    name: "Socio Fundador",
-    title: "Director General",
-    imageUrl: "https://picsum.photos/seed/lawyer1/400/400",
-    imageHint: "professional portrait lawyer",
-    bio: "Más de 20 años de experiencia asesorando a empresas nacionales e internacionales en derecho corporativo, fusiones y adquisiciones. Experto en litigio estratégico y resolución de conflictos complejos."
-  },
-  {
-    name: "Socia",
-    title: "Líder de Compliance",
-    imageUrl: "https://picsum.photos/seed/lawyer2/400/400",
-    imageHint: "professional portrait lawyer woman",
-    bio: "Especialista en la implementación de programas de cumplimiento normativo, anticorrupción y prevención de lavado de dinero para corporativos en industrias reguladas. Certificada internacionalmente."
-  },
-  {
-    name: "Abogado Asociado",
-    title: "Especialista en Derecho Laboral",
-    imageUrl: "https://picsum.photos/seed/lawyer3/400/400",
-    imageHint: "professional portrait associate",
-    bio: "Dedicado a la representación de empresas en controversias laborales, negociaciones colectivas y consultoría preventiva para la gestión de recursos humanos bajo el marco legal mexicano."
-  }
-];
 
 export default function QuienesSomosPage() {
   const teamImage = {
@@ -89,34 +67,36 @@ export default function QuienesSomosPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <Card key={index} className="bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 hover:-translate-y-2 transition-transform duration-300">
-                <CardHeader className="p-0 items-center">
-                  <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-primary">
-                     <Image
-                      src={member.imageUrl}
-                      alt={`Retrato de ${member.name}`}
-                      fill
-                      className="object-cover"
-                      data-ai-hint={member.imageHint}
-                    />
-                  </div>
-                   <div className="pt-4">
-                     <h3 className="text-xl font-bold font-headline text-white">{member.name}</h3>
-                     <p className="text-primary font-medium">{member.title}</p>
-                   </div>
-                </CardHeader>
-                <CardContent className="flex-grow pt-4">
-                  <p className="text-sm text-muted-foreground">{member.bio}</p>
-                   <div className="mt-4">
-                    <Button variant="ghost" size="icon" asChild>
-                      <Link href="#" aria-label="LinkedIn">
-                        <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary"/>
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+            {teamMembers.map((member) => (
+              <Link key={member.slug} href={`/quienes-somos/${member.slug}`} className="group">
+                <Card className="bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 h-full transition-transform duration-300 group-hover:-translate-y-2">
+                  <CardHeader className="p-0 items-center">
+                    <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-primary">
+                       <Image
+                        src={member.imageUrl}
+                        alt={`Retrato de ${member.name}`}
+                        fill
+                        className="object-cover"
+                        data-ai-hint={member.imageHint}
+                      />
+                    </div>
+                     <div className="pt-4">
+                       <h3 className="text-xl font-bold font-headline text-white">{member.name}</h3>
+                       <p className="text-primary font-medium">{member.title}</p>
+                     </div>
+                  </CardHeader>
+                  <CardContent className="flex-grow pt-4">
+                    <p className="text-sm text-muted-foreground">{member.bio}</p>
+                     <div className="mt-4">
+                      <Button variant="ghost" size="icon" asChild>
+                        <Link href="#" aria-label="LinkedIn">
+                          <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary"/>
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
