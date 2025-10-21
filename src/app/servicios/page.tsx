@@ -5,20 +5,20 @@ import { Scale, ShieldCheck, Briefcase } from 'lucide-react';
 
 const services = [
   {
-    icon: <Briefcase className="h-12 w-12 text-primary" />,
-    title: "Consultoría para Creación de Empresas",
+    icon: <Briefcase className="h-10 w-10 text-primary" />,
+    title: "Consultoría Para La Creación De Empresas",
     description: "Le guiamos paso a paso en la constitución de su empresa, asegurando una estructura legal sólida desde el inicio.",
     href: "/servicios/consultoria-creacion-empresas"
   },
   {
-    icon: <ShieldCheck className="h-12 w-12 text-primary" />,
+    icon: <ShieldCheck className="h-10 w-10 text-primary" />,
     title: "Compliance",
     description: "Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa.",
     href: "/servicios/compliance"
   },
   {
-    icon: <Scale className="h-12 w-12 text-primary" />,
-    title: "Representación Legal de Empresas",
+    icon: <Scale className="h-10 w-10 text-primary" />,
+    title: "Representación Legal De Empresas",
     description: "Defensa experta en disputas laborales y controversias generales ante diversas instancias.",
     href: "/servicios/representacion-legal"
   }
@@ -37,17 +37,17 @@ export default function ServicesPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => (
-              <Card key={service.title} className="bg-card text-card-foreground text-center flex flex-col items-center shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300">
-                <CardHeader className="items-center pt-8">
+              <Card key={service.title} className="bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10">
+                <CardHeader>
                   {service.icon}
-                  <CardTitle className="pt-6 font-headline text-2xl">{service.title}</CardTitle>
+                  <CardTitle className="pt-6 font-headline text-xl text-white">{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow">
                   <p className="text-muted-foreground leading-relaxed">{service.description}</p>
                 </CardContent>
-                <CardFooter className="pb-8">
-                  <Button asChild>
-                    <Link href={service.href}>Conocer Más</Link>
+                <CardFooter>
+                   <Button variant="link" asChild className="p-0 text-primary">
+                    <Link href={service.href}>Conocer Más &rarr;</Link>
                   </Button>
                 </CardFooter>
               </Card>

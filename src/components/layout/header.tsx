@@ -47,23 +47,23 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full transition-all duration-300',
-        isScrolled ? 'bg-background/80 backdrop-blur-sm shadow-md' : 'bg-transparent',
+        'sticky top-0 z-50 w-full transition-colors duration-300',
+        isScrolled ? 'bg-background/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent',
       )}
     >
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="text-xl font-bold font-headline text-white">
-          C+ Jurídica
+      <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6">
+        <Link href="/" className="text-2xl font-bold font-headline text-white tracking-wider">
+          CMXS Jurídico
         </Link>
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             link.isDropdown && link.items ? (
               <DropdownMenu key={link.label}>
-                <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-300 hover:text-white transition-colors focus:outline-none">
+                <DropdownMenuTrigger className="flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none">
                   {link.label}
                   <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent className='bg-background border-border/50'>
                   {link.items.map((item) => (
                      <DropdownMenuItem key={item.label} asChild>
                       <Link href={item.href}>{item.label}</Link>
@@ -72,15 +72,15 @@ export function Header() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Link key={link.label} href={link.href!} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+              <Link key={link.label} href={link.href!} className="text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors">
                 {link.label}
               </Link>
             )
           ))}
         </nav>
         <div className="hidden md:block">
-          <Button asChild>
-            <Link href="/contacto">Agenda Consulta</Link>
+          <Button asChild size="sm" variant="outline">
+            <Link href="/contacto">Consulta</Link>
           </Button>
         </div>
         <div className="md:hidden">
@@ -95,7 +95,7 @@ export function Header() {
               <div className="flex flex-col h-full">
                 <div className="flex justify-between items-center p-4 border-b border-border">
                   <Link href="/" className="text-lg font-bold font-headline text-white" onClick={() => setOpen(false)}>
-                    C+ Jurídica
+                    CMXS Jurídico
                   </Link>
                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                       <X className="h-6 w-6 text-white" />
@@ -106,15 +106,15 @@ export function Header() {
                   {navLinks.map((link) => (
                      link.isDropdown && link.items ? (
                       <div key={link.label} className="flex flex-col space-y-2">
-                        <span className="text-lg font-semibold text-white">{link.label}</span>
+                        <span className="text-lg font-semibold text-white uppercase tracking-wider">{link.label}</span>
                         {link.items.map(item => (
-                           <Link key={item.label} href={item.href} className="text-gray-400 hover:text-white pl-4" onClick={() => setOpen(false)}>
+                           <Link key={item.label} href={item.href} className="text-gray-400 hover:text-primary pl-4" onClick={() => setOpen(false)}>
                             {item.label}
                           </Link>
                         ))}
                       </div>
                      ) : (
-                      <Link key={link.label} href={link.href!} className="text-lg text-gray-300 hover:text-white" onClick={() => setOpen(false)}>
+                      <Link key={link.label} href={link.href!} className="text-lg text-gray-300 hover:text-primary uppercase tracking-wider" onClick={() => setOpen(false)}>
                         {link.label}
                       </Link>
                      )
