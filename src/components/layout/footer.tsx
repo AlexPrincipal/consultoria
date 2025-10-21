@@ -21,7 +21,7 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Column 1: Logo and Address */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold font-headline text-white tracking-wider">C+ Consultoría Jurídica</h3>
+              <h3 className="text-xl font-bold font-headline text-white tracking-wider">C+ Consultoría Legal</h3>
               <p className="text-sm">
                 Dirección de la Firma, No. 123<br />
                 Colonia Corporativa, Ciudad, Estado<br />
@@ -60,7 +60,7 @@ export function Footer() {
             </div>
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8 text-center text-sm">
-            <p>&copy; {new Date().getFullYear()} C+ Consultoría Jurídica. Todos los derechos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} C+ Consultoría Legal. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>

@@ -58,7 +58,7 @@ export default function CompliancePage() {
            <p className="text-muted-foreground mb-8">Un programa de compliance robusto es la mejor defensa.</p>
           <div className="text-left mx-auto max-w-2xl bg-card/80 border border-white/10 p-8 rounded-lg">
                 <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
-                  "La implementación del programa de compliance con C+ Jurídica nos abrió las puertas a licitaciones gubernamentales que antes eran inaccesibles. Su trabajo fue fundamental."
+                  "La implementación del programa de compliance con C+ Legal nos abrió las puertas a licitaciones gubernamentales que antes eran inaccesibles. Su trabajo fue fundamental."
                 </blockquote>
                 <p className="text-right mt-4 text-primary font-semibold">- Director de Operaciones, Empresa de Construcción</p>
             </div>

@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'C+ Consultoría Jurídica',
+  title: 'C+ Consultoría Legal',
   description: 'Estrategias legales sólidas para la tranquilidad de su empresa.',
 };
 

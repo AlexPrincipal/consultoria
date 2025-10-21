@@ -59,7 +59,7 @@ export default function CreacionEmpresasPage() {
             </p>
             <div className="text-left mx-auto max-w-2xl bg-card/80 border border-white/10 p-8 rounded-lg">
                 <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
-                  "El proceso de abrir nuestra filial en México parecía abrumador. C+ Jurídica lo hizo sencillo, rápido y nos dio la confianza para operar desde el primer día."
+                  "El proceso de abrir nuestra filial en México parecía abrumador. C+ Consultoría Legal lo hizo sencillo, rápido y nos dio la confianza para operar desde el primer día."
                 </blockquote>
                 <p className="text-right mt-4 text-primary font-semibold">- CEO, Startup Tecnológica Internacional</p>
             </div>

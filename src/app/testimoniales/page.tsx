@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const testimonials = [
   {
-    quote: "El equipo de C+ Consultoría Jurídica transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable.",
+    quote: "El equipo de C+ Consultoría Legal transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable.",
     client: "Cliente Satisfecho",
     company: "CEO, Empresa Ejemplo",
     logoId: "testimonial-logo",
@@ -51,7 +51,7 @@ export default function TestimonialsPage() {
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">Casos de Éxito y Testimoniales</h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              La confianza de nuestros clientes es nuestro mayor activo. Vea lo que dicen sobre su experiencia trabajando con C+ Consultoría Jurídica.
+              La confianza de nuestros clientes es nuestro mayor activo. Vea lo que dicen sobre su experiencia trabajando con C+ Consultoría Legal.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

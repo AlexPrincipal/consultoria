@@ -15,7 +15,7 @@ import Autoplay from "embla-carousel-autoplay"
 
 const testimonials = [
   {
-    quote: "El equipo de C+ Consultoría Jurídica transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable.",
+    quote: "El equipo de C+ Consultoría Legal transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable.",
     client: "Cliente Satisfecho",
     company: "CEO, Empresa Ejemplo",
     logoId: "testimonial-logo",
