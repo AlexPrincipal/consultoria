@@ -1,3 +1,16 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "Abstract legal background image",
+      "imageUrl": "https://images.unsplash.com/photo-1730629689669-5567c3d00ad5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGxlZ2FsfGVufDB8fHx8MTc2MTAxODk4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract legal"
+    },
+    {
+      "id": "testimonial-logo",
+      "description": "Client company logo for testimonial section",
+      "imageUrl": "https://images.unsplash.com/photo-1627843563095-f6e94676cfe0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29tcGFueSUyMGxvZ298ZW58MHx8fHwxNzYwOTE5NzU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "company logo"
+    }
+  ]
 }
