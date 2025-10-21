@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Landmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -53,9 +53,7 @@ export function Header() {
     >
       <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-3 text-2xl font-bold font-headline text-white tracking-wider">
-          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-primary text-primary-foreground font-bold text-xl">
-            C+
-          </div>
+          <Landmark className="h-8 w-8 text-primary" />
           <span>CMXS Jurídico</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
