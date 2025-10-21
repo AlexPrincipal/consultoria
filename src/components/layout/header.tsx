@@ -7,13 +7,29 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ChevronDown } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#quienes-somos', label: 'Quiénes Somos' },
-  { href: '#testimoniales', label: 'Testimoniales' },
-  { href: '#faq', label: 'FAQ' },
+  { 
+    label: 'Servicios',
+    isDropdown: true,
+    items: [
+      { href: '/servicios', label: 'Todos los Servicios' },
+      { href: '/servicios/consultoria-corporativa', label: 'Consultoría Corporativa' },
+      { href: '/servicios/compliance-y-prevencion', label: 'Compliance y Prevención' },
+      { href: '/servicios/representacion-en-litigios', label: 'Representación en Litigios' },
+    ]
+  },
+  { href: '/quienes-somos', label: 'Quiénes Somos' },
+  { href: '/testimoniales', label: 'Testimoniales' },
+  { href: '/faq', label: 'FAQ' },
 ];
 
 export function Header() {
@@ -41,13 +57,31 @@ export function Header() {
         </Link>
         <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (
-            <Link key={link.label} href={link.href} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
-              {link.label}
-            </Link>
+            link.isDropdown && link.items ? (
+              <DropdownMenu key={link.label}>
+                <DropdownMenuTrigger className="flex items-center text-sm font-medium text-gray-300 hover:text-white transition-colors focus:outline-none">
+                  {link.label}
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {link.items.map((item) => (
+                     <DropdownMenuItem key={item.label} asChild>
+                      <Link href={item.href}>{item.label}</Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link key={link.label} href={link.href!} className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+                {link.label}
+              </Link>
+            )
           ))}
         </nav>
         <div className="hidden md:block">
-          <Button>Agenda Consulta</Button>
+          <Button asChild>
+            <Link href="/contacto">Agenda Consulta</Link>
+          </Button>
         </div>
         <div className="md:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
@@ -68,15 +102,28 @@ export function Header() {
                       <span className="sr-only">Cerrar menú</span>
                     </Button>
                 </div>
-                <nav className="flex flex-col space-y-4 p-4">
+                <nav className="flex flex-col space-y-2 p-4">
                   {navLinks.map((link) => (
-                    <Link key={link.label} href={link.href} className="text-lg text-gray-300 hover:text-white" onClick={() => setOpen(false)}>
-                      {link.label}
-                    </Link>
+                     link.isDropdown && link.items ? (
+                      <div key={link.label} className="flex flex-col space-y-2">
+                        <span className="text-lg font-semibold text-white">{link.label}</span>
+                        {link.items.map(item => (
+                           <Link key={item.label} href={item.href} className="text-gray-400 hover:text-white pl-4" onClick={() => setOpen(false)}>
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                     ) : (
+                      <Link key={link.label} href={link.href!} className="text-lg text-gray-300 hover:text-white" onClick={() => setOpen(false)}>
+                        {link.label}
+                      </Link>
+                     )
                   ))}
                 </nav>
                 <div className="mt-auto p-4 border-t border-border">
-                   <Button className="w-full">Agenda Consulta</Button>
+                   <Button className="w-full" asChild>
+                     <Link href="/contacto">Agenda Consulta</Link>
+                   </Button>
                 </div>
               </div>
             </SheetContent>

@@ -1,0 +1,75 @@
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
+export default function QuienesSomosPage() {
+  const teamImage = {
+    imageUrl: 'https://picsum.photos/seed/lawteam/1200/800',
+    description: 'Nuestro equipo de abogados expertos',
+    imageHint: 'lawyers team portrait',
+  };
+
+  return (
+    <div className="bg-background text-white">
+      {/* Hero */}
+      <section className="py-20 md:py-28 text-center bg-black">
+        <div className="container mx-auto px-4 md:px-6">
+          <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
+            Excelencia e Integridad en la Práctica Legal
+          </h1>
+          <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
+            Somos más que abogados; somos los socios estratégicos que su empresa necesita para navegar el complejo entorno legal con confianza y seguridad.
+          </p>
+        </div>
+      </section>
+
+      {/* Misión y Visión */}
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-3xl font-bold font-headline mb-4">Nuestra Misión</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Ofrecer soluciones legales innovadoras, efectivas y a la medida, que no solo resuelvan los problemas actuales de nuestros clientes, sino que también anticipen desafíos futuros. Nos dedicamos a proteger los activos, la reputación y el crecimiento de cada empresa que confía en nosotros, actuando siempre con la máxima integridad y profesionalismo.
+              </p>
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold font-headline mb-4">Nuestra Visión</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Ser la firma de abogados líder en derecho corporativo y de negocios en México, reconocida por nuestro enfoque estratégico, nuestro compromiso inquebrantable con la excelencia y por construir relaciones de largo plazo con nuestros clientes, basadas en la confianza y los resultados.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Equipo */}
+      <section className="py-20 md:py-28 bg-black">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+             <div className="relative aspect-video rounded-lg overflow-hidden">
+                <Image
+                  src={teamImage.imageUrl}
+                  alt={teamImage.description}
+                  fill
+                  className="object-cover"
+                  data-ai-hint={teamImage.imageHint}
+                />
+              </div>
+            <div>
+              <h2 className="text-3xl font-bold font-headline mb-4">Un Equipo de Expertos a su Disposición</h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Nuestro equipo está compuesto por abogados con una profunda especialización y una vasta experiencia en diversas áreas del derecho. Combinamos el conocimiento técnico con una visión práctica de los negocios para ofrecer un servicio legal que verdaderamente agrega valor.
+              </p>
+               <Button asChild>
+                <Link href="/contacto">Contacte a Nuestro Equipo</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  );
+}

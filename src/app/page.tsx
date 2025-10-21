@@ -2,8 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Scale, ShieldCheck, Briefcase } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -11,10 +9,12 @@ function ServiceCard({
   icon,
   title,
   description,
+  href,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
+  href: string;
 }) {
   return (
     <Card className="bg-card text-card-foreground text-center flex flex-col items-center shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300">
@@ -27,7 +27,7 @@ function ServiceCard({
       </CardContent>
       <CardFooter>
         <Button variant="link" asChild>
-          <Link href="#">Saber Más &rarr;</Link>
+          <Link href={href}>Saber Más &rarr;</Link>
         </Button>
       </CardFooter>
     </Card>
@@ -36,7 +36,6 @@ function ServiceCard({
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
-  const testimonialLogo = PlaceHolderImages.find((p) => p.id === 'testimonial-logo');
 
   return (
     <div className="flex flex-col">
@@ -60,11 +59,11 @@ export default function Home() {
               Estrategias legales sólidas para la tranquilidad de su empresa.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button size="lg" className="w-full sm:w-auto">
-                Iniciar Evaluación de Caso
+               <Button size="lg" className="w-full sm:w-auto" asChild>
+                <Link href="/contacto">Iniciar Evaluación de Caso</Link>
               </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto text-white border-white hover:bg-white hover:text-black">
-                Explorar Servicios
+              <Button size="lg" variant="outline" className="w-full sm:w-auto text-white border-white hover:bg-white hover:text-black" asChild>
+                <Link href="/servicios">Explorar Servicios</Link>
               </Button>
             </div>
           </div>
@@ -73,107 +72,80 @@ export default function Home() {
         {/* Services Overview */}
         <section id="servicios" className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline text-center text-white mb-12">
-              Nuestras Áreas de Práctica Centrales
-            </h2>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold font-headline text-white">
+                Nuestras Áreas de Práctica Centrales
+              </h2>
+              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                Ofrecemos asesoramiento y representación experta en las áreas cruciales del derecho corporativo para proteger y potenciar su negocio.
+              </p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <ServiceCard
                 icon={<Briefcase className="h-10 w-10 text-primary" />}
                 title="Consultoría Corporativa"
                 description="Asesoramiento estratégico para garantizar que su negocio opere con seguridad jurídica y eficiencia."
+                href="/servicios/consultoria-corporativa"
               />
               <ServiceCard
                 icon={<ShieldCheck className="h-10 w-10 text-primary" />}
                 title="Compliance y Prevención"
                 description="Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa."
+                 href="/servicios/compliance-y-prevencion"
               />
               <ServiceCard
                 icon={<Scale className="h-10 w-10 text-primary" />}
                 title="Representación en Litigios"
                 description="Defensa experta en disputas comerciales, civiles y administrativas ante tribunales y autoridades."
+                 href="/servicios/representacion-en-litigios"
               />
+            </div>
+            <div className="text-center mt-12">
+              <Button asChild>
+                <Link href="/servicios">Ver Todos los Servicios</Link>
+              </Button>
             </div>
           </div>
         </section>
         
-        {/* About Us Placeholder */}
+        {/* About Us Preview */}
         <section id="quienes-somos" className="py-20 md:py-28 bg-black">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold font-headline text-white mb-4">
-                Quiénes Somos
+                Comprometidos con su Éxito
               </h2>
-              <p className="text-gray-300 leading-relaxed">
-                Somos un equipo de abogados expertos, apasionados por ofrecer soluciones legales innovadoras y efectivas. Nuestra firma se funda sobre los pilares de la integridad, la excelencia y un compromiso inquebrantable con los objetivos de nuestros clientes. (Más información próximamente).
+              <p className="text-gray-300 leading-relaxed mb-8">
+                Somos un equipo de abogados expertos, apasionados por ofrecer soluciones legales innovadoras y efectivas. Nuestra firma se funda sobre los pilares de la integridad, la excelencia y un compromiso inquebrantable con los objetivos de nuestros clientes.
               </p>
+              <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black" asChild>
+                <Link href="/quienes-somos">Conozca Nuestra Firma</Link>
+              </Button>
             </div>
           </div>
         </section>
 
-        {/* Credibility Block */}
+        {/* Testimonial Preview */}
         <section id="testimoniales" className="py-20 md:py-28 bg-secondary">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid md:grid-cols-5 gap-12 items-center">
-              <div className="md:col-span-3">
-                <blockquote className="text-xl md:text-2xl italic text-white border-l-4 border-primary pl-6">
+          <div className="container mx-auto px-4 md:px-6 text-center">
+             <h2 className="text-3xl md:text-4xl font-bold font-headline text-white mb-12">
+              La Confianza de Nuestros Clientes
+            </h2>
+            <div className="max-w-3xl mx-auto">
+                <blockquote className="text-xl md:text-2xl italic text-white border-l-4 border-primary pl-6 text-left">
                   "El equipo de CMXS Jurídico transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable."
                 </blockquote>
-                <div className="mt-6 flex items-center gap-4">
-                  {testimonialLogo && (
-                    <Image
-                      src={testimonialLogo.imageUrl}
-                      alt={testimonialLogo.description}
-                      width={120}
-                      height={40}
-                      className="object-contain"
-                      data-ai-hint={testimonialLogo.imageHint}
-                    />
-                  )}
-                  <div className="text-white">
-                    <p className="font-semibold">Cliente Satisfecho</p>
-                    <p className="text-sm text-gray-300">CEO, Empresa Ejemplo</p>
-                  </div>
+                <div className="mt-6 flex items-center justify-start gap-4">
+                  <p className="text-white">
+                    <span className="font-semibold">Cliente Satisfecho</span>, <span className="text-sm text-gray-300">CEO, Empresa Ejemplo</span>
+                  </p>
                 </div>
-              </div>
-              <div id="contacto" className="md:col-span-2">
-                <Card className="bg-background border-border/50">
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-headline text-white">Contáctenos Rápidamente</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <form className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name" className="text-gray-300">Nombre</Label>
-                        <Input id="name" placeholder="Su nombre completo" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email" className="text-gray-300">Email</Label>
-                        <Input id="email" type="email" placeholder="su@email.com" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="phone" className="text-gray-300">Teléfono</Label>
-                        <Input id="phone" type="tel" placeholder="Su número de teléfono" />
-                      </div>
-                      <Button type="submit" className="w-full !mt-6">
-                        Enviar Consulta
-                      </Button>
-                    </form>
-                  </CardContent>
-                </Card>
-              </div>
+                 <div className="mt-12">
+                    <Button asChild>
+                        <Link href="/testimoniales">Ver más casos de éxito</Link>
+                    </Button>
+                </div>
             </div>
-          </div>
-        </section>
-
-        {/* FAQ Section Placeholder */}
-        <section id="faq" className="py-20 md:py-28 bg-background">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline text-white mb-4">
-              Preguntas Frecuentes
-            </h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Aquí encontrará respuestas a las dudas más comunes sobre nuestros servicios. (Contenido de FAQ próximamente).
-            </p>
           </div>
         </section>
     </div>
