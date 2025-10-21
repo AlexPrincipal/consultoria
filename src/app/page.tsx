@@ -7,6 +7,7 @@ import { Scale, ShieldCheck, Briefcase, Landmark } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { AnimatedSection } from '@/components/animated-section';
 import { cn } from '@/lib/utils';
+import TestimonialsCarousel from '@/components/testimonials-carousel';
 
 function ServiceCard({
   icon,
@@ -128,25 +129,13 @@ export default function Home() {
           </div>
         </AnimatedSection>
 
-        {/* Testimonial Preview */}
+        {/* Testimonials Carousel */}
         <AnimatedSection id="testimoniales" className="py-20 md:py-28 bg-secondary">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-             <h2 className="text-4xl md:text-5xl font-bold font-headline text-white mb-12">
+           <div className="container mx-auto px-4 md:px-6 text-center">
+             <h2 className="text-4xl md:text-5xl font-bold font-headline text-white mb-16">
               La Confianza de Nuestros Clientes
             </h2>
-            <div className="max-w-4xl mx-auto">
-                <blockquote className="text-2xl md:text-3xl font-light italic text-white text-center relative px-8">
-                  <span className="absolute top-0 left-0 text-6xl text-primary/50 font-serif -translate-y-4">&ldquo;</span>
-                  El equipo de CMXS Jurídico transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable.
-                  <span className="absolute bottom-0 right-0 text-6xl text-primary/50 font-serif translate-y-4">&rdquo;</span>
-                </blockquote>
-                <div className="mt-8 flex items-center justify-center gap-4">
-                  <p className="text-white">
-                    <span className="font-semibold block text-lg">Cliente Satisfecho</span>
-                    <span className="text-sm text-gray-400">CEO, Empresa Ejemplo</span>
-                  </p>
-                </div>
-            </div>
+            <TestimonialsCarousel />
           </div>
         </AnimatedSection>
     </div>

@@ -23,6 +23,18 @@
       "description": "Client company logo for testimonial section",
       "imageUrl": "https://images.unsplash.com/photo-1750079521605-9ac6f0edd902?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb25zdHJ1Y3Rpb24lMjBjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NjEwMTkzNjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "construction company logo"
+    },
+    {
+      "id": "testimonial-logo-4",
+      "description": "Client company logo for testimonial section",
+      "imageUrl": "https://images.unsplash.com/photo-1622465911368-72162f8da3e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NjEwMjIyOTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "company logo"
+    },
+    {
+      "id": "testimonial-logo-5",
+      "description": "Client company logo for testimonial section",
+      "imageUrl": "https://images.unsplash.com/photo-1618588429012-0559f1cbc5aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb3Jwb3JhdGUlMjBsb2dvfGVufDB8fHx8MTc2MDkzODExMHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "corporate logo"
     }
   ]
 }

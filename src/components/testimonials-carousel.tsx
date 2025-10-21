@@ -1,7 +1,17 @@
 
+'use client';
+
 import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import Autoplay from "embla-carousel-autoplay"
 
 const testimonials = [
   {
@@ -22,7 +32,7 @@ const testimonials = [
     company: "Constructora Nacional",
     logoId: "testimonial-logo-3",
   },
-   {
+  {
     quote: "Gracias a su programa de Compliance, pudimos acceder a nuevos mercados internacionales que requerían altos estándares de cumplimiento. Un socio estratégico sin duda.",
     client: "Directora de Expansión",
     company: "Fintech Innovadora",
@@ -34,32 +44,32 @@ const testimonials = [
     company: "Filial Multinacional",
     logoId: "testimonial-logo-5",
   },
-   {
-    quote: "La defensa en un juicio laboral fue impecable. Su equipo demostró una pericia y un temple que nos llevaron a una resolución muy favorable.",
-    client: "Gerente de RH",
-    company: "Empresa de Retail",
-    logoId: "testimonial-logo",
-  },
 ];
 
-export default function TestimonialsPage() {
+export default function TestimonialsCarousel() {
   return (
-    <div className="bg-background">
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">Casos de Éxito y Testimoniales</h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              La confianza de nuestros clientes es nuestro mayor activo. Vea lo que dicen sobre su experiencia trabajando con CMXS Jurídico.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => {
-              const logo = PlaceHolderImages.find((p) => p.id === testimonial.logoId);
-              return (
-                <Card key={index} className="bg-card/50 text-card-foreground flex flex-col shadow-lg border-white/10">
+    <Carousel 
+      className="w-full max-w-4xl mx-auto"
+      plugins={[
+        Autoplay({
+          delay: 5000,
+          stopOnInteraction: true,
+        }),
+      ]}
+      opts={{
+        align: "start",
+        loop: true,
+      }}
+    >
+      <CarouselContent>
+        {testimonials.map((testimonial, index) => {
+          const logo = PlaceHolderImages.find((p) => p.id === testimonial.logoId);
+          return (
+            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <div className="p-1 h-full">
+                <Card className="bg-card/50 text-card-foreground flex flex-col shadow-lg border-white/10 h-full">
                   <CardContent className="p-6 flex-grow flex flex-col justify-between">
-                    <blockquote className="text-muted-foreground italic border-l-2 border-primary pl-4 text-left flex-grow">
+                    <blockquote className="text-muted-foreground italic border-l-2 border-primary pl-4 text-left">
                       "{testimonial.quote}"
                     </blockquote>
                     <div className="mt-6 flex items-center gap-4">
@@ -80,11 +90,13 @@ export default function TestimonialsPage() {
                     </div>
                   </CardContent>
                 </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    </div>
+              </div>
+            </CarouselItem>
+          );
+        })}
+      </CarouselContent>
+      <CarouselPrevious className="hidden md:flex" />
+      <CarouselNext className="hidden md:flex" />
+    </Carousel>
   );
 }
