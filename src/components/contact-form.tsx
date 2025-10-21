@@ -8,7 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import { submitContactForm } from '@/app/actions/contact';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'El nombre debe tener al menos 2 caracteres.' }),
@@ -22,7 +23,7 @@ type ContactFormValues = z.infer<typeof formSchema>;
 
 export default function ContactForm({ serviceContext }: { serviceContext?: string }) {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(formSchema),
@@ -36,18 +37,22 @@ export default function ContactForm({ serviceContext }: { serviceContext?: strin
   });
 
   async function onSubmit(values: ContactFormValues) {
-    setIsSubmitting(true);
-    console.log('Form values:', values);
+    startTransition(async () => {
+      const result = await submitContactForm(values);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    form.reset();
-
-    toast({
-      title: 'Formulario Enviado',
-      description: 'Gracias por su mensaje. Nos pondremos en contacto con usted a la brevedad.',
+      if (result.success) {
+        toast({
+          title: 'Formulario Enviado',
+          description: 'Gracias por su mensaje. Nos pondremos en contacto con usted a la brevedad.',
+        });
+        form.reset();
+      } else {
+         toast({
+          variant: "destructive",
+          title: "Error al enviar",
+          description: result.message,
+        });
+      }
     });
   }
 
@@ -106,8 +111,8 @@ export default function ContactForm({ serviceContext }: { serviceContext?: strin
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? 'Enviando...' : 'Enviar Consulta'}
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? 'Enviando...' : 'Enviar Consulta'}
         </Button>
       </form>
     </Form>
