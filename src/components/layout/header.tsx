@@ -54,7 +54,7 @@ export function Header() {
       <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-3 text-2xl font-bold font-headline text-white tracking-wider">
           <Landmark className="h-8 w-8 text-primary" />
-          <span>CMXS Jurídico</span>
+          <span>C+ Consultoría Jurídica</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
@@ -96,7 +96,7 @@ export function Header() {
               <div className="flex flex-col h-full">
                 <div className="flex justify-between items-center p-4 border-b border-border">
                   <Link href="/" className="text-lg font-bold font-headline text-white" onClick={() => setOpen(false)}>
-                    CMXS Jurídico
+                    C+ Consultoría Jurídica
                   </Link>
                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                       <X className="h-6 w-6 text-white" />

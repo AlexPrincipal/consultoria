@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Facebook, Linkedin } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
@@ -20,7 +21,7 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Column 1: Logo and Address */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold font-headline text-white tracking-wider">CMXS Jurídico</h3>
+              <h3 className="text-xl font-bold font-headline text-white tracking-wider">C+ Consultoría Jurídica</h3>
               <p className="text-sm">
                 Dirección de la Firma, No. 123<br />
                 Colonia Corporativa, Ciudad, Estado<br />
@@ -43,7 +44,7 @@ export function Footer() {
             <div>
               <h4 className="font-semibold text-white mb-4 uppercase tracking-wider">Contacto</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="mailto:contacto@cmxsjuridico.com" className="hover:text-primary transition-colors">contacto@cmxsjuridico.com</a></li>
+                <li><a href="mailto:contacto@cplusjuridico.com" className="hover:text-primary transition-colors">contacto@cplusjuridico.com</a></li>
                 <li><a href="tel:+525512345678" className="hover:text-primary transition-colors">+52 55 1234 5678</a></li>
               </ul>
             </div>
@@ -59,7 +60,7 @@ export function Footer() {
             </div>
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8 text-center text-sm">
-            <p>&copy; {new Date().getFullYear()} CMXS Jurídico. Todos los derechos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} C+ Consultoría Jurídica. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>

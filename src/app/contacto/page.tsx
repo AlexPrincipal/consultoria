@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import ContactForm from '@/components/contact-form';
 
@@ -13,7 +14,7 @@ export default function ContactPage() {
                 Estamos listos para escucharle. Complete el formulario para agendar una evaluación de su caso o para cualquier otra consulta. Nuestro equipo se pondrá en contacto a la brevedad.
               </p>
               <div className="mt-8 space-y-4 text-muted-foreground">
-                <p><strong>Email:</strong> <a href="mailto:contacto@cmxsjuridico.com" className="hover:text-primary">contacto@cmxsjuridico.com</a></p>
+                <p><strong>Email:</strong> <a href="mailto:contacto@cplusjuridico.com" className="hover:text-primary">contacto@cplusjuridico.com</a></p>
                 <p><strong>Teléfono:</strong> <a href="tel:+525512345678" className="hover:text-primary">+52 55 1234 5678</a></p>
                 <p><strong>Dirección:</strong> Dirección de la Firma, No. 123, Colonia Corporativa, Ciudad, Estado, CP 12345</p>
               </div>
