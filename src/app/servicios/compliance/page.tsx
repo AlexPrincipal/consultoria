@@ -23,7 +23,7 @@ export default function CompliancePage() {
                   <CardTitle className="text-2xl font-headline text-center">Evalúe su riesgo actual</CardTitle>
                 </CardHeader>
                 <CardContent>
-                 <ContactForm serviceContext="Compliance y Prevención" />
+                 <ContactForm serviceContext="Compliance" />
                 </CardContent>
               </Card>
             </div>
@@ -33,19 +33,19 @@ export default function CompliancePage() {
 
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-3xl font-bold font-headline text-center mb-12">Nuestros Servicios de Compliance</h2>
+          <h2 className="text-3xl font-bold font-headline text-center mb-12">¿Qué Ofrecemos?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <Card className="bg-card p-6">
-              <h3 className="font-semibold text-xl mb-2">Matrices de Riesgo</h3>
-              <p className="text-muted-foreground">Identificamos y evaluamos los riesgos específicos de su industria y operación para priorizar acciones.</p>
+              <h3 className="font-semibold text-xl mb-2">Responsabilidad Penal</h3>
+              <p className="text-muted-foreground">Asesoría para prevenir y gestionar la responsabilidad penal del personal y de la empresa.</p>
             </Card>
             <Card className="bg-card p-6">
+              <h3 className="font-semibold text-xl mb-2">Supervisión y Auditoría</h3>
+              <p className="text-muted-foreground">Realizamos auditorías periódicas y supervisión continua para asegurar la efectividad de los controles internos.</p>
+            </Card>
+             <Card className="bg-card p-6">
               <h3 className="font-semibold text-xl mb-2">Políticas y Procedimientos</h3>
               <p className="text-muted-foreground">Diseñamos códigos de conducta, políticas anticorrupción y protocolos de prevención de lavado de dinero.</p>
-            </Card>
-            <Card className="bg-card p-6">
-              <h3 className="font-semibold text-xl mb-2">Capacitación y Auditoría</h3>
-              <p className="text-muted-foreground">Formamos a su personal y realizamos auditorías periódicas para asegurar la efectividad del programa.</p>
             </Card>
           </div>
         </div>
@@ -53,24 +53,19 @@ export default function CompliancePage() {
 
       <section className="py-20 md:py-28 bg-secondary">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-           <h2 className="text-3xl font-bold font-headline mb-4">Beneficios de un Sólido Programa de Compliance</h2>
-            <p className="text-muted-foreground mb-8">
-              Invertir en cumplimiento normativo es invertir en la longevidad y el valor de su empresa.
-            </p>
-          <ul className="space-y-4 text-left mx-auto max-w-2xl">
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-primary mr-4 mt-1 shrink-0" />
-              <span><span className="font-semibold">Reducción de Sanciones:</span> Evite multas y sanciones por incumplimiento de normativas locales e internacionales.</span>
-            </li>
-            <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-primary mr-4 mt-1 shrink-0" />
-              <span><span className="font-semibold">Mejora de la Reputación:</span> Genere confianza entre clientes, inversores y socios comerciales.</span>
-            </li>
-             <li className="flex items-start">
-              <CheckCircle className="h-6 w-6 text-primary mr-4 mt-1 shrink-0" />
-              <span><span className="font-semibold">Ventaja Competitiva:</span> Acceda a nuevos mercados y oportunidades de negocio que exigen altos estándares de cumplimiento.</span>
-            </li>
-          </ul>
+           <h2 className="text-3xl font-bold font-headline mb-4">Casos de Éxito</h2>
+           <p className="text-muted-foreground mb-8">Un programa de compliance robusto es la mejor defensa.</p>
+          <div className="text-left mx-auto max-w-2xl bg-card p-6 rounded-lg">
+                <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
+                  "La implementación del programa de compliance con C+ Jurídica nos abrió las puertas a licitaciones gubernamentales que antes eran inaccesibles. Su trabajo fue fundamental."
+                </blockquote>
+                <p className="text-right mt-4 text-primary font-semibold">- Director de Operaciones, Empresa de Construcción</p>
+            </div>
+            <div className="mt-8">
+                <Button asChild>
+                    <Link href="/testimoniales">Más sobre nuestros clientes</Link>
+                </Button>
+            </div>
         </div>
       </section>
     </div>

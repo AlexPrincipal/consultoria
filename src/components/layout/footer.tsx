@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { Facebook, Linkedin, Bot } from 'lucide-react';
+import { Facebook, Linkedin } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
+
 
 export function Footer() {
   return (
@@ -11,14 +13,14 @@ export function Footer() {
         className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors z-50 flex items-center justify-center"
         aria-label="Contactar por WhatsApp"
       >
-        <Bot className="h-8 w-8" />
+        <FaWhatsapp className="h-8 w-8" />
       </a>
       <footer className="bg-black text-gray-400">
         <div className="container mx-auto px-4 md:px-6 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Column 1: Logo and Address */}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold font-headline text-white">CMXS Jurídico</h3>
+              <h3 className="text-xl font-bold font-headline text-white">C+ Jurídica</h3>
               <p className="text-sm">
                 Dirección de la Firma, No. 123<br />
                 Colonia Corporativa, Ciudad, Estado<br />
@@ -57,7 +59,7 @@ export function Footer() {
             </div>
           </div>
           <div className="mt-8 border-t border-gray-800 pt-8 text-center text-sm">
-            <p>&copy; {new Date().getFullYear()} CMXS Jurídico. Todos los derechos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} C+ Jurídica. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>

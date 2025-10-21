@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -24,27 +23,37 @@ export default function QuienesSomosPage() {
         </div>
       </section>
 
-      {/* Misión y Visión */}
+      {/* Misión y Visión y Valores */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-3 gap-12">
             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4">Nuestra Misión</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Ofrecer soluciones legales innovadoras, efectivas y a la medida, que no solo resuelvan los problemas actuales de nuestros clientes, sino que también anticipen desafíos futuros. Nos dedicamos a proteger los activos, la reputación y el crecimiento de cada empresa que confía en nosotros, actuando siempre con la máxima integridad y profesionalismo.
+              <h2 className="text-3xl font-bold font-headline mb-4 text-center">Nuestra Misión</h2>
+              <p className="text-muted-foreground leading-relaxed text-center">
+                Ofrecer soluciones legales innovadoras, efectivas y a la medida, que no solo resuelvan los problemas actuales de nuestros clientes, sino que también anticipen desafíos futuros. Nos dedicamos a proteger los activos, la reputación y el crecimiento de cada empresa que confía en nosotros.
               </p>
             </div>
             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4">Nuestra Visión</h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <h2 className="text-3xl font-bold font-headline mb-4 text-center">Nuestra Visión</h2>
+              <p className="text-muted-foreground leading-relaxed text-center">
                 Ser la firma de abogados líder en derecho corporativo y de negocios en México, reconocida por nuestro enfoque estratégico, nuestro compromiso inquebrantable con la excelencia y por construir relaciones de largo plazo con nuestros clientes, basadas en la confianza y los resultados.
               </p>
+            </div>
+             <div>
+              <h2 className="text-3xl font-bold font-headline mb-4 text-center">Nuestros Valores</h2>
+               <ul className="text-muted-foreground leading-relaxed text-center list-disc list-inside">
+                  <li>Integridad</li>
+                  <li>Excelencia</li>
+                  <li>Compromiso</li>
+                  <li>Innovación</li>
+                  <li>Confianza</li>
+               </ul>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Equipo */}
+      {/* Equipo y Contacto */}
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -69,7 +78,6 @@ export default function QuienesSomosPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

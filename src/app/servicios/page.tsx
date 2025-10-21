@@ -6,21 +6,21 @@ import { Scale, ShieldCheck, Briefcase } from 'lucide-react';
 const services = [
   {
     icon: <Briefcase className="h-12 w-12 text-primary" />,
-    title: "Consultoría Corporativa",
-    description: "Asesoramiento estratégico para garantizar que su negocio opere con seguridad jurídica y eficiencia.",
-    href: "/servicios/consultoria-corporativa"
+    title: "Consultoría para Creación de Empresas",
+    description: "Le guiamos paso a paso en la constitución de su empresa, asegurando una estructura legal sólida desde el inicio.",
+    href: "/servicios/consultoria-creacion-empresas"
   },
   {
     icon: <ShieldCheck className="h-12 w-12 text-primary" />,
-    title: "Compliance y Prevención",
+    title: "Compliance",
     description: "Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa.",
-    href: "/servicios/compliance-y-prevencion"
+    href: "/servicios/compliance"
   },
   {
     icon: <Scale className="h-12 w-12 text-primary" />,
-    title: "Representación en Litigios",
-    description: "Defensa experta en disputas comerciales, civiles y administrativas ante tribunales y autoridades.",
-    href: "/servicios/representacion-en-litigios"
+    title: "Representación Legal de Empresas",
+    description: "Defensa experta en disputas laborales y controversias generales ante diversas instancias.",
+    href: "/servicios/representacion-legal"
   }
 ];
 

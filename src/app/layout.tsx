@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'CMXS Jurídico',
+  title: 'C+ Consultoría Jurídica',
   description: 'Estrategias legales sólidas para la tranquilidad de su empresa.',
 };
 

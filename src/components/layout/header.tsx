@@ -22,9 +22,9 @@ const navLinks = [
     isDropdown: true,
     items: [
       { href: '/servicios', label: 'Todos los Servicios' },
-      { href: '/servicios/consultoria-corporativa', label: 'Consultoría Corporativa' },
-      { href: '/servicios/compliance-y-prevencion', label: 'Compliance y Prevención' },
-      { href: '/servicios/representacion-en-litigios', label: 'Representación en Litigios' },
+      { href: '/servicios/consultoria-creacion-empresas', label: 'Creación de Empresas' },
+      { href: '/servicios/compliance', label: 'Compliance' },
+      { href: '/servicios/representacion-legal', label: 'Representación Legal' },
     ]
   },
   { href: '/quienes-somos', label: 'Quiénes Somos' },
@@ -53,7 +53,7 @@ export function Header() {
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link href="/" className="text-xl font-bold font-headline text-white">
-          CMXS Jurídico
+          C+ Jurídica
         </Link>
         <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (
@@ -95,7 +95,7 @@ export function Header() {
               <div className="flex flex-col h-full">
                 <div className="flex justify-between items-center p-4 border-b border-border">
                   <Link href="/" className="text-lg font-bold font-headline text-white" onClick={() => setOpen(false)}>
-                    CMXS Jurídico
+                    C+ Jurídica
                   </Link>
                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                       <X className="h-6 w-6 text-white" />

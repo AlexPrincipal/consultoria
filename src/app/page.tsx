@@ -53,10 +53,10 @@ export default function Home() {
           )}
           <div className="relative z-10 p-4 space-y-6 container mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-              Su Defensa es Nuestra Única Prioridad.
+              Promesa de Valor: Su Socio Legal Estratégico
             </h1>
             <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-              Estrategias legales sólidas para la tranquilidad de su empresa.
+              En C+ Consultoría Jurídica, transformamos la complejidad legal en tranquilidad para su empresa. Ofrecemos estrategias sólidas y un acompañamiento integral para que usted se enfoque en lo que mejor sabe hacer: hacer crecer su negocio.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                <Button size="lg" className="w-full sm:w-auto" asChild>
@@ -83,21 +83,21 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <ServiceCard
                 icon={<Briefcase className="h-10 w-10 text-primary" />}
-                title="Consultoría Corporativa"
-                description="Asesoramiento estratégico para garantizar que su negocio opere con seguridad jurídica y eficiencia."
-                href="/servicios/consultoria-corporativa"
+                title="Consultoría para Creación de Empresas"
+                description="Le guiamos paso a paso en la constitución de su empresa, asegurando una estructura legal sólida desde el inicio."
+                href="/servicios/consultoria-creacion-empresas"
               />
               <ServiceCard
                 icon={<ShieldCheck className="h-10 w-10 text-primary" />}
-                title="Compliance y Prevención"
+                title="Compliance"
                 description="Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa."
-                 href="/servicios/compliance-y-prevencion"
+                 href="/servicios/compliance"
               />
               <ServiceCard
                 icon={<Scale className="h-10 w-10 text-primary" />}
-                title="Representación en Litigios"
-                description="Defensa experta en disputas comerciales, civiles y administrativas ante tribunales y autoridades."
-                 href="/servicios/representacion-en-litigios"
+                title="Representación Legal de Empresas"
+                description="Defensa experta en disputas laborales y controversias generales ante diversas instancias."
+                 href="/servicios/representacion-legal"
               />
             </div>
             <div className="text-center mt-12">
@@ -112,11 +112,11 @@ export default function Home() {
         <section id="quienes-somos" className="py-20 md:py-28 bg-black">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold font-headline text-white mb-4">
-                Comprometidos con su Éxito
+               <h2 className="text-3xl md:text-4xl font-bold font-headline text-white mb-4">
+                ¿Quién es C+ Consultoría Jurídica?
               </h2>
               <p className="text-gray-300 leading-relaxed mb-8">
-                Somos un equipo de abogados expertos, apasionados por ofrecer soluciones legales innovadoras y efectivas. Nuestra firma se funda sobre los pilares de la integridad, la excelencia y un compromiso inquebrantable con los objetivos de nuestros clientes.
+                Somos un equipo de abogados expertos, apasionados por ofrecer soluciones legales innovadoras y efectivas. Nuestra firma se funda sobre los pilares de la integridad, la excelencia y un compromiso inquebrantable con los objetivos de nuestros clientes, convirtiéndonos en sus socios estratégicos para el éxito.
               </p>
               <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black" asChild>
                 <Link href="/quienes-somos">Conozca Nuestra Firma</Link>
@@ -133,7 +133,7 @@ export default function Home() {
             </h2>
             <div className="max-w-3xl mx-auto">
                 <blockquote className="text-xl md:text-2xl italic text-white border-l-4 border-primary pl-6 text-left">
-                  "El equipo de CMXS Jurídico transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable."
+                  "El equipo de C+ Jurídico transformó nuestra forma de gestionar los riesgos legales. Su enfoque proactivo y su profundo conocimiento nos han dado una tranquilidad invaluable."
                 </blockquote>
                 <div className="mt-6 flex items-center justify-start gap-4">
                   <p className="text-white">
