@@ -25,7 +25,7 @@ export default function TeamMemberPage({ params }: { params: { slug: string } })
         <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
           {/* Columna Izquierda - Foto y Datos */}
           <div className="md:col-span-1 flex flex-col items-center">
-            <div className="relative h-64 w-64 rounded-full overflow-hidden border-4 border-primary mb-6 shadow-lg">
+            <div className="relative h-64 w-64 rounded-lg overflow-hidden border-4 border-white/80 mb-6 shadow-lg">
               <Image
                 src={member.imageUrl}
                 alt={`Retrato de ${member.name}`}

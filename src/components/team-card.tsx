@@ -21,7 +21,7 @@ export default function TeamCard({ member, className }: { member: TeamMember, cl
     <Card className={cn("bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 h-full transition-transform duration-300 hover:-translate-y-2", className)}>
       <CardHeader className="p-0 items-center">
         <Link href={`/quienes-somos/${member.slug}`}>
-            <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-primary">
+            <div className="relative h-40 w-40 rounded-lg overflow-hidden border-4 border-white/80">
               <Image
                 src={member.imageUrl}
                 alt={`Retrato de ${member.name}`}
