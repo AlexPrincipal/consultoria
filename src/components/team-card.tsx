@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Linkedin } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type TeamMember = {
   name: string;
@@ -15,9 +16,9 @@ type TeamMember = {
   bio: string;
 };
 
-export default function TeamCard({ member }: { member: TeamMember }) {
+export default function TeamCard({ member, className }: { member: TeamMember, className?: string }) {
   return (
-    <Card className="bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 h-full transition-transform duration-300 hover:-translate-y-2">
+    <Card className={cn("bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 h-full transition-transform duration-300 hover:-translate-y-2", className)}>
       <CardHeader className="p-0 items-center">
         <Link href={`/quienes-somos/${member.slug}`}>
             <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-primary">

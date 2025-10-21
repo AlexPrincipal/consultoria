@@ -1,23 +1,28 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Scale, ShieldCheck, Briefcase, Landmark } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { AnimatedSection } from '@/components/animated-section';
+import { cn } from '@/lib/utils';
 
 function ServiceCard({
   icon,
   title,
   description,
   href,
+  className
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
   href: string;
+  className?: string;
 }) {
   return (
-    <Card className="bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10">
+    <Card className={cn("bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10", className)}>
       <CardHeader>
         {icon}
         <CardTitle className="pt-4 font-headline text-xl text-white">{title}</CardTitle>
@@ -70,7 +75,7 @@ export default function Home() {
         </section>
 
         {/* Services Overview */}
-        <section id="servicios" className="py-20 md:py-28 bg-background">
+        <AnimatedSection id="servicios" className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
@@ -92,19 +97,21 @@ export default function Home() {
                 title="Compliance"
                 description="Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa."
                  href="/servicios/compliance"
+                 className="animation-delay-200"
               />
               <ServiceCard
                 icon={<Scale className="h-10 w-10 text-primary" />}
                 title="Representación Legal De Empresas"
                 description="Defensa experta en disputas laborales y controversias generales ante diversas instancias."
                  href="/servicios/representacion-legal"
+                 className="animation-delay-400"
               />
             </div>
           </div>
-        </section>
+        </AnimatedSection>
         
         {/* About Us Preview */}
-        <section id="quienes-somos" className="py-20 md:py-28 bg-black">
+        <AnimatedSection id="quienes-somos" className="py-20 md:py-28 bg-black">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto">
                 <Landmark className="h-12 w-12 text-primary mx-auto mb-6" />
@@ -119,10 +126,10 @@ export default function Home() {
               </Button>
             </div>
           </div>
-        </section>
+        </AnimatedSection>
 
         {/* Testimonial Preview */}
-        <section id="testimoniales" className="py-20 md:py-28 bg-secondary">
+        <AnimatedSection id="testimoniales" className="py-20 md:py-28 bg-secondary">
           <div className="container mx-auto px-4 md:px-6 text-center">
              <h2 className="text-4xl md:text-5xl font-bold font-headline text-white mb-12">
               La Confianza de Nuestros Clientes
@@ -141,7 +148,7 @@ export default function Home() {
                 </div>
             </div>
           </div>
-        </section>
+        </AnimatedSection>
     </div>
   );
 }
