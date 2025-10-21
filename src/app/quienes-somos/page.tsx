@@ -1,6 +1,32 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Linkedin } from 'lucide-react';
+
+const teamMembers = [
+  {
+    name: "Socio Fundador",
+    title: "Director General",
+    imageUrl: "https://picsum.photos/seed/lawyer1/400/400",
+    imageHint: "professional portrait lawyer",
+    bio: "Más de 20 años de experiencia asesorando a empresas nacionales e internacionales en derecho corporativo, fusiones y adquisiciones. Experto en litigio estratégico y resolución de conflictos complejos."
+  },
+  {
+    name: "Socia",
+    title: "Líder de Compliance",
+    imageUrl: "https://picsum.photos/seed/lawyer2/400/400",
+    imageHint: "professional portrait lawyer woman",
+    bio: "Especialista en la implementación de programas de cumplimiento normativo, anticorrupción y prevención de lavado de dinero para corporativos en industrias reguladas. Certificada internacionalmente."
+  },
+  {
+    name: "Abogado Asociado",
+    title: "Especialista en Derecho Laboral",
+    imageUrl: "https://picsum.photos/seed/lawyer3/400/400",
+    imageHint: "professional portrait associate",
+    bio: "Dedicado a la representación de empresas en controversias laborales, negociaciones colectivas y consultoría preventiva para la gestión de recursos humanos bajo el marco legal mexicano."
+  }
+];
 
 export default function QuienesSomosPage() {
   const teamImage = {
@@ -28,20 +54,20 @@ export default function QuienesSomosPage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-3 gap-12">
             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4 text-center">Nuestra Misión</h2>
+              <h2 className="text-3xl font-bold font-headline mb-4 text-center text-primary">Nuestra Misión</h2>
               <p className="text-muted-foreground leading-relaxed text-center">
                 Ofrecer soluciones legales innovadoras, efectivas y a la medida, que no solo resuelvan los problemas actuales de nuestros clientes, sino que también anticipen desafíos futuros. Nos dedicamos a proteger los activos, la reputación y el crecimiento de cada empresa que confía en nosotros.
               </p>
             </div>
             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4 text-center">Nuestra Visión</h2>
+              <h2 className="text-3xl font-bold font-headline mb-4 text-center text-primary">Nuestra Visión</h2>
               <p className="text-muted-foreground leading-relaxed text-center">
                 Ser la firma de abogados líder en derecho corporativo y de negocios en México, reconocida por nuestro enfoque estratégico, nuestro compromiso inquebrantable con la excelencia y por construir relaciones de largo plazo con nuestros clientes, basadas en la confianza y los resultados.
               </p>
             </div>
              <div>
-              <h2 className="text-3xl font-bold font-headline mb-4 text-center">Nuestros Valores</h2>
-               <ul className="text-muted-foreground leading-relaxed text-center list-disc list-inside">
+              <h2 className="text-3xl font-bold font-headline mb-4 text-center text-primary">Nuestros Valores</h2>
+               <ul className="text-muted-foreground leading-relaxed text-center list-disc list-inside marker:text-primary">
                   <li>Integridad</li>
                   <li>Excelencia</li>
                   <li>Compromiso</li>
@@ -53,8 +79,51 @@ export default function QuienesSomosPage() {
         </div>
       </section>
       
+      {/* Team Section */}
+      <section id="equipo" className="py-20 md:py-28 bg-black">
+        <div className="container mx-auto px-4 md:px-6">
+           <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Conozca a Nuestro Equipo</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Profesionales dedicados a la excelencia, con la experiencia y el conocimiento para proteger sus intereses.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {teamMembers.map((member, index) => (
+              <Card key={index} className="bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 hover:-translate-y-2 transition-transform duration-300">
+                <CardHeader className="p-0 items-center">
+                  <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-primary">
+                     <Image
+                      src={member.imageUrl}
+                      alt={`Retrato de ${member.name}`}
+                      fill
+                      className="object-cover"
+                      data-ai-hint={member.imageHint}
+                    />
+                  </div>
+                   <div className="pt-4">
+                     <h3 className="text-xl font-bold font-headline text-white">{member.name}</h3>
+                     <p className="text-primary font-medium">{member.title}</p>
+                   </div>
+                </CardHeader>
+                <CardContent className="flex-grow pt-4">
+                  <p className="text-sm text-muted-foreground">{member.bio}</p>
+                   <div className="mt-4">
+                    <Button variant="ghost" size="icon" asChild>
+                      <Link href="#" aria-label="LinkedIn">
+                        <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary"/>
+                      </Link>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Equipo y Contacto */}
-      <section className="py-20 md:py-28 bg-black">
+      <section className="py-20 md:py-28 bg-secondary">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
              <div className="relative aspect-video rounded-lg overflow-hidden">
