@@ -68,8 +68,8 @@ export default function QuienesSomosPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member) => (
-              <Link key={member.slug} href={`/quienes-somos/${member.slug}`} className="group">
-                <Card className="bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 h-full transition-transform duration-300 group-hover:-translate-y-2">
+              <Card key={member.slug} className="bg-card text-card-foreground border-border/50 shadow-xl text-center flex flex-col items-center pt-8 h-full transition-transform duration-300 hover:-translate-y-2">
+                <Link href={`/quienes-somos/${member.slug}`} className="group flex flex-col items-center flex-grow w-full">
                   <CardHeader className="p-0 items-center">
                     <div className="relative h-32 w-32 rounded-full overflow-hidden border-4 border-primary">
                        <Image
@@ -81,22 +81,22 @@ export default function QuienesSomosPage() {
                       />
                     </div>
                      <div className="pt-4">
-                       <h3 className="text-xl font-bold font-headline text-white">{member.name}</h3>
+                       <h3 className="text-xl font-bold font-headline text-white group-hover:text-primary">{member.name}</h3>
                        <p className="text-primary font-medium">{member.title}</p>
                      </div>
                   </CardHeader>
-                  <CardContent className="flex-grow pt-4">
+                  <CardContent className="flex-grow pt-4 px-4">
                     <p className="text-sm text-muted-foreground">{member.bio}</p>
-                     <div className="mt-4">
-                      <Button variant="ghost" size="icon" asChild>
-                        <Link href="#" aria-label="LinkedIn">
-                          <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary"/>
-                        </Link>
-                      </Button>
-                    </div>
                   </CardContent>
-                </Card>
-              </Link>
+                </Link>
+                <div className="pb-4">
+                  <Button variant="ghost" size="icon" asChild>
+                    <a href="#" aria-label="LinkedIn" onClick={(e) => e.stopPropagation()}>
+                      <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary"/>
+                    </a>
+                  </Button>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
