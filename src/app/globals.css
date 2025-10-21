@@ -49,19 +49,19 @@ body {
     --card-foreground: 0, 0%, 98%;
     --popover: 228, 12%, 18%;
     --popover-foreground: 0, 0%, 98%;
-    --primary: 38, 92%, 50%; /* Gold */
-    --primary-foreground: 228, 12%, 18%;
+    --primary: 217, 91%, 60%; /* Professional Blue */
+    --primary-foreground: 0, 0%, 98%; /* White */
     --secondary: 228, 12%, 22%;
     --secondary-foreground: 0, 0%, 98%;
     --muted: 228, 12%, 22%;
     --muted-foreground: 0, 0%, 63.9%;
     --accent: 228, 12%, 22%;
-    --accent-foreground: 38, 92%, 50%;
+    --accent-foreground: 217, 91%, 60%;
     --destructive: 0, 62.8%, 30.6%;
     --destructive-foreground: 0, 0%, 98%;
     --border: 228, 12%, 28%;
     --input: 228, 12%, 24%;
-    --ring: 38, 92%, 50%;
+    --ring: 217, 91%, 60%;
     --chart-1: 220, 70%, 50%;
     --chart-2: 160, 60%, 45%;
     --chart-3: 30, 80%, 55%;
