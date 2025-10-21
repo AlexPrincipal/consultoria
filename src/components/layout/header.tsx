@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, Landmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
@@ -93,16 +93,18 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw] p-0">
-              <div className="flex flex-col h-full">
-                <div className="flex justify-between items-center p-4 border-b border-border">
-                  <Link href="/" className="text-lg font-bold font-headline text-white" onClick={() => setOpen(false)}>
-                    C+ Consultoría Legal
-                  </Link>
+               <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
+                  <SheetTitle asChild>
+                    <Link href="/" className="text-lg font-bold font-headline text-white" onClick={() => setOpen(false)}>
+                      C+ Consultoría Legal
+                    </Link>
+                  </SheetTitle>
                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                       <X className="h-6 w-6 text-white" />
                       <span className="sr-only">Cerrar menú</span>
                     </Button>
-                </div>
+                </SheetHeader>
+              <div className="flex flex-col h-full">
                 <nav className="flex flex-col space-y-2 p-4">
                   {navLinks.map((link) => (
                      link.isDropdown && link.items ? (
