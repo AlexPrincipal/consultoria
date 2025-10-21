@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button';
 import { Scale, ShieldCheck, Briefcase } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
+import { cn } from '@/lib/utils';
 
 const services = [
   {
@@ -38,7 +39,10 @@ export default function ServicesPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <Card key={service.title} className={`bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10 animation-delay-${index * 200}`}>
+              <Card key={service.title} className={cn(
+                "bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10",
+                `animation-delay-${index * 200}`
+              )}>
                 <CardHeader>
                   {service.icon}
                   <CardTitle className="pt-6 font-headline text-xl text-white">{service.title}</CardTitle>

@@ -38,7 +38,7 @@ export default function TestimonialsPage() {
             {testimonials.map((testimonial, index) => {
               const logo = PlaceHolderImages.find((p) => p.id === testimonial.logoId);
               return (
-                <Card key={index} className="bg-card text-card-foreground flex flex-col shadow-lg">
+                <Card key={index} className="bg-card/50 text-card-foreground flex flex-col shadow-lg border-white/10">
                   <CardContent className="p-6 flex-grow flex flex-col">
                     <blockquote className="text-muted-foreground italic border-l-2 border-primary pl-4 flex-grow">
                       "{testimonial.quote}"

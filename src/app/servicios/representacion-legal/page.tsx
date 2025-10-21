@@ -6,8 +6,8 @@ import ContactForm from '@/components/contact-form';
 
 export default function RepresentacionLegalPage() {
   return (
-    <div className="bg-black text-white">
-      <section className="py-20 md:py-28 bg-background">
+    <div className="bg-background text-white">
+      <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -18,9 +18,9 @@ export default function RepresentacionLegalPage() {
               </p>
             </div>
             <div className="flex justify-center">
-               <Card className="w-full max-w-md bg-card shadow-lg">
+               <Card className="w-full max-w-md bg-card border-border/50 shadow-xl">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-headline text-center">Evalúe su caso</CardTitle>
+                  <CardTitle className="text-2xl font-headline text-center text-white">Evalúe su caso</CardTitle>
                 </CardHeader>
                 <CardContent>
                  <ContactForm serviceContext="Representación Legal" />
@@ -33,38 +33,38 @@ export default function RepresentacionLegalPage() {
 
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-3xl font-bold font-headline text-center mb-12">¿Qué Ofrecemos?</h2>
+          <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">¿Qué Ofrecemos?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <Card className="bg-card p-6">
-              <h3 className="font-semibold text-xl mb-2">Controversias Laborales</h3>
+            <Card className="bg-card/50 p-6 border-white/10">
+              <h3 className="font-semibold text-xl mb-2 text-white">Controversias Laborales</h3>
               <p className="text-muted-foreground">Defensa y representación en juicios laborales, tanto individuales como colectivos, y ante sindicatos.</p>
             </Card>
-            <Card className="bg-card p-6">
-              <h3 className="font-semibold text-xl mb-2">Representación Legal General</h3>
+            <Card className="bg-card/50 p-6 border-white/10">
+              <h3 className="font-semibold text-xl mb-2 text-white">Representación Legal General</h3>
               <p className="text-muted-foreground">Manejo de disputas contractuales, responsabilidad civil y conflictos entre accionistas.</p>
             </Card>
-            <Card className="bg-card p-6">
-              <h3 className="font-semibold text-xl mb-2">Litigio Regional y Nacional</h3>
+            <Card className="bg-card/50 p-6 border-white/10">
+              <h3 className="font-semibold text-xl mb-2 text-white">Litigio Regional y Nacional</h3>
               <p className="text-muted-foreground">Capacidad para gestionar controversias en su región de operación o en cualquier parte del país.</p>
             </Card>
           </div>
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-secondary">
+      <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-           <h2 className="text-3xl font-bold font-headline mb-4">Casos de Éxito</h2>
+           <h2 className="text-3xl font-bold font-headline mb-4 text-white">Casos de Éxito</h2>
             <p className="text-muted-foreground mb-8">
               Nuestra estrategia combina un profundo análisis jurídico con una ejecución procesal impecable.
             </p>
-          <div className="text-left mx-auto max-w-2xl bg-card p-6 rounded-lg">
+          <div className="text-left mx-auto max-w-2xl bg-card/80 border border-white/10 p-8 rounded-lg">
                 <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
                   "Enfrentamos un litigio laboral complejo que ponía en riesgo la operación. Su representación fue clave para obtener un resultado favorable y justo."
                 </blockquote>
                 <p className="text-right mt-4 text-primary font-semibold">- Gerente de RH, Empresa Manufacturera</p>
             </div>
             <div className="mt-8">
-                <Button asChild>
+                <Button asChild variant="outline">
                     <Link href="/testimoniales">Conozca más resultados</Link>
                 </Button>
             </div>
