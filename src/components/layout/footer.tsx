@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Linkedin } from 'lucide-react';
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp } from 'react-icons/fa6';
 
 
 export function Footer() {
