@@ -7,6 +7,7 @@ import { Scale, ShieldCheck, Briefcase, Landmark } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import TestimonialsCarousel from '@/components/testimonials-carousel';
+import AnimatedSection from '@/components/animated-section';
 
 function ServiceCard({
   icon,
@@ -75,7 +76,7 @@ export default function Home() {
         </section>
 
         {/* Services Overview */}
-        <section id="servicios" className="py-20 md:py-28 bg-background">
+        <AnimatedSection id="servicios" className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
@@ -97,19 +98,21 @@ export default function Home() {
                 title="Compliance"
                 description="Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa."
                  href="/servicios/compliance"
+                 className="animation-delay-200"
               />
               <ServiceCard
                 icon={<Scale className="h-10 w-10 text-primary" />}
                 title="Representación Legal De Empresas"
                 description="Defensa experta en disputas laborales y controversias generales ante diversas instancias."
                  href="/servicios/representacion-legal"
+                 className="animation-delay-400"
               />
             </div>
           </div>
-        </section>
+        </AnimatedSection>
         
         {/* About Us Preview */}
-        <section id="quienes-somos" className="py-20 md:py-28 bg-black">
+        <AnimatedSection id="quienes-somos" className="py-20 md:py-28 bg-black">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto">
                 <Landmark className="h-12 w-12 text-primary mx-auto mb-6" />
@@ -124,10 +127,10 @@ export default function Home() {
               </Button>
             </div>
           </div>
-        </section>
+        </AnimatedSection>
 
         {/* Testimonials */}
-        <section id="testimoniales" className="py-20 md:py-28 bg-secondary">
+        <AnimatedSection id="testimoniales" className="py-20 md:py-28 bg-secondary">
            <div className="container mx-auto px-4 md:px-6 text-center">
              <h2 className="text-4xl md:text-5xl font-bold font-headline text-white mb-16">
               La Confianza de Nuestros Clientes
@@ -136,7 +139,7 @@ export default function Home() {
               <TestimonialsCarousel />
             </div>
           </div>
-        </section>
+        </AnimatedSection>
     </div>
   );
 }
