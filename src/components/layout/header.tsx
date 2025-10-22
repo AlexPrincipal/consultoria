@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -20,6 +21,7 @@ const navLinks = [
   { 
     label: 'Servicios',
     isDropdown: true,
+    href: '/servicios',
     items: [
       { href: '/servicios', label: 'Todos los Servicios' },
       { href: '/servicios/consultoria-creacion-empresas', label: 'Creación de Empresas' },
@@ -35,6 +37,7 @@ const navLinks = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +47,8 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isServiceRouteActive = pathname.startsWith('/servicios');
+
   return (
     <header
       className={cn(
@@ -51,28 +56,30 @@ export function Header() {
         isScrolled ? 'bg-background/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent',
       )}
     >
-      <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6 py-4">
-        <Link href="/" className="relative h-28 w-32">
-          <Logo className="h-full w-full object-contain" />
+      <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6">
+        <Link href="/" className="relative w-32 h-28">
+          <Logo className="w-full h-auto object-contain" />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
         {navLinks.map((link) => (
             link.isDropdown && link.items ? (
             <DropdownMenu key={link.label}>
-                <DropdownMenuTrigger className="flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none">
+                <DropdownMenuTrigger className={cn("flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none",
+                  isServiceRouteActive && "text-primary"
+                )}>
                 {link.label}
                 <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='bg-background border-border/50'>
                 {link.items.map((item) => (
                     <DropdownMenuItem key={item.label} asChild>
-                    <Link href={item.href}>{item.label}</Link>
+                    <Link href={item.href} className={cn(pathname === item.href && "text-primary")}>{item.label}</Link>
                     </DropdownMenuItem>
                 ))}
                 </DropdownMenuContent>
             </DropdownMenu>
             ) : (
-            <Link key={link.label} href={link.href!} className="text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors">
+            <Link key={link.label} href={link.href!} className={cn("text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors", pathname === link.href && "text-primary")}>
                 {link.label}
             </Link>
             )
@@ -108,15 +115,15 @@ export function Header() {
                     {navLinks.map((link) => (
                         link.isDropdown && link.items ? (
                         <div key={link.label} className="flex flex-col space-y-2">
-                            <span className="text-lg font-semibold text-white uppercase tracking-wider">{link.label}</span>
+                            <span className={cn("text-lg font-semibold text-white uppercase tracking-wider", isServiceRouteActive && "text-primary")}>{link.label}</span>
                             {link.items.map(item => (
-                            <Link key={item.label} href={item.href} className="text-gray-400 hover:text-primary pl-4" onClick={() => setOpen(false)}>
+                            <Link key={item.label} href={item.href} className={cn("text-gray-400 hover:text-primary pl-4", pathname === item.href && "text-primary font-semibold")} onClick={() => setOpen(false)}>
                                 {item.label}
                             </Link>
                             ))}
                         </div>
                         ) : (
-                        <Link key={link.label} href={link.href!} className="text-lg text-gray-300 hover:text-primary uppercase tracking-wider" onClick={() => setOpen(false)}>
+                        <Link key={link.label} href={link.href!} className={cn("text-lg text-gray-300 hover:text-primary uppercase tracking-wider", pathname === link.href && "text-primary")} onClick={() => setOpen(false)}>
                             {link.label}
                         </Link>
                         )
