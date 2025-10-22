@@ -129,13 +129,15 @@ export default function Home() {
           </div>
         </AnimatedSection>
 
-        {/* Testimonials Carousel */}
+        {/* Testimonials */}
         <AnimatedSection id="testimoniales" className="py-20 md:py-28 bg-secondary">
            <div className="container mx-auto px-4 md:px-6 text-center">
              <h2 className="text-4xl md:text-5xl font-bold font-headline text-white mb-16">
               La Confianza de Nuestros Clientes
             </h2>
-            <TestimonialsCarousel />
+            <div className="max-w-5xl mx-auto">
+              <TestimonialsCarousel />
+            </div>
           </div>
         </AnimatedSection>
     </div>

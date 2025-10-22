@@ -3,11 +3,27 @@ import './globals.css';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
+import { Cinzel, Lato } from 'next/font/google';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'C+ Consultoría Legal',
   description: 'Estrategias legales sólidas para la tranquilidad de su empresa.',
 };
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-cinzel',
+  weight: ['400', '700'],
+});
+
+const lato = Lato({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lato',
+  weight: ['400', '700'],
+});
 
 export default function RootLayout({
   children,
@@ -15,15 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="es" className={cn('dark', cinzel.variable, lato.variable)}>
       <body className="font-body bg-background text-foreground antialiased">
         <Header />
         <main>{children}</main>

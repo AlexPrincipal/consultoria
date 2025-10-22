@@ -1,17 +1,8 @@
-
 'use client';
 
 import Image from 'next/image';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import Autoplay from "embla-carousel-autoplay"
 
 const testimonials = [
   {
@@ -32,71 +23,39 @@ const testimonials = [
     company: "Constructora Nacional",
     logoId: "testimonial-logo-3",
   },
-  {
-    quote: "Gracias a su programa de Compliance, pudimos acceder a nuevos mercados internacionales que requerían altos estándares de cumplimiento. Un socio estratégico sin duda.",
-    client: "Directora de Expansión",
-    company: "Fintech Innovadora",
-    logoId: "testimonial-logo-4",
-  },
-  {
-    quote: "La constitución de nuestra empresa en México fue un proceso rápido y sin contratiempos gracias a su gestoría experta. Un servicio de primera clase.",
-    client: "Country Manager",
-    company: "Filial Multinacional",
-    logoId: "testimonial-logo-5",
-  },
 ];
 
 export default function TestimonialsCarousel() {
   return (
-    <Carousel 
-      className="w-full max-w-4xl mx-auto"
-      plugins={[
-        Autoplay({
-          delay: 5000,
-          stopOnInteraction: true,
-        }),
-      ]}
-      opts={{
-        align: "start",
-        loop: true,
-      }}
-    >
-      <CarouselContent>
-        {testimonials.map((testimonial, index) => {
-          const logo = PlaceHolderImages.find((p) => p.id === testimonial.logoId);
-          return (
-            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-              <div className="p-1 h-full">
-                <Card className="bg-card/50 text-card-foreground flex flex-col shadow-lg border-white/10 h-full">
-                  <CardContent className="p-6 flex-grow flex flex-col justify-between">
-                    <blockquote className="text-muted-foreground italic border-l-2 border-primary pl-4 text-left">
-                      "{testimonial.quote}"
-                    </blockquote>
-                    <div className="mt-6 flex items-center gap-4">
-                      {logo && (
-                        <Image
-                          src={logo.imageUrl}
-                          alt={logo.description}
-                          width={48}
-                          height={48}
-                          className="rounded-full object-cover w-12 h-12"
-                          data-ai-hint={logo.imageHint}
-                        />
-                      )}
-                      <div className="text-left">
-                        <p className="font-semibold text-white">{testimonial.client}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.company}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {testimonials.map((testimonial, index) => {
+        const logo = PlaceHolderImages.find((p) => p.id === testimonial.logoId);
+        return (
+          <Card key={index} className="bg-card/50 text-card-foreground flex flex-col shadow-lg border-white/10 h-full">
+            <CardContent className="p-6 flex-grow flex flex-col justify-between">
+              <blockquote className="text-muted-foreground italic border-l-2 border-primary pl-4 text-left flex-grow">
+                "{testimonial.quote}"
+              </blockquote>
+              <div className="mt-6 flex items-center gap-4">
+                {logo && (
+                  <Image
+                    src={logo.imageUrl}
+                    alt={logo.description}
+                    width={48}
+                    height={48}
+                    className="rounded-full object-cover w-12 h-12"
+                    data-ai-hint={logo.imageHint}
+                  />
+                )}
+                <div className="text-left">
+                  <p className="font-semibold text-white">{testimonial.client}</p>
+                  <p className="text-sm text-muted-foreground">{testimonial.company}</p>
+                </div>
               </div>
-            </CarouselItem>
-          );
-        })}
-      </CarouselContent>
-      <CarouselPrevious className="hidden md:flex" />
-      <CarouselNext className="hidden md:flex" />
-    </Carousel>
+            </CardContent>
+          </Card>
+        );
+      })}
+    </div>
   );
 }
