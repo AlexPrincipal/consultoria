@@ -51,8 +51,8 @@ export function Header() {
         isScrolled ? 'bg-background/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent',
       )}
     >
-      <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6 py-4">
-        <Link href="/" className="relative flex items-center h-full w-80">
+      <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6 py-4">
+        <Link href="/" className="relative flex items-center h-full w-96">
           <Logo />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
