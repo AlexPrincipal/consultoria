@@ -52,7 +52,7 @@ export function Header() {
         isScrolled ? 'bg-background/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent',
       )}
     >
-      <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6">
+      <div className="container mx-auto flex items-center justify-between px-4 md:px-6 py-4">
         <Link href="/" className="flex items-center gap-3 text-white">
           <Logo />
         </Link>
@@ -96,7 +96,7 @@ export function Header() {
                 <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
                    <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
                     <Link href="/" onClick={() => setOpen(false)}>
-                      <Logo className="h-10 w-auto" />
+                      <Logo />
                     </Link>
                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                       <X className="h-6 w-6 text-white" />
