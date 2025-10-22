@@ -53,36 +53,36 @@ export function Header() {
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6 py-4">
         <Link href="/" className="relative h-28 w-32">
-          <Logo />
+          <Logo className="h-full w-full object-contain" />
         </Link>
-        <div className="flex items-center space-x-8">
-            <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-                link.isDropdown && link.items ? (
-                <DropdownMenu key={link.label}>
-                    <DropdownMenuTrigger className="flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none">
-                    {link.label}
-                    <ChevronDown className="ml-1 h-4 w-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className='bg-background border-border/50'>
-                    {link.items.map((item) => (
-                        <DropdownMenuItem key={item.label} asChild>
-                        <Link href={item.href}>{item.label}</Link>
-                        </DropdownMenuItem>
-                    ))}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-                ) : (
-                <Link key={link.label} href={link.href!} className="text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors">
-                    {link.label}
-                </Link>
-                )
-            ))}
-            </nav>
+        <nav className="hidden md:flex items-center space-x-8">
+        {navLinks.map((link) => (
+            link.isDropdown && link.items ? (
+            <DropdownMenu key={link.label}>
+                <DropdownMenuTrigger className="flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none">
+                {link.label}
+                <ChevronDown className="ml-1 h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='bg-background border-border/50'>
+                {link.items.map((item) => (
+                    <DropdownMenuItem key={item.label} asChild>
+                    <Link href={item.href}>{item.label}</Link>
+                    </DropdownMenuItem>
+                ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
+            ) : (
+            <Link key={link.label} href={link.href!} className="text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors">
+                {link.label}
+            </Link>
+            )
+        ))}
+        </nav>
+        <div className="flex items-center space-x-2">
             <div className="hidden md:block">
-            <Button asChild size="sm">
-                <Link href="/contacto">Consulta</Link>
-            </Button>
+                <Button asChild size="sm">
+                    <Link href="/contacto">Consulta</Link>
+                </Button>
             </div>
             <div className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
