@@ -1,9 +1,9 @@
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { teamMembers } from '@/lib/team';
 import TeamCard from '@/components/team-card';
-import { AnimatedSection } from '@/components/animated-section';
 
 
 export default function QuienesSomosPage() {
@@ -28,7 +28,7 @@ export default function QuienesSomosPage() {
       </section>
 
       {/* Misión y Visión y Valores */}
-      <AnimatedSection className="py-20 md:py-28">
+      <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-3 gap-12">
             <div>
@@ -55,10 +55,10 @@ export default function QuienesSomosPage() {
             </div>
           </div>
         </div>
-      </AnimatedSection>
+      </section>
       
       {/* Team Section */}
-      <AnimatedSection id="equipo" className="py-20 md:py-28 bg-black">
+      <section id="equipo" className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
            <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Conozca a Nuestro Equipo</h2>
@@ -71,15 +71,14 @@ export default function QuienesSomosPage() {
               <TeamCard 
                 key={member.slug} 
                 member={member} 
-                className={`animation-delay-${index * 200}`}
               />
             ))}
           </div>
         </div>
-      </AnimatedSection>
+      </section>
 
       {/* Equipo y Contacto */}
-      <AnimatedSection className="py-20 md:py-28 bg-secondary">
+      <section className="py-20 md:py-28 bg-secondary">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
              <div className="relative aspect-video rounded-lg overflow-hidden">
@@ -102,7 +101,7 @@ export default function QuienesSomosPage() {
             </div>
           </div>
         </div>
-      </AnimatedSection>
+      </section>
     </div>
   );
 }

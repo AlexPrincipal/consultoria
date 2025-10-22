@@ -1,8 +1,8 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Scale, ShieldCheck, Briefcase } from 'lucide-react';
-import { AnimatedSection } from '@/components/animated-section';
 import { cn } from '@/lib/utils';
 
 const services = [
@@ -29,7 +29,7 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="bg-background">
-      <AnimatedSection className="py-20 md:py-28">
+      <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">Nuestros Servicios</h1>
@@ -40,8 +40,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <Card key={service.title} className={cn(
-                "bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10",
-                `animation-delay-${index * 200}`
+                "bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10"
               )}>
                 <CardHeader>
                   {service.icon}
@@ -59,7 +58,7 @@ export default function ServicesPage() {
             ))}
           </div>
         </div>
-      </AnimatedSection>
+      </section>
     </div>
   );
 }
