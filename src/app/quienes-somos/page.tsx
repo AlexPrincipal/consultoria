@@ -3,8 +3,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { teamMembers } from '@/lib/team';
-import TeamCard from '@/components/team-card';
-
+import { cn } from '@/lib/utils';
 
 export default function QuienesSomosPage() {
   const teamImage = {
@@ -66,12 +65,31 @@ export default function QuienesSomosPage() {
               Profesionales dedicados a la excelencia, con la experiencia y el conocimiento para proteger sus intereses.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="space-y-24">
             {teamMembers.map((member, index) => (
-              <TeamCard 
-                key={member.slug} 
-                member={member} 
-              />
+              <div key={member.slug}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
+                  <div className={cn("relative aspect-[4/5] w-full max-w-sm mx-auto", index % 2 !== 0 && "md:order-last")}>
+                    <Image
+                      src={member.imageUrl}
+                      alt={`Retrato de ${member.name}`}
+                      fill
+                      className="object-cover rounded-lg"
+                      data-ai-hint={member.imageHint}
+                    />
+                  </div>
+                  <div className="md:col-span-2 space-y-4 text-center md:text-left">
+                    <h3 className="text-3xl font-bold font-headline text-primary">{member.name}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-lg">{member.bio}</p>
+                     <Button variant="link" asChild className="p-0 text-primary">
+                        <Link href={`/quienes-somos/${member.slug}`}>Conocer trayectoria &rarr;</Link>
+                    </Button>
+                  </div>
+                </div>
+                {index < teamMembers.length - 1 && (
+                  <hr className="mt-24 border-white/10" />
+                )}
+              </div>
             ))}
           </div>
         </div>

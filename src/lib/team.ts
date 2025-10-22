@@ -1,13 +1,13 @@
 
 export const teamMembers = [
   {
-    name: "Socio Fundador",
-    title: "Director General",
-    slug: "socio-fundador",
-    imageUrl: "https://picsum.photos/seed/lawyer1/400/400",
+    name: "FERNANDO PÉREZ CORREA",
+    title: "Socio Fundador",
+    slug: "fernando-perez-correa",
+    imageUrl: "https://picsum.photos/seed/lawyer1/400/500",
     imageHint: "professional portrait lawyer",
-    bio: "Más de 20 años de experiencia asesorando a empresas nacionales e internacionales en derecho corporativo, fusiones y adquisiciones.",
-    fullBio: "Con una trayectoria de más de dos décadas, el Socio Fundador es un referente en el ámbito del derecho corporativo en México. Ha liderado algunas de las transacciones más complejas del mercado, especializándose en fusiones y adquisiciones, gobierno corporativo y litigio estratégico. Su enfoque combina un profundo rigor técnico con una visión de negocio que le permite ofrecer soluciones innovadoras y efectivas a los desafíos más exigentes de sus clientes. Es egresado con honores de la Universidad Nacional Autónoma de México y cuenta con un máster en Derecho Corporativo por la Universidad de Harvard.",
+    bio: "Cuenta con más de 30 años de experiencia en Solución de Controversias, Concursos Mercantiles, Litigio, Arbitraje y Mediación. Reconocido como uno de los mejores abogados de México en sus áreas de expertise por los directorios legales más importantes a nivel internacional como Chambers and Partners, The Legal 500, Leaders League y Best Lawyers.",
+    fullBio: "Con una trayectoria de más de dos décadas, Fernando es un referente en el ámbito del derecho corporativo en México. Ha liderado algunas de las transacciones más complejas del mercado, especializándose en fusiones y adquisiciones, gobierno corporativo y litigio estratégico. Su enfoque combina un profundo rigor técnico con una visión de negocio que le permite ofrecer soluciones innovadoras y efectivas a los desafíos más exigentes de sus clientes. Es egresado con honores de la Universidad Nacional Autónoma de México y cuenta con un máster en Derecho Corporativo por la Universidad de Harvard.",
     achievements: [
       "Líder en más de 50 operaciones de Fusión y Adquisición, valoradas en más de $2 mil millones.",
       "Reconocido por 'Chambers and Partners' como uno de los mejores abogados corporativos de México por 5 años consecutivos.",
@@ -16,27 +16,27 @@ export const teamMembers = [
     ]
   },
   {
-    name: "Socia",
-    title: "Líder de Compliance",
-    slug: "socia-lider-compliance",
-    imageUrl: "https://picsum.photos/seed/lawyer2/400/400",
-    imageHint: "professional portrait lawyer woman",
-    bio: "Especialista en la implementación de programas de cumplimiento normativo, anticorrupción y prevención de lavado de dinero.",
-    fullBio: "Nuestra Socia es una de las mayores expertas en Compliance de la región. Su práctica se centra en el diseño e implementación de programas de cumplimiento normativo a la medida, ayudando a las empresas a navegar el complejo entorno regulatorio y a mitigar riesgos penales y reputacionales. Posee certificaciones internacionales en materia de anticorrupción y prevención de lavado de dinero, y es una ponente habitual en foros nacionales e internacionales sobre la materia. Su liderazgo ha sido fundamental para consolidar la práctica de Compliance de la firma como una de las más respetadas del país.",
+    name: "LUIS GONZÁLEZ",
+    title: "Socio",
+    slug: "luis-gonzalez",
+    imageUrl: "https://picsum.photos/seed/lawyer2/400/500",
+    imageHint: "professional portrait lawyer man",
+    bio: "Con más de 30 años de experiencia en áreas como Capital Privado (donde fue pionero), Emprendedor y Público, Inmobiliario, Fusiones y Adquisiciones, Corporativos e Inversiones Extranjera, actualmente se encuentra reconocido entre los mejores abogados de México por directorios como Chambers and Partners, The Legal 500, IFLR1000, LACCA Approved, Leaders League, Best Lawyers y Acquisition International.",
+    fullBio: "Luis es uno de los mayores expertos en Capital Privado de la región. Su práctica se centra en el diseño e implementación de estructuras de inversión, ayudando a las empresas a navegar el complejo entorno regulatorio y a mitigar riesgos. Posee certificaciones internacionales y es un ponente habitual en foros nacionales e internacionales sobre la materia. Su liderazgo ha sido fundamental para consolidar la práctica de la firma como una de las más respetadas del país.",
     achievements: [
-      "Implementación exitosa de programas de Compliance en más de 30 empresas multinacionales.",
-      "Certificación Internacional en Prevención de Lavado de Dinero (CAMS).",
-      "Reducción de contingencias regulatorias en un 40% para clientes clave del sector farmacéutico.",
-      "Asesora externa para la elaboración de políticas públicas en materia de anticorrupción."
+      "Implementación exitosa de fondos de capital privado para más de 30 empresas.",
+      "Certificación Internacional en Valuación de Empresas (CVA).",
+      "Reducción de contingencias regulatorias en un 40% para clientes clave del sector.",
+      "Asesor externo para la elaboración de políticas públicas en materia de inversión."
     ]
   },
   {
     name: "Abogado Asociado",
     title: "Especialista en Derecho Laboral",
     slug: "abogado-asociado-laboral",
-    imageUrl: "https://picsum.photos/seed/lawyer3/400/400",
+    imageUrl: "https://picsum.photos/seed/lawyer3/400/500",
     imageHint: "professional portrait associate",
-    bio: "Dedicado a la representación de empresas en controversias laborales, negociaciones colectivas y consultoría preventiva.",
+    bio: "Dedicado a la representación de empresas en controversias laborales, negociaciones colectivas y consultoría preventiva, con un enfoque en la defensa de los intereses de la empresa en juicios laborales individuales y colectivos.",
     fullBio: "El Abogado Asociado es un litigante consumado y un estratega en el ámbito del derecho laboral. Su práctica se enfoca en la defensa de los intereses de la empresa en juicios laborales individuales y colectivos, así como en la negociación de contratos colectivos de trabajo. Además, ofrece una valiosa consultoría preventiva que ayuda a las organizaciones a adoptar las mejores prácticas en la gestión de recursos humanos, minimizando riesgos y fomentando un ambiente de trabajo justo y productivo. Su profundo conocimiento de la legislación y la jurisprudencia laboral lo convierte en un aliado indispensable para nuestros clientes.",
     achievements: [
       "95% de éxito en la defensa de juicios laborales durante los últimos 3 años.",
