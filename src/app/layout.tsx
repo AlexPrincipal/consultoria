@@ -7,7 +7,7 @@ import { Cinzel, Lato } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'C+ Consultoría Legal',
+  title: 'Jurídico Empresarial y Comercial',
   description: 'Estrategias legales sólidas para la tranquilidad de su empresa.',
 };
 

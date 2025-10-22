@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Landmark } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from 'lucide-react';
+import Logo from '@/components/logo';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -52,9 +53,8 @@ export function Header() {
       )}
     >
       <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-3 text-2xl font-bold font-headline text-white tracking-wider">
-          <Landmark className="h-8 w-8 text-primary" />
-          <span>C+ Consultoría Legal</span>
+        <Link href="/" className="flex items-center gap-3 text-white">
+          <Logo className="h-12 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
@@ -93,12 +93,11 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw] p-0">
-               <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
-                  <SheetTitle asChild>
-                    <Link href="/" className="text-lg font-bold font-headline text-white" onClick={() => setOpen(false)}>
-                      C+ Consultoría Legal
+                <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
+                   <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
+                    <Link href="/" onClick={() => setOpen(false)}>
+                      <Logo className="h-10 w-auto" />
                     </Link>
-                  </SheetTitle>
                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
                       <X className="h-6 w-6 text-white" />
                       <span className="sr-only">Cerrar menú</span>
