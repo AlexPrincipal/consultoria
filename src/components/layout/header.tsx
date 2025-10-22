@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -52,84 +53,87 @@ export function Header() {
       )}
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6 py-4">
+        <div className="flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+                link.isDropdown && link.items ? (
+                <DropdownMenu key={link.label}>
+                    <DropdownMenuTrigger className="flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none">
+                    {link.label}
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className='bg-background border-border/50'>
+                    {link.items.map((item) => (
+                        <DropdownMenuItem key={item.label} asChild>
+                        <Link href={item.href}>{item.label}</Link>
+                        </DropdownMenuItem>
+                    ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                ) : (
+                <Link key={link.label} href={link.href!} className="text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors">
+                    {link.label}
+                </Link>
+                )
+            ))}
+            </nav>
+            <div className="hidden md:block">
+            <Button asChild size="sm">
+                <Link href="/contacto">Consulta</Link>
+            </Button>
+            </div>
+            <div className="md:hidden">
+            <Sheet open={open} onOpenChange={setOpen}>
+                <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                    <Menu className="h-6 w-6 text-white" />
+                    <span className="sr-only">Abrir menú</span>
+                </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw] p-0">
+                    <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
+                    <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
+                        <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10">
+                        <Logo />
+                        </Link>
+                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
+                        <X className="h-6 w-6 text-white" />
+                        <span className="sr-only">Cerrar menú</span>
+                        </Button>
+                    </SheetHeader>
+                <div className="flex flex-col h-full">
+                    <nav className="flex flex-col space-y-2 p-4">
+                    {navLinks.map((link) => (
+                        link.isDropdown && link.items ? (
+                        <div key={link.label} className="flex flex-col space-y-2">
+                            <span className="text-lg font-semibold text-white uppercase tracking-wider">{link.label}</span>
+                            {link.items.map(item => (
+                            <Link key={item.label} href={item.href} className="text-gray-400 hover:text-primary pl-4" onClick={() => setOpen(false)}>
+                                {item.label}
+                            </Link>
+                            ))}
+                        </div>
+                        ) : (
+                        <Link key={link.label} href={link.href!} className="text-lg text-gray-300 hover:text-primary uppercase tracking-wider" onClick={() => setOpen(false)}>
+                            {link.label}
+                        </Link>
+                        )
+                    ))}
+                    </nav>
+                    <div className="mt-auto p-4 border-t border-border">
+                    <Button className="w-full" asChild>
+                        <Link href="/contacto">Agenda Consulta</Link>
+                    </Button>
+                    </div>
+                </div>
+                </SheetContent>
+            </Sheet>
+            </div>
+        </div>
+
         <Link href="/" className="relative h-28 w-[30rem]">
           <Logo />
         </Link>
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            link.isDropdown && link.items ? (
-              <DropdownMenu key={link.label}>
-                <DropdownMenuTrigger className="flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none">
-                  {link.label}
-                  <ChevronDown className="ml-1 h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='bg-background border-border/50'>
-                  {link.items.map((item) => (
-                     <DropdownMenuItem key={item.label} asChild>
-                      <Link href={item.href}>{item.label}</Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link key={link.label} href={link.href!} className="text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors">
-                {link.label}
-              </Link>
-            )
-          ))}
-        </nav>
-        <div className="hidden md:block">
-          <Button asChild size="sm">
-            <Link href="/contacto">Consulta</Link>
-          </Button>
-        </div>
-        <div className="md:hidden">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6 text-white" />
-                <span className="sr-only">Abrir menú</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw] p-0">
-                <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
-                   <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
-                    <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10">
-                      <Logo />
-                    </Link>
-                   <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-                      <X className="h-6 w-6 text-white" />
-                      <span className="sr-only">Cerrar menú</span>
-                    </Button>
-                </SheetHeader>
-              <div className="flex flex-col h-full">
-                <nav className="flex flex-col space-y-2 p-4">
-                  {navLinks.map((link) => (
-                     link.isDropdown && link.items ? (
-                      <div key={link.label} className="flex flex-col space-y-2">
-                        <span className="text-lg font-semibold text-white uppercase tracking-wider">{link.label}</span>
-                        {link.items.map(item => (
-                           <Link key={item.label} href={item.href} className="text-gray-400 hover:text-primary pl-4" onClick={() => setOpen(false)}>
-                            {item.label}
-                          </Link>
-                        ))}
-                      </div>
-                     ) : (
-                      <Link key={link.label} href={link.href!} className="text-lg text-gray-300 hover:text-primary uppercase tracking-wider" onClick={() => setOpen(false)}>
-                        {link.label}
-                      </Link>
-                     )
-                  ))}
-                </nav>
-                <div className="mt-auto p-4 border-t border-border">
-                   <Button className="w-full" asChild>
-                     <Link href="/contacto">Agenda Consulta</Link>
-                   </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
       </div>
     </header>
   );
