@@ -65,7 +65,7 @@ export default function QuienesSomosPage() {
               Profesionales dedicados a la excelencia, con la experiencia y el conocimiento para proteger sus intereses.
             </p>
           </div>
-          <div className="space-y-24">
+          <div className="space-y-16">
             {teamMembers.map((member, index) => (
               <div key={member.slug}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
@@ -87,7 +87,7 @@ export default function QuienesSomosPage() {
                   </div>
                 </div>
                 {index < teamMembers.length - 1 && (
-                  <hr className="mt-24 border-white/10" />
+                  <hr className="mt-16 border-white/10" />
                 )}
               </div>
             ))}
