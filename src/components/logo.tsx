@@ -9,7 +9,7 @@ export default function Logo({ className }: { className?: string }) {
       alt="Jurídico Empresarial y Comercial Logo"
       width={960}
       height={288}
-      className={cn("w-48 h-auto object-contain", className)}
+      className={cn("w-full h-auto object-contain", className)}
       priority
     />
   );
