@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -53,7 +52,7 @@ export function Header() {
       )}
     >
       <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6 py-4">
-        <Link href="/" className="relative flex items-center w-64 h-full">
+        <Link href="/" className="relative flex items-center h-full w-80">
           <Logo />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
