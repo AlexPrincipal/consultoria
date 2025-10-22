@@ -53,6 +53,9 @@ export function Header() {
       )}
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6 py-4">
+        <Link href="/" className="relative h-28 w-[30rem]">
+          <Logo />
+        </Link>
         <div className="flex items-center space-x-8">
             <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
@@ -130,10 +133,6 @@ export function Header() {
             </Sheet>
             </div>
         </div>
-
-        <Link href="/" className="relative h-28 w-[30rem]">
-          <Logo />
-        </Link>
       </div>
     </header>
   );
