@@ -6,8 +6,8 @@ export default function Logo({ className }: { className?: string }) {
     <Image
       src="/logo.png"
       alt="C+ Consultoría Legal Logo"
-      width={480}
-      height={144}
+      width={960}
+      height={288}
       className={cn("object-contain w-auto h-auto", className)}
       priority
     />
