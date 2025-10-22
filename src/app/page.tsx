@@ -59,7 +59,7 @@ export default function Home() {
           )}
           <div className="relative z-10 p-4 space-y-8 container mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">
-              Jurídico Empresarial y Comercial
+              C+ Consultoría Legal
             </h1>
             <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
               Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza.
