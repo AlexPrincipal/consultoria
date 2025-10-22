@@ -52,7 +52,7 @@ export function Header() {
       )}
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6 py-4">
-        <Link href="/" className="relative h-28 w-60">
+        <Link href="/" className="relative h-28 w-32">
           <Logo />
         </Link>
         <div className="flex items-center space-x-8">
