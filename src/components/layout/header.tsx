@@ -53,7 +53,7 @@ export function Header() {
       )}
     >
       <div className="container mx-auto flex h-24 items-center justify-between px-4 md:px-6 py-4">
-        <Link href="/" className="flex items-center gap-3 text-white w-48">
+        <Link href="/" className="relative flex items-center w-48 h-full">
           <Logo />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
@@ -95,7 +95,7 @@ export function Header() {
             <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw] p-0">
                 <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
                    <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
-                    <Link href="/" onClick={() => setOpen(false)}>
+                    <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10">
                       <Logo />
                     </Link>
                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
