@@ -1,14 +1,9 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-
 export default function Logo() {
   return (
-    <Image
+    <img
       src="/logo.png"
       alt="Jurídico Empresarial y Comercial Logo"
-      fill
-      className="object-contain"
-      priority
+      className="object-contain w-full h-full"
     />
   );
 }
