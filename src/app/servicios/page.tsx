@@ -1,10 +1,12 @@
 
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Briefcase, ShieldCheck, Scale, FileText, Building, GitBranch, Anchor } from 'lucide-react';
 import Logo from '@/components/logo';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const services = [
   {
@@ -51,7 +53,59 @@ const services = [
   },
 ];
 
+function CircularMenu() {
+    return (
+        <div className="relative w-[700px] h-[700px]">
+        {/* Center Logo */}
+        <div className="absolute inset-0 flex justify-center items-center z-10">
+          <div className="w-56 h-56 bg-card flex justify-center items-center rounded-lg shadow-2xl p-4">
+            <Logo />
+          </div>
+        </div>
+        
+        {/* Service Bubbles */}
+        {services.map((service, index) => {
+            const angle = (index / services.length) * (2 * Math.PI); // Angle in radians
+            const radius = 280; // Circle radius
+            const itemSize = 192; // Width/height of the bubble
+            const containerSize = 700;
+            
+            // Calculate position
+            const x = (containerSize / 2) + radius * Math.cos(angle - Math.PI / 2) - (itemSize / 2);
+            const y = (containerSize / 2) + radius * Math.sin(angle - Math.PI / 2) - (itemSize / 2);
+
+            return (
+                <Link
+                  href={service.href}
+                  key={service.title}
+                  className={cn(
+                      "absolute flex flex-col items-center justify-center w-48 h-48 rounded-full transition-all duration-300 transform hover:scale-110 hover:z-20",
+                      "text-center p-4 backdrop-blur-sm border border-white/10",
+                      service.color
+                  )}
+                  style={{
+                      top: `${y}px`,
+                      left: `${x}px`,
+                  }}
+                  >
+                  <div className="w-10 h-10 text-white [&>svg]:w-full [&>svg]:h-full">
+                      {service.icon}
+                  </div>
+                  <h3 className="mt-2 font-headline text-base text-white">{service.title}</h3>
+              </Link>
+            )
+        })}
+      </div>
+    );
+}
+
 export default function ServicesPage() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="bg-background min-h-screen">
       <section className="py-20 md:py-28">
@@ -65,47 +119,20 @@ export default function ServicesPage() {
 
           {/* Desktop Circular Menu */}
           <div className="hidden md:flex justify-center items-center">
-            <div className="relative w-[700px] h-[700px]">
-              {/* Center Logo */}
-              <div className="absolute inset-0 flex justify-center items-center z-10">
-                <div className="w-56 h-56 bg-card flex justify-center items-center rounded-lg shadow-2xl p-4">
-                  <Logo />
-                </div>
-              </div>
-              
-              {/* Service Bubbles */}
-              {services.map((service, index) => {
-                  const angle = (index / services.length) * (2 * Math.PI); // Angle in radians
-                  const radius = 280; // Circle radius
-                  const itemSize = 192; // Width/height of the bubble
-                  const containerSize = 700;
-                  
-                  // Calculate position
-                  const x = (containerSize / 2) + radius * Math.cos(angle - Math.PI / 2) - (itemSize / 2);
-                  const y = (containerSize / 2) + radius * Math.sin(angle - Math.PI / 2) - (itemSize / 2);
-
-                  return (
-                     <Link
-                        href={service.href}
-                        key={service.title}
-                        className={cn(
-                            "absolute flex flex-col items-center justify-center w-48 h-48 rounded-full transition-all duration-300 transform hover:scale-110 hover:z-20",
-                            "text-center p-4 backdrop-blur-sm border border-white/10",
-                            service.color
-                        )}
-                        style={{
-                            top: `${y}px`,
-                            left: `${x}px`,
-                        }}
-                        >
-                        <div className="w-10 h-10 text-white [&>svg]:w-full [&>svg]:h-full">
-                            {service.icon}
-                        </div>
-                        <h3 className="mt-2 font-headline text-base text-white">{service.title}</h3>
-                    </Link>
-                  )
-              })}
-            </div>
+            {isClient ? <CircularMenu /> : (
+                 <div className="relative w-[700px] h-[700px] flex items-center justify-center">
+                    <Skeleton className="w-56 h-56 rounded-lg" />
+                    {[...Array(7)].map((_, i) => {
+                         const angle = (i / 7) * (2 * Math.PI);
+                         const radius = 280;
+                         const itemSize = 192;
+                         const containerSize = 700;
+                         const x = (containerSize / 2) + radius * Math.cos(angle - Math.PI / 2) - (itemSize / 2);
+                         const y = (containerSize / 2) + radius * Math.sin(angle - Math.PI / 2) - (itemSize / 2);
+                        return <Skeleton key={i} className="w-48 h-48 rounded-full absolute" style={{ top: `${y}px`, left: `${x}px` }}/>
+                    })}
+                 </div>
+            )}
           </div>
 
           {/* Mobile Grid */}
