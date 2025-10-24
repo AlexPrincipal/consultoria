@@ -89,22 +89,22 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <ServiceCard
                 icon={<Briefcase className="h-10 w-10 text-primary" />}
-                title="Consultoría Para La Creación De Empresas"
-                description="Le guiamos paso a paso en la constitución de su empresa, asegurando una estructura legal sólida desde el inicio."
-                href="/servicios/consultoria-creacion-empresas"
-              />
-              <ServiceCard
-                icon={<ShieldCheck className="h-10 w-10 text-primary" />}
-                title="Compliance"
-                description="Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa."
-                 href="/servicios/compliance"
-                 className="animation-delay-200"
+                title="Asesoría y Consultoría Legal"
+                description="Orientación estratégica para la resolución de problemas complejos y el diseño de proyectos empresariales a largo plazo."
+                href="/servicios/asesoria-consultoria-legal"
               />
               <ServiceCard
                 icon={<Scale className="h-10 w-10 text-primary" />}
-                title="Representación Legal De Empresas"
-                description="Defensa experta en disputas laborales y controversias generales ante diversas instancias."
-                 href="/servicios/representacion-legal"
+                title="Representación y Defensa"
+                description="Defensa experta en negociaciones y litigios mercantiles, laborales y administrativos ante diversas instancias."
+                 href="/servicios/representacion-defensa"
+                 className="animation-delay-200"
+              />
+              <ServiceCard
+                icon={<ShieldCheck className="h-10 w-10 text-primary" />}
+                title="Cumplimiento Normativo (Compliance)"
+                description="Implementamos programas de cumplimiento para mitigar riesgos, asegurar el marco legal y proteger la reputación de su empresa."
+                 href="/servicios/compliance"
                  className="animation-delay-400"
               />
             </div>
