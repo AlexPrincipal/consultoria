@@ -19,7 +19,7 @@ export const teamMembers = [
     name: "LUIS GONZÁLEZ",
     title: "Socio",
     slug: "luis-gonzalez",
-    imageUrl: "https://images.unsplash.com/photo-1522556189639-b150ed9c4331?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwb3J0cmFpdCUyMG1hbCUyMG5ldXRyYWwlMjBiYWNrZ3JvdW5kfGVufDB8fHx8MTc2MTM4MDI5NXww&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "https://picsum.photos/seed/luisgonzalez/800/1000",
     imageHint: "professional portrait lawyer man",
     bio: "Con más de 30 años de experiencia en áreas como Capital Privado (donde fue pionero), Emprendedor y Público, Inmobiliario, Fusiones y Adquisiciones, Corporativos e Inversiones Extranjera, actualmente se encuentra reconocido entre los mejores abogados de México por directorios como Chambers and Partners, The Legal 500, IFLR1000, LACCA Approved, Leaders League, Best Lawyers y Acquisition International.",
     fullBio: "Luis es uno de los mayores expertos en Capital Privado de la región. Su práctica se centra en el diseño e implementación de estructuras de inversión, ayudando a las empresas a navegar el complejo entorno regulatorio y a mitigar riesgos. Posee certificaciones internacionales y es un ponente habitual en foros nacionales e internacionales sobre la materia. Su liderazgo ha sido fundamental para consolidar la práctica de la firma como una de las más respetadas del país.",
