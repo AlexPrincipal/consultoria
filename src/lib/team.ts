@@ -1,18 +1,18 @@
 
 export const teamMembers = [
   {
-    name: "FERNANDO PÉREZ CORREA",
-    title: "Socio Fundador",
-    slug: "fernando-perez-correa",
+    name: "René Rodrigo Casillas Gallardo",
+    title: "Socio, Especialista en Compliance y Derecho Corporativo",
+    slug: "rene-casillas-gallardo",
     imageUrl: "https://picsum.photos/seed/lawyer1/400/500",
     imageHint: "professional portrait lawyer",
-    bio: "Cuenta con más de 30 años de experiencia en Solución de Controversias, Concursos Mercantiles, Litigio, Arbitraje y Mediación. Reconocido como uno de los mejores abogados de México en sus áreas de expertise por los directorios legales más importantes a nivel internacional como Chambers and Partners, The Legal 500, Leaders League y Best Lawyers.",
-    fullBio: "Con una trayectoria de más de dos décadas, Fernando es un referente en el ámbito del derecho corporativo en México. Ha liderado algunas de las transacciones más complejas del mercado, especializándose en fusiones y adquisiciones, gobierno corporativo y litigio estratégico. Su enfoque combina un profundo rigor técnico con una visión de negocio que le permite ofrecer soluciones innovadoras y efectivas a los desafíos más exigentes de sus clientes. Es egresado con honores de la Universidad Nacional Autónoma de México y cuenta con un máster en Derecho Corporativo por la Universidad de Harvard.",
+    bio: "Con una Maestría en Derecho Corporativo y más de 10 años de experiencia en los sectores público y privado, René es experto en el diseño e implementación de sistemas de control y cumplimiento normativo, ayudando a las empresas a mitigar riesgos financieros, reputacionales y legales con una visión estratégica.",
+    fullBio: "René es un abogado con una visión integral única, forjada a lo largo de una década de experiencia tanto en la administración pública como en la iniciativa privada. Es Licenciado en Derecho y Maestro en Derecho Corporativo, y ha desarrollado una profunda especialización en el control y cumplimiento de procedimientos administrativos, políticas corporativas y regulaciones. Su habilidad para navegar entornos complejos le permite diseñar e implementar estrategias que garantizan los más altos estándares éticos, previniendo eficazmente los riesgos operativos y legales para nuestros clientes.",
     achievements: [
-      "Líder en más de 50 operaciones de Fusión y Adquisición, valoradas en más de $2 mil millones.",
-      "Reconocido por 'Chambers and Partners' como uno de los mejores abogados corporativos de México por 5 años consecutivos.",
-      "Consejero de administración en diversas empresas de los sectores tecnológico y financiero.",
-      "Autor de múltiples publicaciones sobre gobierno corporativo y cumplimiento normativo."
+      "Lideró la vigilancia y cumplimiento de normas internas en Citibanamex para mitigar riesgos corporativos, reputacionales y legales.",
+      "Gestionó investigaciones de alto impacto derivadas del canal de ética corporativa.",
+      "Brindó asesoría estratégica a diversas áreas sobre el cumplimiento de normativas internas y legislación vigente.",
+      "Dirigió proyectos de implementación tecnológica y firma electrónica para optimizar procesos administrativos y de seguridad de la información."
     ]
   },
   {
