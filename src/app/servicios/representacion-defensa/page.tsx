@@ -1,22 +1,37 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Scale, CheckCircle } from 'lucide-react';
+import { Scale } from 'lucide-react';
 import Link from 'next/link';
 import ContactForm from '@/components/contact-form';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+
 
 export default function RepresentacionDefensaPage() {
+    const serviceImage = PlaceHolderImages.find((p) => p.id === 'servicio-representacion');
+
   return (
     <div className="bg-background text-white">
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Scale className="h-16 w-16 text-primary mb-4" />
+            <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl font-bold font-headline">Representación y Defensa</h1>
               <p className="mt-4 text-lg text-muted-foreground">
                 Cuando sus intereses están en juego, necesita un defensor estratégico. Actuamos en nombre de su empresa con una defensa sólida y una representación experta en negociaciones, ante autoridades y en procedimientos judiciales en materia empresarial.
               </p>
+                {serviceImage && (
+                <div className="relative aspect-video rounded-lg overflow-hidden mt-6">
+                    <Image
+                    src={serviceImage.imageUrl}
+                    alt={serviceImage.description}
+                    fill
+                    className="object-cover"
+                    data-ai-hint={serviceImage.imageHint}
+                    />
+                </div>
+                )}
             </div>
             <div className="flex justify-center">
                <Card className="w-full max-w-md bg-card border-border/50 shadow-xl">

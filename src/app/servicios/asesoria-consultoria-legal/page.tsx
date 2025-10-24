@@ -1,22 +1,36 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import ContactForm from '@/components/contact-form';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function AsesoriaPage() {
+    const serviceImage = PlaceHolderImages.find((p) => p.id === 'servicio-asesoria');
+
   return (
     <div className="bg-background text-white">
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Briefcase className="h-16 w-16 text-primary mb-4" />
+            <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl font-bold font-headline">Asesoría y Consultoría Legal</h1>
               <p className="mt-4 text-lg text-muted-foreground">
                 Ofrecemos orientación sobre derechos, responsabilidades y regulaciones aplicables, asimismo nos centramos en la estrategia y la resolución de problemas complejos o el diseño de proyectos a largo plazo en materia empresarial o de negocios.
               </p>
+               {serviceImage && (
+                <div className="relative aspect-video rounded-lg overflow-hidden mt-6">
+                    <Image
+                    src={serviceImage.imageUrl}
+                    alt={serviceImage.description}
+                    fill
+                    className="object-cover"
+                    data-ai-hint={serviceImage.imageHint}
+                    />
+                </div>
+                )}
             </div>
             <div className="flex justify-center">
                <Card className="w-full max-w-md bg-card border-border/50 shadow-xl">

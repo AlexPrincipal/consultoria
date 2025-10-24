@@ -1,22 +1,35 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Building, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import ContactForm from '@/components/contact-form';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function AreaEmpresarialPage() {
+    const serviceImage = PlaceHolderImages.find((p) => p.id === 'servicio-area-empresarial');
+    
   return (
     <div className="bg-background text-white">
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Building className="h-16 w-16 text-primary mb-4" />
+            <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl font-bold font-headline">Área Empresarial Específica</h1>
               <p className="mt-4 text-lg text-muted-foreground">
                 Ofrecemos una asesoría 360° en las áreas críticas del derecho que impactan directamente en la operación y estrategia de su negocio. Nuestro enfoque multidisciplinario garantiza una cobertura legal completa y soluciones integrales.
               </p>
+                {serviceImage && (
+                <div className="relative aspect-video rounded-lg overflow-hidden mt-6">
+                    <Image
+                    src={serviceImage.imageUrl}
+                    alt={serviceImage.description}
+                    fill
+                    className="object-cover"
+                    data-ai-hint={serviceImage.imageHint}
+                    />
+                </div>
+                )}
             </div>
             <div className="flex justify-center">
                <Card className="w-full max-w-md bg-card border-border/50 shadow-xl">

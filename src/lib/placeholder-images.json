@@ -35,6 +35,48 @@
       "description": "Client company logo for testimonial section",
       "imageUrl": "https://images.unsplash.com/photo-1618588429012-0559f1cbc5aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb3Jwb3JhdGUlMjBsb2dvfGVufDB8fHx8MTc2MDkzODExMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "corporate logo"
+    },
+    {
+      "id": "servicio-asesoria",
+      "description": "Imagen para servicio de Asesoría y Consultoría Legal",
+      "imageUrl": "https://images.unsplash.com/photo-1716703432455-3045789de738?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHN0cmF0ZWd5JTIwbWVldGluZ3xlbnwwfHx8fDE3NjEyNzY0NjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "business strategy meeting"
+    },
+    {
+      "id": "servicio-representacion",
+      "description": "Imagen para servicio de Representación y Defensa",
+      "imageUrl": "https://images.unsplash.com/photo-1660784670019-33a36fd82515?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjb3VydHJvb20lMjBsZWdhbCUyMGFyZ3VtZW50fGVufDB8fHx8MTc2MTI3NjQ2NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "courtroom legal argument"
+    },
+    {
+      "id": "servicio-masc",
+      "description": "Imagen para servicio de Mecanismos Alternativos de Solución de Conflictos",
+      "imageUrl": "https://images.unsplash.com/photo-1638262052638-c413289d7cf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bmVnb3RpYXRpb24lMjBoYW5kc2hha2UlMjBkZWFsfGVufDB8fHx8MTc2MTI3NjQ2NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "negotiation handshake deal"
+    },
+    {
+      "id": "servicio-gestion",
+      "description": "Imagen para servicio de Gestión y Trámites",
+      "imageUrl": "https://images.unsplash.com/photo-1645536107287-59088714a788?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZG9jdW1lbnRzJTIwY29udHJhY3QlMjBzaWduaW5nfGVufDB8fHx8MTc2MTI3NjQ2NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "documents contract signing"
+    },
+    {
+      "id": "servicio-area-empresarial",
+      "description": "Imagen para servicio de Área Empresarial Específica",
+      "imageUrl": "https://images.unsplash.com/photo-1760135480471-3dd87f8e9e59?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb3Jwb3JhdGUlMjBidWlsZGluZyUyMGNpdHlzY2FwZXxlbnwwfHx8fDE3NjEyNzY0NjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "corporate building cityscape"
+    },
+    {
+      "id": "servicio-compliance",
+      "description": "Imagen para servicio de Cumplimiento Normativo (Compliance)",
+      "imageUrl": "https://images.unsplash.com/photo-1632152053560-2ff69f7981f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGVja2xpc3QlMjByZWd1bGF0aW9ucyUyMGNvbXBsaWFuY2V8ZW58MHx8fHwxNzYxMjc2NDY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "checklist regulations compliance"
+    },
+    {
+      "id": "servicio-comercio",
+      "description": "Imagen para servicio de Comercio Internacional y Aduanas",
+      "imageUrl": "https://images.unsplash.com/photo-1712578584947-ccc35250b6e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYXJnbyUyMHNoaXAlMjBwb3J0fGVufDB8fHx8MTc2MTIxMDU5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cargo ship port"
     }
   ]
 }
