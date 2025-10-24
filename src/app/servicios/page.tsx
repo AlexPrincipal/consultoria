@@ -1,86 +1,131 @@
 
+'use client';
+
 import Link from 'next/link';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Briefcase, ShieldCheck, Scale, FileText, Building, GitBranch, Anchor } from 'lucide-react';
+import Logo from '@/components/logo';
 import { cn } from '@/lib/utils';
 
 const services = [
   {
-    icon: <Briefcase className="h-10 w-10 text-primary" />,
+    icon: <Briefcase />,
     title: "Asesoría y Consultoría Legal",
-    description: "Orientación estratégica sobre derechos, responsabilidades y regulaciones para resolver problemas complejos y diseñar proyectos empresariales a largo plazo.",
-    href: "/servicios/asesoria-consultoria-legal"
+    href: "/servicios/asesoria-consultoria-legal",
+    position: "top-0 left-1/2 -translate-x-1/2",
+    color: "bg-blue-200/20 hover:bg-blue-300/30 text-blue-100",
   },
   {
-    icon: <Scale className="h-10 w-10 text-primary" />,
+    icon: <Scale />,
     title: "Representación y Defensa",
-    description: "Representación experta en negociaciones, ante organismos públicos y en litigios mercantiles, laborales y administrativos para proteger sus intereses.",
-    href: "/servicios/representacion-defensa"
+    href: "/servicios/representacion-defensa",
+    position: "top-1/4 -translate-y-1/4 right-0 -translate-x-1/4",
+    color: "bg-green-200/20 hover:bg-green-300/30 text-green-100",
   },
   {
-    icon: <GitBranch className="h-10 w-10 text-primary" />,
-    title: "Mecanismos Alternativos (MASC)",
-    description: "Soluciones de conflictos a través de arbitraje y mediación, buscando una resolución más rápida, económica y confidencial fuera de los tribunales.",
-    href: "/servicios/masc"
+    icon: <GitBranch />,
+    title: "MASC",
+    href: "/servicios/masc",
+    position: "bottom-1/4 translate-y-1/4 right-0 -translate-x-1/4",
+    color: "bg-purple-200/20 hover:bg-purple-300/30 text-purple-100",
   },
   {
-    icon: <FileText className="h-10 w-10 text-primary" />,
+    icon: <FileText />,
     title: "Gestión y Trámites",
-    description: "Elaboración de contratos, constitución de sociedades, y gestión de trámites para asegurar la correcta legalización y operación de su empresa.",
-    href: "/servicios/gestion-tramites"
+    href: "/servicios/gestion-tramites",
+     position: "bottom-0 left-1/2 -translate-x-1/2",
+    color: "bg-yellow-200/20 hover:bg-yellow-300/30 text-yellow-100",
   },
   {
-    icon: <Building className="h-10 w-10 text-primary" />,
+    icon: <Building />,
     title: "Área Empresarial Específica",
-    description: "Asesoría especializada en derecho corporativo, mercantil, laboral y fiscal para cubrir todas las necesidades de su negocio.",
-    href: "/servicios/area-empresarial-especifica"
+    href: "/servicios/area-empresarial-especifica",
+    position: "bottom-1/4 translate-y-1/4 left-0 translate-x-1/4",
+    color: "bg-red-200/20 hover:bg-red-300/30 text-red-100",
   },
   {
-    icon: <ShieldCheck className="h-10 w-10 text-primary" />,
-    title: "Cumplimiento Normativo (Compliance)",
-    description: "Implementación de sistemas de gestión proactivos para prevenir, detectar y corregir riesgos de incumplimiento legal, regulatorio y ético.",
-    href: "/servicios/compliance"
+    icon: <ShieldCheck />,
+    title: "Compliance",
+    href: "/servicios/compliance",
+    position: "top-1/4 -translate-y-1/4 left-0 translate-x-1/4",
+    color: "bg-indigo-200/20 hover:bg-indigo-300/30 text-indigo-100",
   },
   {
-    icon: <Anchor className="h-10 w-10 text-primary" />,
-    title: "Comercio Internacional y Aduanas",
-    description: "Asesoría especializada en derecho aduanero para asegurar que sus operaciones de importación y exportación sean legales, eficientes y estratégicas.",
-    href: "/servicios/comercio-internacional"
-  }
+    icon: <Anchor />,
+    title: "Comercio Internacional",
+    href: "/servicios/comercio-internacional",
+    position: "top-1/2 -translate-y-1/2 right-[10%] translate-x-[10%]",
+     color: "bg-pink-200/20 hover:bg-pink-300/30 text-pink-100",
+  },
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="bg-background">
+    <div className="bg-background min-h-screen">
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">Nuestros Servicios</h1>
+          <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
+            <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">Nuestras Prácticas</h1>
             <p className="mt-4 text-lg text-muted-foreground">
               Brindamos soluciones legales integrales, diseñadas para proteger y fortalecer su empresa en cada etapa de su desarrollo. Explore nuestras áreas de especialización.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          {/* Desktop Circular Menu */}
+          <div className="hidden md:flex justify-center items-center">
+            <div className="relative w-[700px] h-[700px]">
+              {/* Center Logo */}
+              <div className="absolute inset-0 flex justify-center items-center z-10">
+                <div className="w-56 h-56 bg-card flex justify-center items-center rounded-lg shadow-2xl p-4">
+                  <Logo />
+                </div>
+              </div>
+              
+              {/* Service Bubbles */}
+              {services.map((service, index) => {
+                  const angle = (index / services.length) * 360;
+                  const radius = 280; // Radio del círculo
+                  const x = Math.cos((angle - 90) * (Math.PI / 180)) * radius + 350 - 90; // 350 es la mitad del contenedor, 90 la mitad del item
+                  const y = Math.sin((angle - 90) * (Math.PI / 180)) * radius + 350 - 90; // 350 es la mitad del contenedor, 90 la mitad del item
+
+                  return (
+                     <Link
+                        href={service.href}
+                        key={service.title}
+                        className={cn(
+                            "absolute flex flex-col items-center justify-center w-48 h-48 rounded-full transition-all duration-300 transform hover:scale-110 hover:z-20",
+                            "text-center p-4 backdrop-blur-sm border border-white/10",
+                            service.color
+                        )}
+                        style={{ top: `${y}px`, left: `${x}px` }}
+                        >
+                        <div className="w-10 h-10 text-white [&>svg]:w-full [&>svg]:h-full">
+                            {service.icon}
+                        </div>
+                        <h3 className="mt-2 font-headline text-base text-white">{service.title}</h3>
+                    </Link>
+                  )
+              })}
+            </div>
+          </div>
+
+          {/* Mobile Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:hidden gap-6">
             {services.map((service) => (
-              <Card key={service.title} className={cn(
-                "bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10"
-              )}>
-                <CardHeader>
-                  {service.icon}
-                  <CardTitle className="pt-6 font-headline text-xl text-white">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-muted-foreground leading-relaxed">{service.description}</p>
-                </CardContent>
-                <CardFooter>
-                   <Button variant="link" asChild className="p-0 text-primary">
-                    <Link href={service.href}>Conocer Más &rarr;</Link>
-                  </Button>
-                </CardFooter>
-              </Card>
+              <Link href={service.href} key={service.title}>
+                 <div className={cn(
+                    "flex flex-col items-center justify-center p-6 rounded-lg h-full text-center transition-all duration-300 transform hover:scale-105",
+                    "backdrop-blur-sm border border-white/10",
+                    service.color
+                 )}>
+                    <div className="w-10 h-10 text-white [&>svg]:w-full [&>svg]:h-full">
+                        {service.icon}
+                    </div>
+                   <h3 className="mt-4 font-headline text-lg font-semibold text-white">{service.title}</h3>
+                 </div>
+              </Link>
             ))}
           </div>
+
         </div>
       </section>
     </div>
