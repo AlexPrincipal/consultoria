@@ -7,6 +7,7 @@ import { Briefcase, ShieldCheck, Scale, FileText, Building, GitBranch, Anchor } 
 import Logo from '@/components/logo';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
 
 const services = [
   {
@@ -71,8 +72,8 @@ function CircularMenu() {
             const containerSize = 700;
             
             // Calculate position
-            const x = (containerSize / 2) + radius * Math.cos(angle - Math.PI / 2) - (itemSize / 2);
-            const y = (containerSize / 2) + radius * Math.sin(angle - Math.PI / 2) - (itemSize / 2);
+            const y = (containerSize / 2) + radius * Math.sin(angle - Math.PI / 2);
+            const x = (containerSize / 2) + radius * Math.cos(angle - Math.PI / 2);
 
             return (
                 <Link
@@ -84,8 +85,8 @@ function CircularMenu() {
                       service.color
                   )}
                   style={{
-                      top: `${y}px`,
-                      left: `${x}px`,
+                      top: `calc(${y}px - ${itemSize/2}px)`,
+                      left: `calc(${x}px - ${itemSize/2}px)`,
                   }}
                   >
                   <div className="w-10 h-10 text-white [&>svg]:w-full [&>svg]:h-full">
@@ -153,6 +154,20 @@ export default function ServicesPage() {
             ))}
           </div>
 
+        </div>
+      </section>
+
+      <section className="py-20 md:py-28 bg-black">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <h2 className="text-3xl font-bold font-headline text-white">¿Listo para Fortalecer su Empresa?</h2>
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            Nuestro equipo está preparado para ofrecerle la asesoría estratégica que su negocio necesita. Contáctenos hoy para una evaluación de su caso.
+          </p>
+          <div className="mt-8">
+            <Button size="lg" asChild>
+              <Link href="/contacto">Agendar una Consulta</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>
