@@ -1,73 +1,85 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, Scale } from 'lucide-react';
 import Link from 'next/link';
-import ContactForm from '@/components/contact-form';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Briefcase, ShieldCheck, Scale, FileText, Building, GitBranch, Anchor } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-export default function RepresentacionLegalPage() {
+const services = [
+  {
+    icon: <Briefcase className="h-10 w-10 text-primary" />,
+    title: "Asesoría y Consultoría Legal",
+    description: "Orientación estratégica sobre derechos, responsabilidades y regulaciones para resolver problemas complejos y diseñar proyectos empresariales a largo plazo.",
+    href: "/servicios/asesoria-consultoria-legal"
+  },
+  {
+    icon: <Scale className="h-10 w-10 text-primary" />,
+    title: "Representación y Defensa",
+    description: "Representación experta en negociaciones, ante organismos públicos y en litigios mercantiles, laborales y administrativos para proteger sus intereses.",
+    href: "/servicios/representacion-defensa"
+  },
+  {
+    icon: <GitBranch className="h-10 w-10 text-primary" />,
+    title: "Mecanismos Alternativos (MASC)",
+    description: "Soluciones de conflictos a través de arbitraje y mediación, buscando una resolución más rápida, económica y confidencial fuera de los tribunales.",
+    href: "/servicios/masc"
+  },
+  {
+    icon: <FileText className="h-10 w-10 text-primary" />,
+    title: "Gestión y Trámites",
+    description: "Elaboración de contratos, constitución de sociedades, y gestión de trámites para asegurar la correcta legalización y operación de su empresa.",
+    href: "/servicios/gestion-tramites"
+  },
+  {
+    icon: <Building className="h-10 w-10 text-primary" />,
+    title: "Área Empresarial Específica",
+    description: "Asesoría especializada en derecho corporativo, mercantil, laboral y fiscal para cubrir todas las necesidades de su negocio.",
+    href: "/servicios/area-empresarial-especifica"
+  },
+  {
+    icon: <ShieldCheck className="h-10 w-10 text-primary" />,
+    title: "Cumplimiento Normativo (Compliance)",
+    description: "Implementación de sistemas de gestión proactivos para prevenir, detectar y corregir riesgos de incumplimiento legal, regulatorio y ético.",
+    href: "/servicios/compliance"
+  },
+  {
+    icon: <Anchor className="h-10 w-10 text-primary" />,
+    title: "Comercio Internacional y Aduanas",
+    description: "Asesoría especializada en derecho aduanero para asegurar que sus operaciones de importación y exportación sean legales, eficientes y estratégicas.",
+    href: "/servicios/comercio-internacional"
+  }
+];
+
+export default function ServicesPage() {
   return (
-    <div className="bg-background text-white">
-      <section className="py-20 md:py-28 bg-black">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Scale className="h-16 w-16 text-primary mb-4" />
-              <h1 className="text-4xl md:text-5xl font-bold font-headline">Representación Legal de Empresas</h1>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Cuando surgen disputas, necesita una defensa estratégica y firme. Nuestro equipo de litigantes expertos le representa ante tribunales y autoridades para proteger sus intereses y resolver conflictos de manera eficaz.
-              </p>
-            </div>
-            <div className="flex justify-center">
-               <Card className="w-full max-w-md bg-card border-border/50 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-headline text-center text-white">Evalúe su caso</CardTitle>
-                </CardHeader>
-                <CardContent>
-                 <ContactForm serviceContext="Representación Legal" />
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
+    <div className="bg-background">
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">¿Qué Ofrecemos?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Controversias Laborales</h3>
-              <p className="text-muted-foreground">Defensa y representación en juicios laborales, tanto individuales como colectivos, y ante sindicatos.</p>
-            </Card>
-            <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Representación Legal General</h3>
-              <p className="text-muted-foreground">Manejo de disputas contractuales, responsabilidad civil y conflictos entre accionistas.</p>
-            </Card>
-            <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Litigio Regional y Nacional</h3>
-              <p className="text-muted-foreground">Capacidad para gestionar controversias en su región de operación o en cualquier parte del país.</p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 md:py-28 bg-black">
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-           <h2 className="text-3xl font-bold font-headline mb-4 text-white">Casos de Éxito</h2>
-            <p className="text-muted-foreground mb-8">
-              Nuestra estrategia combina un profundo análisis jurídico con una ejecución procesal impecable.
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">Nuestros Servicios</h1>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Brindamos soluciones legales integrales, diseñadas para proteger y fortalecer su empresa en cada etapa de su desarrollo. Explore nuestras áreas de especialización.
             </p>
-          <div className="text-left mx-auto max-w-2xl bg-card/80 border border-white/10 p-8 rounded-lg">
-                <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
-                  "Enfrentamos un litigio laboral complejo que ponía en riesgo la operación. Su representación fue clave para obtener un resultado favorable y justo."
-                </blockquote>
-                <p className="text-right mt-4 text-primary font-semibold">- Gerente de RH, Empresa Manufacturera</p>
-            </div>
-            <div className="mt-8">
-                <Button asChild variant="outline">
-                    <Link href="/testimoniales">Conozca más resultados</Link>
-                </Button>
-            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service) => (
+              <Card key={service.title} className={cn(
+                "bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10"
+              )}>
+                <CardHeader>
+                  {service.icon}
+                  <CardTitle className="pt-6 font-headline text-xl text-white">{service.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <p className="text-muted-foreground leading-relaxed">{service.description}</p>
+                </CardContent>
+                <CardFooter>
+                   <Button variant="link" asChild className="p-0 text-primary">
+                    <Link href={service.href}>Conocer Más &rarr;</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
     </div>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -18,15 +19,19 @@ import Logo from '@/components/logo';
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { 
+  {
     label: 'Servicios',
     isDropdown: true,
     href: '/servicios',
     items: [
       { href: '/servicios', label: 'Todos los Servicios' },
-      { href: '/servicios/consultoria-creacion-empresas', label: 'Creación de Empresas' },
+      { href: '/servicios/asesoria-consultoria-legal', label: 'Asesoría y Consultoría' },
+      { href: '/servicios/representacion-defensa', label: 'Representación y Defensa' },
+      { href: '/servicios/masc', label: 'MASC' },
+      { href: '/servicios/gestion-tramites', label: 'Gestión y Trámites' },
+      { href: '/servicios/area-empresarial-especifica', label: 'Área Empresarial Específica' },
       { href: '/servicios/compliance', label: 'Compliance' },
-      { href: '/servicios/representacion-legal', label: 'Representación Legal' },
+      { href: '/servicios/comercio-internacional', label: 'Comercio Internacional' },
     ]
   },
   { href: '/quienes-somos', label: 'Quiénes Somos' },
@@ -58,7 +63,7 @@ export function Header() {
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6">
         <Link href="/" className="relative w-32 h-28">
-          <Logo className="w-full h-auto object-contain" />
+          <Logo />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
         {navLinks.map((link) => (
@@ -73,7 +78,7 @@ export function Header() {
                 <DropdownMenuContent className='bg-background border-border/50'>
                 {link.items.map((item) => (
                     <DropdownMenuItem key={item.label} asChild>
-                    <Link href={item.href} className={cn(pathname === item.href && "text-primary")}>{item.label}</Link>
+                    <Link href={item.href} className={cn("cursor-pointer", pathname === item.href ? "text-primary" : "text-white")}>{item.label}</Link>
                     </DropdownMenuItem>
                 ))}
                 </DropdownMenuContent>

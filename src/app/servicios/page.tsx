@@ -2,27 +2,51 @@
 import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Scale, ShieldCheck, Briefcase } from 'lucide-react';
+import { Briefcase, ShieldCheck, Scale, FileText, Building, GitBranch, Anchor } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const services = [
   {
     icon: <Briefcase className="h-10 w-10 text-primary" />,
-    title: "Consultoría Para La Creación De Empresas",
-    description: "Le guiamos paso a paso en la constitución de su empresa, asegurando una estructura legal sólida desde el inicio.",
-    href: "/servicios/consultoria-creacion-empresas"
-  },
-  {
-    icon: <ShieldCheck className="h-10 w-10 text-primary" />,
-    title: "Compliance",
-    description: "Implementamos programas de cumplimiento normativo para mitigar riesgos y proteger la reputación de su empresa.",
-    href: "/servicios/compliance"
+    title: "Asesoría y Consultoría Legal",
+    description: "Orientación estratégica sobre derechos, responsabilidades y regulaciones para resolver problemas complejos y diseñar proyectos empresariales a largo plazo.",
+    href: "/servicios/asesoria-consultoria-legal"
   },
   {
     icon: <Scale className="h-10 w-10 text-primary" />,
-    title: "Representación Legal De Empresas",
-    description: "Defensa experta en disputas laborales y controversias generales ante diversas instancias.",
-    href: "/servicios/representacion-legal"
+    title: "Representación y Defensa",
+    description: "Representación experta en negociaciones, ante organismos públicos y en litigios mercantiles, laborales y administrativos para proteger sus intereses.",
+    href: "/servicios/representacion-defensa"
+  },
+  {
+    icon: <GitBranch className="h-10 w-10 text-primary" />,
+    title: "Mecanismos Alternativos (MASC)",
+    description: "Soluciones de conflictos a través de arbitraje y mediación, buscando una resolución más rápida, económica y confidencial fuera de los tribunales.",
+    href: "/servicios/masc"
+  },
+  {
+    icon: <FileText className="h-10 w-10 text-primary" />,
+    title: "Gestión y Trámites",
+    description: "Elaboración de contratos, constitución de sociedades, y gestión de trámites para asegurar la correcta legalización y operación de su empresa.",
+    href: "/servicios/gestion-tramites"
+  },
+  {
+    icon: <Building className="h-10 w-10 text-primary" />,
+    title: "Área Empresarial Específica",
+    description: "Asesoría especializada en derecho corporativo, mercantil, laboral y fiscal para cubrir todas las necesidades de su negocio.",
+    href: "/servicios/area-empresarial-especifica"
+  },
+  {
+    icon: <ShieldCheck className="h-10 w-10 text-primary" />,
+    title: "Cumplimiento Normativo (Compliance)",
+    description: "Implementación de sistemas de gestión proactivos para prevenir, detectar y corregir riesgos de incumplimiento legal, regulatorio y ético.",
+    href: "/servicios/compliance"
+  },
+  {
+    icon: <Anchor className="h-10 w-10 text-primary" />,
+    title: "Comercio Internacional y Aduanas",
+    description: "Asesoría especializada en derecho aduanero para asegurar que sus operaciones de importación y exportación sean legales, eficientes y estratégicas.",
+    href: "/servicios/comercio-internacional"
   }
 ];
 
@@ -38,7 +62,7 @@ export default function ServicesPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+            {services.map((service) => (
               <Card key={service.title} className={cn(
                 "bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10"
               )}>
