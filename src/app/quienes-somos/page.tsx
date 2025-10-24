@@ -18,10 +18,10 @@ export default function QuienesSomosPage() {
       <section className="py-20 md:py-28 text-center bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-            Excelencia e Integridad en la Práctica Legal
+            ¿Quiénes somos?
           </h1>
           <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-            Somos más que abogados; somos los socios estratégicos que su empresa necesita para navegar el complejo entorno legal con confianza y seguridad.
+            Somos un grupo de abogados que ofrecemos servicios profesionales integrales en las áreas legales, contables, financieras, tributarias, mercantiles, laborales, administrativas, orientadas a la creación de tu PYME o negocio de punta a punta. En esencia, el objetivo es proporcionar soluciones legales y de gestión que permitan a la persona física o moral operar de forma segura, eficiente y exitosa.
           </p>
         </div>
       </section>
