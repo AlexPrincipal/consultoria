@@ -4,7 +4,7 @@ export const teamMembers = [
     name: "René Rodrigo Casillas Gallardo",
     title: "Socio, Especialista en Compliance y Derecho Corporativo",
     slug: "rene-casillas-gallardo",
-    imageUrl: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYWxlJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxNDc1NTk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    imageUrl: "/perfilRene.png",
     imageHint: "professional portrait lawyer",
     bio: "Con una Maestría en Derecho Corporativo y más de 10 años de experiencia en los sectores público y privado, René es experto en el diseño e implementación de sistemas de control y cumplimiento normativo, ayudando a las empresas a mitigar riesgos financieros, reputacionales y legales con una visión estratégica.",
     fullBio: "René es un abogado con una visión integral única, forjada a lo largo de una década de experiencia tanto en la administración pública como en la iniciativa privada. Es Licenciado en Derecho y Maestro en Derecho Corporativo, y ha desarrollado una profunda especialización en el control y cumplimiento de procedimientos administrativos, políticas corporativas y regulaciones. Su habilidad para navegar entornos complejos le permite diseñar e implementar estrategias que garantizan los más altos estándares éticos, previniendo eficazmente los riesgos operativos y legales para nuestros clientes.",
