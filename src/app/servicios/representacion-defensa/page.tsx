@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Scale } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import ContactForm from '@/components/contact-form';
 import Image from 'next/image';
@@ -54,7 +54,7 @@ export default function RepresentacionDefensaPage() {
             
             <Card className="bg-card/50 p-6 border-white/10">
               <CardHeader className="p-0">
-                <CardTitle className="text-xl text-white font-semibold">1. Representación en Negociaciones</CardTitle>
+                 <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/>Representación en Negociaciones</CardTitle>
               </CardHeader>
               <CardContent className="p-0 pt-4">
                 <p className="text-muted-foreground">Actuamos como su abogado en la negociación de contratos complejos, alianzas estratégicas, fusiones, adquisiciones (M&A), o disoluciones para asegurar siempre los términos más favorables para su negocio.</p>
@@ -63,7 +63,7 @@ export default function RepresentacionDefensaPage() {
 
             <Card className="bg-card/50 p-6 border-white/10">
               <CardHeader className="p-0">
-                <CardTitle className="text-xl text-white font-semibold">2. Representación ante Organismos Públicos</CardTitle>
+                 <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/>Representación ante Organismos Públicos</CardTitle>
               </CardHeader>
               <CardContent className="p-0 pt-4">
                 <p className="text-muted-foreground">Gestionamos y tramitamos asuntos ante autoridades administrativas, registros mercantiles, notarías o reguladores (por ejemplo, en temas de competencia económica o protección de datos).</p>
@@ -72,7 +72,7 @@ export default function RepresentacionDefensaPage() {
 
             <Card className="bg-card/50 p-6 border-white/10">
               <CardHeader className="p-0">
-                <CardTitle className="text-xl text-white font-semibold">3. Formalización de Acuerdos</CardTitle>
+                 <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/>Formalización de Acuerdos</CardTitle>
               </CardHeader>
               <CardContent className="p-0 pt-4">
                 <p className="text-muted-foreground">Firmamos documentos, contratos, o escrituras en nombre de la sociedad, asegurando que todos los actos cumplan con el marco legal corporativo y los estatutos internos.</p>
@@ -81,7 +81,7 @@ export default function RepresentacionDefensaPage() {
 
             <Card className="bg-card/50 p-6 border-white/10">
               <CardHeader className="p-0">
-                <CardTitle className="text-xl text-white font-semibold">4. Defensa Corporativa en Litigios</CardTitle>
+                 <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/>Defensa Corporativa en Litigios</CardTitle>
               </CardHeader>
               <CardContent className="p-0 pt-4">
                 <p className="text-muted-foreground mb-4">Representamos a la empresa como demandante o demandada en juicios o procedimientos ante tribunales.</p>
