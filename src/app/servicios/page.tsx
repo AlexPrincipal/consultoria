@@ -11,50 +11,43 @@ const services = [
     icon: <Briefcase />,
     title: "Asesoría y Consultoría Legal",
     href: "/servicios/asesoria-consultoria-legal",
-    position: "top-0 left-1/2 -translate-x-1/2",
     color: "bg-blue-200/20 hover:bg-blue-300/30 text-blue-100",
   },
   {
     icon: <Scale />,
     title: "Representación y Defensa",
     href: "/servicios/representacion-defensa",
-    position: "top-1/4 -translate-y-1/4 right-0 -translate-x-1/4",
     color: "bg-green-200/20 hover:bg-green-300/30 text-green-100",
+  },
+   {
+    icon: <Anchor />,
+    title: "Comercio Internacional",
+    href: "/servicios/comercio-internacional",
+     color: "bg-pink-200/20 hover:bg-pink-300/30 text-pink-100",
   },
   {
     icon: <GitBranch />,
     title: "MASC",
     href: "/servicios/masc",
-    position: "bottom-1/4 translate-y-1/4 right-0 -translate-x-1/4",
     color: "bg-purple-200/20 hover:bg-purple-300/30 text-purple-100",
   },
   {
     icon: <FileText />,
     title: "Gestión y Trámites",
     href: "/servicios/gestion-tramites",
-     position: "bottom-0 left-1/2 -translate-x-1/2",
     color: "bg-yellow-200/20 hover:bg-yellow-300/30 text-yellow-100",
   },
   {
     icon: <Building />,
     title: "Área Empresarial Específica",
     href: "/servicios/area-empresarial-especifica",
-    position: "bottom-1/4 translate-y-1/4 left-0 translate-x-1/4",
     color: "bg-red-200/20 hover:bg-red-300/30 text-red-100",
   },
   {
     icon: <ShieldCheck />,
     title: "Compliance",
     href: "/servicios/compliance",
-    position: "top-1/4 -translate-y-1/4 left-0 translate-x-1/4",
     color: "bg-indigo-200/20 hover:bg-indigo-300/30 text-indigo-100",
-  },
-  {
-    icon: <Anchor />,
-    title: "Comercio Internacional",
-    href: "/servicios/comercio-internacional",
-    position: "top-1/2 -translate-y-1/2 right-[10%] translate-x-[10%]",
-     color: "bg-pink-200/20 hover:bg-pink-300/30 text-pink-100",
   },
 ];
 
@@ -82,10 +75,14 @@ export default function ServicesPage() {
               
               {/* Service Bubbles */}
               {services.map((service, index) => {
-                  const angle = (index / services.length) * 360;
-                  const radius = 280; // Radio del círculo
-                  const x = Math.cos((angle - 90) * (Math.PI / 180)) * radius + 350 - 90; // 350 es la mitad del contenedor, 90 la mitad del item
-                  const y = Math.sin((angle - 90) * (Math.PI / 180)) * radius + 350 - 90; // 350 es la mitad del contenedor, 90 la mitad del item
+                  const angle = (index / services.length) * (2 * Math.PI); // Angle in radians
+                  const radius = 280; // Circle radius
+                  const itemSize = 192; // Width/height of the bubble
+                  const containerSize = 700;
+                  
+                  // Calculate position
+                  const x = (containerSize / 2) + radius * Math.cos(angle - Math.PI / 2) - (itemSize / 2);
+                  const y = (containerSize / 2) + radius * Math.sin(angle - Math.PI / 2) - (itemSize / 2);
 
                   return (
                      <Link
@@ -96,7 +93,10 @@ export default function ServicesPage() {
                             "text-center p-4 backdrop-blur-sm border border-white/10",
                             service.color
                         )}
-                        style={{ top: `${y}px`, left: `${x}px` }}
+                        style={{
+                            top: `${y}px`,
+                            left: `${x}px`,
+                        }}
                         >
                         <div className="w-10 h-10 text-white [&>svg]:w-full [&>svg]:h-full">
                             {service.icon}
