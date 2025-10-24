@@ -57,7 +57,7 @@ function CircularMenu() {
     return (
         <div className="relative w-[700px] h-[700px]">
         {/* Center Logo */}
-        <div className="absolute inset-0 flex justify-center items-center z-10">
+        <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
           <div className="w-56 h-56 bg-card flex justify-center items-center rounded-lg shadow-2xl p-4">
             <Logo />
           </div>
