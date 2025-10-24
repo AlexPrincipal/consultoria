@@ -15,7 +15,7 @@ export default function CompliancePage() {
               <ShieldCheck className="h-16 w-16 text-primary mb-4" />
               <h1 className="text-4xl md:text-5xl font-bold font-headline">Cumplimiento Normativo (Compliance)</h1>
               <p className="mt-4 text-lg text-muted-foreground">
-                Proteja la integridad, reputación y valor de su empresa. Diseñamos e implementamos sistemas de gestión proactivos para prevenir, detectar y corregir riesgos de incumplimiento, asegurando que su operación se ajuste al marco legal, regulatorio y ético.
+                Aseguramos que su empresa cumpla con todas las leyes y regulaciones aplicables para evitar sanciones. Implementamos un sistema de gestión proactivo para prevenir, detectar y corregir riesgos, garantizando que sus actividades se ajusten al marco legal, regulatorio y ético.
               </p>
             </div>
             <div className="flex justify-center">
@@ -35,18 +35,30 @@ export default function CompliancePage() {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">Más que Cumplir la Ley: Es Gestión de Riesgo</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="max-w-4xl mx-auto space-y-8">
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Prevención de Responsabilidad Penal</h3>
-              <p className="text-muted-foreground">Implementamos controles para mitigar la responsabilidad penal tanto del personal como de la persona moral, protegiendo a los directivos y a la propia empresa.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Prevención de Responsabilidad Penal</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Implementamos controles para mitigar la responsabilidad penal tanto del personal como de la persona moral, protegiendo a los directivos y a la propia empresa.</p>
+              </CardContent>
             </Card>
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Políticas y Procedimientos Clave</h3>
-              <p className="text-muted-foreground">Diseñamos e implementamos códigos de conducta, políticas anticorrupción, manuales de prevención de lavado de dinero (PLD) y canales de denuncia seguros.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Políticas y Procedimientos Clave</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Diseñamos e implementamos códigos de conducta, políticas anticorrupción, manuales de prevención de lavado de dinero (PLD) y canales de denuncia seguros.</p>
+              </CardContent>
             </Card>
              <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Supervisión y Auditoría Continua</h3>
-              <p className="text-muted-foreground">Realizamos auditorías periódicas y supervisión constante para asegurar la efectividad de los controles internos y la adaptación a nuevas normativas.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Supervisión y Auditoría Continua</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Realizamos auditorías periódicas y supervisión constante para asegurar la efectividad de los controles internos y la adaptación a nuevas normativas.</p>
+              </CardContent>
             </Card>
           </div>
         </div>

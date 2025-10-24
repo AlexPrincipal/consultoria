@@ -35,26 +35,46 @@ export default function AreaEmpresarialPage() {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">Nuestras Especialidades de Negocio</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="max-w-4xl mx-auto space-y-8">
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Derecho Corporativo</h3>
-              <p className="text-muted-foreground">Asesoría experta en la organización interna, gobierno corporativo, toma de decisiones y todas las actividades comerciales de la empresa.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">Derecho Corporativo</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Asesoría experta en la organización interna, gobierno corporativo, toma de decisiones y todas las actividades comerciales de la empresa.</p>
+              </CardContent>
             </Card>
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Derecho Mercantil</h3>
-              <p className="text-muted-foreground">Gestión y estrategia en títulos de crédito, contratos comerciales, fusiones, escisiones y adquisiciones (M&A) y otros actos de comercio.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">Derecho Mercantil</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Gestión y estrategia en títulos de crédito, contratos comerciales, fusiones, escisiones y adquisiciones (M&A) y otros actos de comercio.</p>
+              </CardContent>
             </Card>
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Derecho Laboral</h3>
-              <p className="text-muted-foreground">Consultoría en contratación y terminación de relaciones laborales, negociación colectiva y defensa estratégica en demandas individuales o colectivas.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">Derecho Laboral</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Consultoría en contratación, terminación de relaciones laborales, negociación colectiva y defensa estratégica en demandas individuales o colectivas.</p>
+              </CardContent>
             </Card>
-             <Card className="bg-card/50 p-6 border-white/10 mt-8">
-              <h3 className="font-semibold text-xl mb-2 text-white">Asesoría Fiscal y Contable</h3>
-              <p className="text-muted-foreground">Estrategias para la optimización fiscal, gestión de obligaciones tributarias, elaboración de dictámenes y auditorías para una salud financiera óptima.</p>
+             <Card className="bg-card/50 p-6 border-white/10">
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">Asesoría Fiscal y Contable</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Estrategias para la optimización fiscal, gestión de obligaciones tributarias, elaboración de dictámenes y auditorías para una salud financiera óptima.</p>
+              </CardContent>
             </Card>
-             <Card className="bg-card/50 p-6 border-white/10 mt-8">
-              <h3 className="font-semibold text-xl mb-2 text-white">Gestión Administrativa</h3>
-              <p className="text-muted-foreground">Asistencia, gestoría y representación en todo tipo de trámites y procedimientos ante las diversas instancias gubernamentales.</p>
+             <Card className="bg-card/50 p-6 border-white/10">
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">Gestión Administrativa</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Asistencia, gestoría y representación en todo tipo de trámites y procedimientos ante las diversas instancias gubernamentales.</p>
+              </CardContent>
             </Card>
           </div>
         </div>

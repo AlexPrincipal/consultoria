@@ -35,18 +35,30 @@ export default function ComercioInternacionalPage() {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">Navegando el Comercio Global con Certeza</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="max-w-4xl mx-auto space-y-8">
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Cumplimiento Aduanero Estratégico</h3>
-              <p className="text-muted-foreground">Aseguramos que cada operación cumpla con la compleja legislación aduanera vigente, evitando costosas multas, demoras y sanciones.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Cumplimiento Aduanero Estratégico</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Aseguramos que cada operación cumpla con la compleja legislación aduanera vigente, evitando costosas multas, demoras y sanciones.</p>
+              </CardContent>
             </Card>
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Optimización de la Cadena de Suministro</h3>
-              <p className="text-muted-foreground">Diseñamos estrategias para optimizar aranceles, aprovechar tratados de libre comercio (T-MEC y otros) y mejorar la eficiencia de su cadena logística global.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Optimización de la Cadena de Suministro</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Diseñamos estrategias para optimizar aranceles, aprovechar tratados de libre comercio (T-MEC y otros) y mejorar la eficiencia de su cadena logística global.</p>
+              </CardContent>
             </Card>
              <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Defensa y Litigio Aduanero</h3>
-              <p className="text-muted-foreground">Le representamos y defendemos ante autoridades aduaneras, y en litigios derivados de procedimientos como el PAMA (Procedimiento Administrativo en Materia Aduanera).</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Defensa y Litigio Aduanero</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Le representamos y defendemos ante autoridades aduaneras, y en litigios derivados de procedimientos como el PAMA (Procedimiento Administrativo en Materia Aduanera).</p>
+              </CardContent>
             </Card>
           </div>
         </div>

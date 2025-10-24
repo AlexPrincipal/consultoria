@@ -15,7 +15,7 @@ export default function AsesoriaPage() {
               <Briefcase className="h-16 w-16 text-primary mb-4" />
               <h1 className="text-4xl md:text-5xl font-bold font-headline">Asesoría y Consultoría Legal</h1>
               <p className="mt-4 text-lg text-muted-foreground">
-                Más allá del consejo legal, ofrecemos una visión estratégica. Le orientamos sobre sus derechos, responsabilidades y el complejo entorno regulatorio para transformar los desafíos en oportunidades y los proyectos a largo plazo en realidades exitosas.
+                Ofrecemos orientación sobre derechos, responsabilidades y regulaciones aplicables, asimismo nos centramos en la estrategia y la resolución de problemas complejos o el diseño de proyectos a largo plazo en materia empresarial o de negocios.
               </p>
             </div>
             <div className="flex justify-center">
@@ -35,18 +35,30 @@ export default function AsesoriaPage() {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">Nuestra Consultoría Estratégica</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+           <div className="max-w-4xl mx-auto space-y-8">
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Orientación Normativa Clara</h3>
-              <p className="text-muted-foreground">Analizamos a fondo la legislación aplicable a su industria para que opere con certeza, minimizando riesgos y asegurando el cumplimiento en cada decisión.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Orientación Normativa Clara</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Analizamos a fondo la legislación aplicable a su industria para que opere con certeza, minimizando riesgos y asegurando el cumplimiento en cada decisión.</p>
+              </CardContent>
             </Card>
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Diseño de Estrategias de Negocio</h3>
-              <p className="text-muted-foreground">Le acompañamos en el diseño de proyectos empresariales, fusiones, adquisiciones y reestructuraciones, alineando la estructura legal con sus objetivos de crecimiento.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Diseño de Estrategias de Negocio</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Le acompañamos en el diseño de proyectos empresariales, fusiones, adquisiciones y reestructuraciones, alineando la estructura legal con sus objetivos de crecimiento.</p>
+              </CardContent>
             </Card>
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Resolución de Problemas Complejos</h3>
-              <p className="text-muted-foreground">Nos anticipamos a los conflictos. Brindamos asesoramiento para solucionar disputas complejas de manera eficiente, protegiendo sus relaciones comerciales y evitando litigios costosos.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Resolución de Problemas Complejos</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Nos anticipamos a los conflictos. Brindamos asesoramiento para solucionar disputas complejas de manera eficiente, protegiendo sus relaciones comerciales y evitando litigios costosos.</p>
+              </CardContent>
             </Card>
           </div>
         </div>

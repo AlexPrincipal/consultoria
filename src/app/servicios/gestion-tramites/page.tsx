@@ -15,7 +15,7 @@ export default function GestionTramitesPage() {
               <FileText className="h-16 w-16 text-primary mb-4" />
               <h1 className="text-4xl md:text-5xl font-bold font-headline">Gestión y Trámites</h1>
               <p className="mt-4 text-lg text-muted-foreground">
-                La base de un negocio sólido reside en sus documentos. Nos encargamos de la elaboración de contratos, constitución de sociedades, emisión de dictámenes y legalización de documentos para garantizar la seguridad jurídica y el cumplimiento en cada paso de su operación.
+                La base de un negocio sólido reside en su formalidad. Nos encargamos de la elaboración de contratos, escrituras, dictámenes, constitución de sociedades y legalización de documentos para garantizar la seguridad jurídica en cada paso de su operación.
               </p>
             </div>
             <div className="flex justify-center">
@@ -34,19 +34,31 @@ export default function GestionTramitesPage() {
 
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-          <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">Servicios de Gestión Documental y Societaria</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">Nuestros Servicios de Gestión Documental</h2>
+          <div className="max-w-4xl mx-auto space-y-8">
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Elaboración de Contratos y Escrituras</h3>
-              <p className="text-muted-foreground">Redactamos y revisamos todo tipo de contratos (comerciales, laborales, de arrendamiento, etc.) y escrituras constitutivas, asegurando que sus acuerdos sean claros, sólidos y legalmente vinculantes.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Elaboración de Contratos y Escrituras</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Redactamos y revisamos todo tipo de contratos (comerciales, laborales, de arrendamiento, etc.) y escrituras, asegurando que sus acuerdos sean claros, sólidos y legalmente vinculantes.</p>
+              </CardContent>
             </Card>
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Constitución de Sociedades</h3>
-              <p className="text-muted-foreground">Le guiamos en todo el proceso de creación legal de su nueva empresa en México, desde la elección del tipo de sociedad hasta su inscripción final, para un arranque sin contratiempos.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Constitución de Sociedades</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Le guiamos en todo el proceso de creación legal de su nueva empresa en México, desde la elección del tipo de sociedad hasta su inscripción final, para un arranque sin contratiempos.</p>
+              </CardContent>
             </Card>
-             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Dictámenes y Legalización</h3>
-              <p className="text-muted-foreground">Emitimos dictámenes legales expertos sobre la viabilidad de operaciones y nos encargamos de la legalización y apostilla de documentos para su validez nacional e internacional.</p>
+            <Card className="bg-card/50 p-6 border-white/10">
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold flex items-center gap-3"><CheckCircle className="h-6 w-6 text-primary"/> Emisión de Dictámenes y Legalización</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Emitimos dictámenes legales expertos sobre la viabilidad de operaciones y nos encargamos de la legalización y apostilla de documentos para su validez nacional e internacional.</p>
+              </CardContent>
             </Card>
           </div>
         </div>

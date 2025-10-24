@@ -15,7 +15,7 @@ export default function RepresentacionDefensaPage() {
               <Scale className="h-16 w-16 text-primary mb-4" />
               <h1 className="text-4xl md:text-5xl font-bold font-headline">Representación y Defensa</h1>
               <p className="mt-4 text-lg text-muted-foreground">
-                Cuando sus intereses están en juego, necesita más que un abogado: necesita un defensor estratégico. Actuamos en nombre de su empresa con una defensa sólida y una representación experta en negociaciones, ante autoridades y en procedimientos judiciales.
+                Cuando sus intereses están en juego, necesita un defensor estratégico. Actuamos en nombre de su empresa con una defensa sólida y una representación experta en negociaciones, ante autoridades y en procedimientos judiciales en materia empresarial.
               </p>
             </div>
             <div className="flex justify-center">
@@ -35,27 +35,49 @@ export default function RepresentacionDefensaPage() {
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline text-center mb-12 text-white">Nuestras Áreas de Representación</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto space-y-8">
+            
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Representación en Negociaciones</h3>
-              <p className="text-muted-foreground">Actuamos como su brazo legal en negociaciones de contratos complejos, alianzas estratégicas, fusiones y adquisiciones (M&A), y disoluciones, asegurando siempre los términos más favorables para su negocio.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">1. Representación en Negociaciones</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Actuamos como su abogado en la negociación de contratos complejos, alianzas estratégicas, fusiones, adquisiciones (M&A), o disoluciones para asegurar siempre los términos más favorables para su negocio.</p>
+              </CardContent>
             </Card>
+
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Representación ante Organismos Públicos</h3>
-              <p className="text-muted-foreground">Gestionamos sus trámites e intereses ante autoridades administrativas, registros mercantiles, notarías y reguladores (ej. COFECE, INAI), garantizando un proceso fluido y conforme a la ley.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">2. Representación ante Organismos Públicos</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Gestionamos y tramitamos asuntos ante autoridades administrativas, registros mercantiles, notarías o reguladores (por ejemplo, en temas de competencia económica o protección de datos).</p>
+              </CardContent>
             </Card>
+
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Formalización de Acuerdos</h3>
-              <p className="text-muted-foreground">Nos encargamos de la firma de documentos, contratos y escrituras en nombre de la sociedad, validando que cada acto cumpla rigurosamente con el marco legal y los estatutos internos.</p>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">3. Formalización de Acuerdos</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground">Firmamos documentos, contratos, o escrituras en nombre de la sociedad, asegurando que todos los actos cumplan con el marco legal corporativo y los estatutos internos.</p>
+              </CardContent>
             </Card>
+
             <Card className="bg-card/50 p-6 border-white/10">
-              <h3 className="font-semibold text-xl mb-2 text-white">Defensa Corporativa en Litigios</h3>
-               <ul className="text-muted-foreground space-y-2 list-disc list-inside">
-                  <li><span className='font-semibold text-white/90'>Mercantil:</span> Disputas por incumplimiento de contratos, competencia desleal, cobranza judicial y conflictos entre socios.</li>
-                  <li><span className='font-semibold text-white/90'>Laboral:</span> Defensa ante demandas de empleados o sindicatos por despidos o condiciones de trabajo.</li>
-                  <li><span className='font-semibold text-white/90'>Administrativo/Fiscal:</span> Impugnación de multas, sanciones o resoluciones de autoridades.</li>
-               </ul>
+              <CardHeader className="p-0">
+                <CardTitle className="text-xl text-white font-semibold">4. Defensa Corporativa en Litigios</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 pt-4">
+                <p className="text-muted-foreground mb-4">Representamos a la empresa como demandante o demandada en juicios o procedimientos ante tribunales.</p>
+                <ul className="space-y-3 text-muted-foreground list-disc list-inside">
+                  <li><span className='font-semibold text-white/90'>Litigio Mercantil:</span> Disputas por incumplimiento de contratos, competencia desleal, reclamación de deudas (cobranza judicial), o conflictos entre socios.</li>
+                  <li><span className='font-semibold text-white/90'>Litigio Laboral:</span> Defensa de la empresa ante demandas de empleados o sindicatos (despidos, condiciones de trabajo).</li>
+                  <li><span className='font-semibold text-white/90'>Litigio Administrativo/Fiscal:</span> Impugnación de multas, sanciones o resoluciones emitidas por autoridades gubernamentales.</li>
+                </ul>
+              </CardContent>
             </Card>
+
           </div>
         </div>
       </section>
