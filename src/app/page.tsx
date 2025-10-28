@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -165,7 +166,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-2xl font-bold font-headline text-white">{member.name}</h3>
                   <p className="text-primary font-medium">{member.title}</p>
-                  <p className="text-muted-foreground mt-2 text-sm max-w-xs">{member.bio}</p>
+                  <p className="text-muted-foreground mt-2 text-sm max-w-xs">{member.homeSummary}</p>
                   <Button variant="link" asChild className="mt-4 p-0 text-primary">
                     <Link href={`/quienes-somos/${member.slug}`}>Ver Perfil Completo &rarr;</Link>
                   </Button>
