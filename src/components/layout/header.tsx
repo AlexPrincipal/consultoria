@@ -42,22 +42,40 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 10) {
+        setIsScrolled(true);
+        if (currentScrollY > lastScrollY) {
+          // Scrolling down
+          setShow(false);
+        } else {
+          // Scrolling up
+          setShow(true);
+        }
+      } else {
+        setIsScrolled(false);
+        setShow(true);
+      }
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const isServiceRouteActive = pathname.startsWith('/servicios');
 
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full transition-colors duration-300',
+        'sticky top-0 z-50 w-full transition-all duration-300',
         isScrolled ? 'bg-background/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent',
+        show ? 'translate-y-0' : '-translate-y-full'
       )}
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6">
@@ -105,15 +123,11 @@ export function Header() {
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw]">
                     <SheetHeader className="p-4 border-b border-border flex flex-row items-center justify-between">
-                        <SheetTitle>
-                            <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10 block">
+                        <SheetTitle asChild>
+                           <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10 block">
                                 <Logo />
                             </Link>
                         </SheetTitle>
-                        <SheetClose>
-                          <X className="h-6 w-6 text-white" />
-                          <span className="sr-only">Cerrar</span>
-                        </SheetClose>
                     </SheetHeader>
                 <div className="flex flex-col h-[calc(100%-73px)]">
                     <nav className="flex flex-col space-y-2 p-4">
