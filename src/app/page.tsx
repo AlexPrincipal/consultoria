@@ -7,6 +7,7 @@ import { Scale, ShieldCheck, Briefcase, Landmark, FileText, Building, GitBranch,
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
+import { teamMembers } from '@/lib/team';
 
 function ServiceCard({
   icon,
@@ -41,6 +42,7 @@ function ServiceCard({
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
+  const mainTeamMembers = teamMembers.slice(0, 2);
 
   return (
     <div className="flex flex-col">
@@ -138,8 +140,48 @@ export default function Home() {
           </div>
         </AnimatedSection>
         
+        {/* Team Preview Section */}
+        <AnimatedSection id="equipo" className="py-20 md:py-28 bg-black">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
+                Conozca a Nuestro Equipo
+              </h2>
+              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                La experiencia y dedicación que su empresa merece. Conozca a los socios que lideran nuestra firma.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {mainTeamMembers.map((member) => (
+                <div key={member.slug} className="flex flex-col items-center text-center">
+                  <div className="relative w-48 h-48 mb-4">
+                    <Image
+                      src={member.imageUrl}
+                      alt={`Retrato de ${member.name}`}
+                      fill
+                      className="rounded-full object-cover border-4 border-primary/50"
+                      data-ai-hint={member.imageHint}
+                    />
+                  </div>
+                  <h3 className="text-2xl font-bold font-headline text-white">{member.name}</h3>
+                  <p className="text-primary font-medium">{member.title}</p>
+                  <p className="text-muted-foreground mt-2 text-sm max-w-xs">{member.bio}</p>
+                  <Button variant="link" asChild className="mt-4 p-0 text-primary">
+                    <Link href={`/quienes-somos/${member.slug}`}>Ver Perfil Completo &rarr;</Link>
+                  </Button>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-16">
+              <Button variant="outline" asChild>
+                <Link href="/quienes-somos">Ver Todo el Equipo</Link>
+              </Button>
+            </div>
+          </div>
+        </AnimatedSection>
+
         {/* About Us Preview */}
-        <AnimatedSection id="quienes-somos" className="py-20 md:py-28 bg-black">
+        <AnimatedSection id="quienes-somos" className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto">
                 <Landmark className="h-12 w-12 text-primary mx-auto mb-6" />
