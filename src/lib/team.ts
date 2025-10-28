@@ -7,7 +7,7 @@ export const teamMembers = [
     imageUrl: "/perfil.jpg",
     imageHint: "professional portrait lawyer",
     bio: "Con una Maestría en Derecho Corporativo y más de 10 años de experiencia en los sectores público y privado, René es experto en el diseño e implementación de sistemas de control y cumplimiento normativo, ayudando a las empresas a mitigar riesgos financieros, reputacionales y legales con una visión estratégica.",
-    fullBio: "Licenciado y Maestro en Derecho Corporativo con 10 años de experiencia en roles de Control, Cumplimiento Normativo (Compliance) y Asuntos Legales, alternando entre la Administración Pública y la Iniciativa Privada. Especializado en establecer y monitorear políticas y procedimientos para asegurar estándares éticos y prevenir riesgos financieros, reputacionales y legales. Asimismo, es especialista en asesoramiento en la constitución de sociedades, fusiones, adquisiciones, modificaciones de capital y elaboración de estatutos, manejando patentes, marcas, derechos de autor y licencias.",
+    fullBio: "Licenciado y Maestro en Derecho Corporativo con 10 años de experiencia en roles de Control, Cumplimiento Normativo (Compliance) y Asuntos Legales, alternando entre la Administración Pública y la Iniciativa Privada. Especializado en establecer y monitorear políticas y procedimientos para asegurar estándares éticos y prevenir riesgos financieros, reputacionales y legales.\nAsimismo, es especialista en asesoramiento en la constitución de sociedades, fusiones, adquisiciones, modificaciones de capital y elaboración de estatutos, manejando patentes, marcas, derechos de autor y licencias.",
     achievements: [
       "Lideró la vigilancia y cumplimiento de normas internas en Citibanamex para mitigar riesgos corporativos, reputacionales y legales.",
       "Gestionó investigaciones de alto impacto derivadas del canal de ética corporativa.",
@@ -19,7 +19,7 @@ export const teamMembers = [
     name: "Jose Luis Pineda Nuñez",
     title: "Socio, Especialista en Litigio y Consultoría",
     slug: "jose-luis-pineda-nunez",
-    imageUrl: "/luis-perfil.jpg",
+    imageUrl: "/luisPerfil.jpg",
     imageHint: "professional portrait lawyer man",
     bio: "Abogado con amplia experiencia en litigio y consultoría, enfocado en resultados. Experto en la dirección de juicios en materia civil, familiar y mercantil, así como en la negociación y mediación de conflictos complejos.",
     fullBio: "Experiencia en litigio y consultoría legal, enfocado en resultados. Experiencia probada en la dirección de juicios en las áreas civil, familiar y mercantil, logrando resoluciones favorables. Sólida trayectoria en asesoría corporativa y elaboración de contratos, protegiendo los intereses empresariales. Habilidad para negociar y mediar en conflictos complejos, buscando la solución más eficiente para el cliente. Dominio del Sistema de Justicia Oral y de las reformas legales recientes. Capacidad para elaborar estrategias procesales efectivas, manejar equipos legales y presentar argumentos sólidos en audiencia.",
