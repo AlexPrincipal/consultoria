@@ -38,7 +38,7 @@ export default function TeamMemberPage({ params }: { params: { slug: string } })
             <p className="text-primary text-lg font-medium text-center">{member.title}</p>
             <div className="mt-4">
               <Button variant="ghost" size="icon" asChild>
-                <Link href="#" aria-label="LinkedIn">
+                <Link href={member.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                   <Linkedin className="h-6 w-6 text-muted-foreground hover:text-primary" />
                 </Link>
               </Button>

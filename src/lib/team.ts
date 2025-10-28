@@ -14,7 +14,8 @@ export const teamMembers = [
       "Gestionó investigaciones de alto impacto derivadas del canal de ética corporativa.",
       "Brindó asesoría estratégica a diversas áreas sobre el cumplimiento de normativas internas y legislación vigente.",
       "Dirigió proyectos de implementación tecnológica y firma electrónica para optimizar procesos administrativos y de seguridad de la información."
-    ]
+    ],
+    linkedinUrl: "https://www.linkedin.com/in/renecg"
   },
   {
     name: "Jose Luis Pineda Nuñez",
@@ -30,7 +31,8 @@ export const teamMembers = [
       "Sólida experiencia en la elaboración de contratos y asesoría corporativa para proteger intereses empresariales.",
       "Habilidad comprobada en la negociación y mediación de conflictos, logrando soluciones eficientes.",
       "Dominio del Sistema de Justicia Oral y de las reformas legales más recientes."
-    ]
+    ],
+    linkedinUrl: "#"
   },
   {
     name: "Abogado Asociado",
@@ -46,6 +48,7 @@ export const teamMembers = [
       "Negociación exitosa de más de 20 contratos colectivos de trabajo sin huelgas.",
       "Diseño de estrategias de reestructuración laboral para empresas del sector retail y manufacturero.",
       "Capacitador en materia de NOM-035 (Factores de riesgo psicosocial en el trabajo)."
-    ]
+    ],
+    linkedinUrl: "#"
   }
 ];
