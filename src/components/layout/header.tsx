@@ -106,13 +106,19 @@ export function Header() {
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw] p-0">
                     <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
-                    <SheetTitle>
-                        <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10 block">
-                            <Logo />
-                        </Link>
-                    </SheetTitle>
+                        <SheetTitle>
+                            <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10 block">
+                                <Logo />
+                            </Link>
+                        </SheetTitle>
+                        <SheetClose asChild>
+                            <Button variant="ghost" size="icon">
+                                <X className="h-6 w-6 text-white" />
+                                <span className="sr-only">Cerrar menú</span>
+                            </Button>
+                        </SheetClose>
                     </SheetHeader>
-                <div className="flex flex-col h-full">
+                <div className="flex flex-col h-[calc(100%-73px)]">
                     <nav className="flex flex-col space-y-2 p-4">
                     {navLinks.map((link) => (
                         link.isDropdown && link.items ? (
@@ -133,7 +139,7 @@ export function Header() {
                     </nav>
                     <div className="mt-auto p-4 border-t border-border">
                     <Button className="w-full" asChild>
-                        <Link href="/contacto">Agenda Consulta</Link>
+                        <Link href="/contacto" onClick={() => setOpen(false)}>Agenda Consulta</Link>
                     </Button>
                     </div>
                 </div>
