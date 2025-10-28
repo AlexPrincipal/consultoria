@@ -15,7 +15,7 @@ export default function ContactPage() {
               </p>
               <div className="mt-8 space-y-4 text-muted-foreground">
                 <p><strong>Email:</strong> <a href="mailto:contacto@cplusjuridico.com" className="hover:text-primary">contacto@cplusjuridico.com</a></p>
-                <p><strong>Teléfono:</strong> <a href="tel:+525512345678" className="hover:text-primary">+52 55 1234 5678</a></p>
+                <p><strong>Teléfono:</strong> <a href="tel:+523111181084" className="hover:text-primary">+52 311 118 1084</a></p>
                 <p><strong>Dirección:</strong> Dirección de la Firma, No. 123, Colonia Corporativa, Ciudad, Estado, CP 12345</p>
               </div>
             </div>

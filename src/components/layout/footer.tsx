@@ -45,7 +45,7 @@ export function Footer() {
               <h4 className="font-semibold text-white mb-4 uppercase tracking-wider">Contacto</h4>
               <ul className="space-y-2 text-sm">
                 <li><a href="mailto:contacto@cplusjuridico.com" className="hover:text-primary transition-colors">contacto@cplusjuridico.com</a></li>
-                <li><a href="tel:+525512345678" className="hover:text-primary transition-colors">+52 55 1234 5678</a></li>
+                <li><a href="tel:+523111181084" className="hover:text-primary transition-colors">+52 311 118 1084</a></li>
               </ul>
             </div>
 
