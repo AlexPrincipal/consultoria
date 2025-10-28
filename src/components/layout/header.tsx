@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
@@ -106,10 +106,11 @@ export function Header() {
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw] p-0">
                     <SheetHeader className="p-4 border-b border-border flex flex-row justify-between items-center">
-                    <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
-                        <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10">
-                        <Logo />
+                    <SheetTitle>
+                        <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10 block">
+                            <Logo />
                         </Link>
+                    </SheetTitle>
                     </SheetHeader>
                 <div className="flex flex-col h-full">
                     <nav className="flex flex-col space-y-2 p-4">
