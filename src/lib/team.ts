@@ -16,18 +16,18 @@ export const teamMembers = [
     ]
   },
   {
-    name: "LUIS GONZÁLEZ",
-    title: "Socio",
-    slug: "luis-gonzalez",
-    imageUrl: "https://picsum.photos/seed/luisgonzalez/800/1000",
+    name: "Jose Luis Pineda Nuñez",
+    title: "Socio, Especialista en Litigio y Consultoría",
+    slug: "jose-luis-pineda-nunez",
+    imageUrl: "https://picsum.photos/seed/joseluispineda/800/1000",
     imageHint: "professional portrait lawyer man",
-    bio: "Con más de 30 años de experiencia en áreas como Capital Privado (donde fue pionero), Emprendedor y Público, Inmobiliario, Fusiones y Adquisiciones, Corporativos e Inversiones Extranjera, actualmente se encuentra reconocido entre los mejores abogados de México por directorios como Chambers and Partners, The Legal 500, IFLR1000, LACCA Approved, Leaders League, Best Lawyers y Acquisition International.",
-    fullBio: "Luis es uno de los mayores expertos en Capital Privado de la región. Su práctica se centra en el diseño e implementación de estructuras de inversión, ayudando a las empresas a navegar el complejo entorno regulatorio y a mitigar riesgos. Posee certificaciones internacionales y es un ponente habitual en foros nacionales e internacionales sobre la materia. Su liderazgo ha sido fundamental para consolidar la práctica de la firma como una de las más respetadas del país.",
+    bio: "Abogado con amplia experiencia en litigio y consultoría, enfocado en resultados. Experto en la dirección de juicios en materia civil, familiar y mercantil, así como en la negociación y mediación de conflictos complejos.",
+    fullBio: "Experiencia en litigio y consultoría legal, enfocado en resultados. Experiencia probada en la dirección de juicios en las áreas civil, familiar y mercantil, logrando resoluciones favorables. Sólida trayectoria en asesoría corporativa y elaboración de contratos, protegiendo los intereses empresariales. Habilidad para negociar y mediar en conflictos complejos, buscando la solución más eficiente para el cliente. Dominio del Sistema de Justicia Oral y de las reformas legales recientes. Capacidad para elaborar estrategias procesales efectivas, manejar equipos legales y presentar argumentos sólidos en audiencia.",
     achievements: [
-      "Implementación exitosa de fondos de capital privado para más de 30 empresas.",
-      "Certificación Internacional en Valuación de Empresas (CVA).",
-      "Reducción de contingencias regulatorias en un 40% para clientes clave del sector.",
-      "Asesor externo para la elaboración de políticas públicas en materia de inversión."
+      "Dirección exitosa de juicios complejos en materia civil, familiar y mercantil.",
+      "Sólida experiencia en la elaboración de contratos y asesoría corporativa para proteger intereses empresariales.",
+      "Habilidad comprobada en la negociación y mediación de conflictos, logrando soluciones eficientes.",
+      "Dominio del Sistema de Justicia Oral y de las reformas legales más recientes."
     ]
   },
   {
