@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <>
       <a
-        href="https://wa.me/5211234567890?text=Hola,%20necesito%20ayuda%20con%20un%20asunto%20legal."
+        href="https://wa.me/5213111181084?text=Hola,%20necesito%20ayuda%20con%20un%20asunto%20legal."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors z-50 flex items-center justify-center"
