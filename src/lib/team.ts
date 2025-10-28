@@ -19,7 +19,7 @@ export const teamMembers = [
     name: "Jose Luis Pineda Nuñez",
     title: "Socio, Especialista en Litigio y Consultoría",
     slug: "jose-luis-pineda-nunez",
-    imageUrl: "https://picsum.photos/seed/joseluispineda/800/1000",
+    imageUrl: "/luis-perfil.jpg",
     imageHint: "professional portrait lawyer man",
     bio: "Abogado con amplia experiencia en litigio y consultoría, enfocado en resultados. Experto en la dirección de juicios en materia civil, familiar y mercantil, así como en la negociación y mediación de conflictos complejos.",
     fullBio: "Experiencia en litigio y consultoría legal, enfocado en resultados. Experiencia probada en la dirección de juicios en las áreas civil, familiar y mercantil, logrando resoluciones favorables. Sólida trayectoria en asesoría corporativa y elaboración de contratos, protegiendo los intereses empresariales. Habilidad para negociar y mediar en conflictos complejos, buscando la solución más eficiente para el cliente. Dominio del Sistema de Justicia Oral y de las reformas legales recientes. Capacidad para elaborar estrategias procesales efectivas, manejar equipos legales y presentar argumentos sólidos en audiencia.",
