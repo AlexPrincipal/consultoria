@@ -23,9 +23,8 @@ export function Footer() {
             <div className="space-y-4">
               <h3 className="text-xl font-bold font-headline text-white tracking-wider">Jurídico Empresarial y Comercial</h3>
               <p className="text-sm">
-                Dirección de la Firma, No. 123<br />
-                Colonia Corporativa, Ciudad, Estado<br />
-                CP 12345
+                Perif. Blvd. Manuel Ávila Camacho 1903,<br />
+                Cd. Satélite, 53100 Naucalpan de Juárez, Méx.
               </p>
             </div>
 
