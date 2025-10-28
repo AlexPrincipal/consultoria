@@ -110,10 +110,6 @@ export function Header() {
                         <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10">
                         <Logo />
                         </Link>
-                    <Button variant="ghost" size="icon" onClick={() => setOpen(false)}>
-                        <X className="h-6 w-6 text-white" />
-                        <span className="sr-only">Cerrar menú</span>
-                        </Button>
                     </SheetHeader>
                 <div className="flex flex-col h-full">
                     <nav className="flex flex-col space-y-2 p-4">
