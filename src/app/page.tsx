@@ -3,10 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Scale, ShieldCheck, Briefcase, Landmark } from 'lucide-react';
+import { Scale, ShieldCheck, Briefcase, Landmark, FileText, Building, GitBranch, Anchor } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
-import TestimonialsCarousel from '@/components/testimonials-carousel';
 import AnimatedSection from '@/components/animated-section';
 
 function ServiceCard({
@@ -86,10 +85,10 @@ export default function Home() {
                 Ofrecemos asesoramiento y representación experta en las áreas cruciales del derecho corporativo para proteger y potenciar su negocio.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <ServiceCard
                 icon={<Briefcase className="h-10 w-10 text-primary" />}
-                title="Asesoría y Consultoría Legal"
+                title="Asesoría y Consultoría"
                 description="Orientación estratégica para la resolución de problemas complejos y el diseño de proyectos empresariales a largo plazo."
                 href="/servicios/asesoria-consultoria-legal"
               />
@@ -98,14 +97,42 @@ export default function Home() {
                 title="Representación y Defensa"
                 description="Defensa experta en negociaciones y litigios mercantiles, laborales y administrativos ante diversas instancias."
                  href="/servicios/representacion-defensa"
-                 className="animation-delay-200"
               />
               <ServiceCard
                 icon={<ShieldCheck className="h-10 w-10 text-primary" />}
-                title="Cumplimiento Normativo (Compliance)"
+                title="Compliance"
                 description="Implementamos programas de cumplimiento para mitigar riesgos, asegurar el marco legal y proteger la reputación de su empresa."
                  href="/servicios/compliance"
-                 className="animation-delay-400"
+              />
+              <ServiceCard
+                icon={<Anchor className="h-10 w-10 text-primary" />}
+                title="Comercio Internacional"
+                description="Garantizamos que sus operaciones de importación y exportación se realicen de manera legal, eficiente y estratégica."
+                 href="/servicios/comercio-internacional"
+              />
+               <ServiceCard
+                icon={<GitBranch className="h-10 w-10 text-primary" />}
+                title="MASC"
+                description="Resolvemos disputas de forma más rápida, económica y confidencial a través de la mediación y el arbitraje."
+                 href="/servicios/masc"
+              />
+               <ServiceCard
+                icon={<FileText className="h-10 w-10 text-primary" />}
+                title="Gestión y Trámites"
+                description="Nos encargamos de la elaboración de contratos, constitución de sociedades y legalización de documentos."
+                 href="/servicios/gestion-tramites"
+              />
+              <ServiceCard
+                icon={<Building className="h-10 w-10 text-primary" />}
+                title="Área Empresarial Específica"
+                description="Ofrecemos una asesoría 360° en derecho corporativo, mercantil, laboral, fiscal y gestión administrativa."
+                 href="/servicios/area-empresarial-especifica"
+              />
+               <ServiceCard
+                icon={<Briefcase className="h-10 w-10 text-primary" />}
+                title="Creación de Empresas"
+                description="Asesoramiento proactivo para iniciar su negocio sobre cimientos sólidos, minimizando riesgos y maximizando oportunidades."
+                href="/servicios/consultoria-creacion-empresas"
               />
             </div>
           </div>
