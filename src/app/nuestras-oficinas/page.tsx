@@ -1,105 +1,127 @@
 
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
 
 const officeImages = [
   {
     src: '/oficina1.png',
     alt: 'Recepción de nuestras oficinas',
     hint: 'modern office reception',
+    title: 'Una Bienvenida Profesional'
   },
   {
     src: '/oficina2.png',
     alt: 'Sala de juntas principal',
     hint: 'conference room meeting',
+    title: 'Decisiones Estratégicas'
   },
   {
     src: '/oficina3.png',
     alt: 'Área de trabajo colaborativo',
     hint: 'collaborative workspace office',
+    title: 'Innovación y Colaboración'
   },
   {
     src: '/oficina4.png',
     alt: 'Oficina privada con vista',
     hint: 'private office city view',
+    title: 'Confidencialidad y Enfoque'
   },
 ];
 
 export default function NuestrasOficinasPage() {
-  return (
-    <div className="bg-background text-white">
-      {/* Hero */}
-      <AnimatedSection className="py-20 md:py-28 text-center bg-black">
-        <div className="container mx-auto px-4 md:px-6">
-          <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-            Conozca Nuestras Oficinas
-          </h1>
-          <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-            Un espacio diseñado para la excelencia, la colaboración y la confidencialidad. Le invitamos a conocer el lugar donde creamos las estrategias que protegen y potencian su negocio.
-          </p>
-        </div>
-      </AnimatedSection>
+  const [activeIndex, setActiveIndex] = useState(0);
 
-      {/* Gallery Section */}
+  return (
+    <div className="bg-background text-white min-h-[calc(100vh-7rem)]">
       <AnimatedSection className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-           <Carousel className="w-full max-w-4xl mx-auto"
-            opts={{
-                loop: true,
-            }}
-           >
-            <CarouselContent>
-              {officeImages.map((image, index) => (
-                <CarouselItem key={index}>
-                  <div className="p-1">
-                     <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg group">
-                        <Image
-                            src={image.src}
-                            alt={image.alt}
-                            fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-105"
-                            data-ai-hint={image.hint}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <h3 className="text-white font-semibold text-2xl font-headline">{image.alt}</h3>
-                        </div>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="left-[-50px]" />
-            <CarouselNext className="right-[-50px]" />
-          </Carousel>
-        </div>
-      </AnimatedSection>
-      
-      {/* Address & CTA Section */}
-      <AnimatedSection className="py-20 md:py-28 bg-black">
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-            <h2 className="text-3xl font-bold font-headline mb-4 text-white">Visítenos</h2>
-             <p className="text-muted-foreground mb-8 text-lg">
-                Nuestras puertas están abiertas para usted. Agende una reunión y permítanos discutir cómo podemos colaborar en un entorno profesional y confortable.
-             </p>
-            <p className="text-primary font-semibold text-xl mb-8">Perif. Blvd. Manuel Ávila Camacho 1903, Cd. Satélite, 53100 Naucalpan de Juárez, Méx.</p>
-            <div className="mt-8">
-                <Button size="lg" asChild>
-                    <Link href="/contacto">Agendar una Reunión</Link>
-                </Button>
-            </div>
-        </div>
-      </AnimatedSection>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">
+              Un Espacio a la Altura de sus Negocios
+            </h1>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Le invitamos a un recorrido virtual por nuestras instalaciones, diseñadas para la excelencia, la confidencialidad y la colaboración estratégica.
+            </p>
+          </div>
 
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            {/* Main Image Display */}
+            <div className="lg:col-span-2 relative aspect-video w-full h-[60vh] rounded-lg overflow-hidden shadow-2xl bg-card">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={officeImages[activeIndex].src}
+                    alt={officeImages[activeIndex].alt}
+                    fill
+                    className="object-cover"
+                    data-ai-hint={officeImages[activeIndex].hint}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                    priority={activeIndex === 0}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Thumbnails and Description */}
+            <div className="flex flex-col justify-between">
+              <div>
+                <h2 className="font-headline text-3xl text-primary mb-4">Nuestros Espacios</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-4">
+                  {officeImages.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveIndex(index)}
+                      className={cn(
+                        "relative aspect-video rounded-md overflow-hidden transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary ring-offset-2 ring-offset-background",
+                        activeIndex === index ? 'ring-2 ring-primary' : 'ring-0 hover:opacity-80'
+                      )}
+                    >
+                      <Image
+                        src={image.src}
+                        alt={`Thumbnail of ${image.alt}`}
+                        fill
+                        className="object-cover"
+                        data-ai-hint={image.hint}
+                        sizes="150px"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-8 lg:mt-0 text-left">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeIndex}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.4, ease: 'easeInOut' }}
+                    >
+                      <h3 className="font-headline text-2xl text-white mb-2">{officeImages[activeIndex].title}</h3>
+                      <p className="text-muted-foreground">
+                        {officeImages[activeIndex].alt}. Un entorno diseñado para inspirar confianza y alcanzar los mejores resultados para su empresa.
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
     </div>
   );
 }
