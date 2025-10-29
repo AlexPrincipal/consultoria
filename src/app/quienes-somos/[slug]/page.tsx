@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { teamMembers } from '@/lib/team';
@@ -30,7 +31,7 @@ export default function TeamMemberPage({ params }: { params: { slug: string } })
                 src={member.imageUrl}
                 alt={`Retrato de ${member.name}`}
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 data-ai-hint={member.imageHint}
               />
             </div>
