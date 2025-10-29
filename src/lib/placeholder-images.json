@@ -77,6 +77,24 @@
       "description": "Imagen para servicio de Comercio Internacional y Aduanas",
       "imageUrl": "https://images.unsplash.com/photo-1712578584947-ccc35250b6e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYXJnbyUyMHNoaXAlMjBwb3J0fGVufDB8fHx8MTc2MTIxMDU5M3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "cargo ship port"
+    },
+    {
+      "id": "why-us-strategy",
+      "description": "Chess pieces on a board, representing business strategy",
+      "imageUrl": "https://images.unsplash.com/photo-1582925250462-d012a2287272?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxidXNpbmVzcyUyMHN0cmF0ZWd5fGVufDB8fHx8MTc2MTQ3MDU1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "business strategy"
+    },
+    {
+      "id": "why-us-experience",
+      "description": "Experienced professionals in a modern office collaborating",
+      "imageUrl": "https://images.unsplash.com/photo-1657664042448-c955b59a7f30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjB0ZWFtJTIwbWVldGluZ3xlbnwwfHx8fDE3NjE0NzA1NTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional team meeting"
+    },
+    {
+      "id": "why-us-commitment",
+      "description": "A firm handshake sealing a business deal",
+      "imageUrl": "https://images.unsplash.com/photo-1600880292210-f89bb597353f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHBhcnRuZXJzJTIwaGFuZHNoYWtlfGVufDB8fHx8MTc2MTQ3MDU1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "business partnership handshake"
     }
   ]
 }

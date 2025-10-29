@@ -19,6 +19,7 @@ import Logo from '@/components/logo';
 
 const navLinks = [
   { href: '/', label: 'Home' },
+  { href: '/quienes-somos', label: 'Quiénes Somos' },
   {
     label: 'Servicios',
     isDropdown: true,
@@ -34,7 +35,7 @@ const navLinks = [
       { href: '/servicios/comercio-internacional', label: 'Comercio Internacional' },
     ]
   },
-  { href: '/quienes-somos', label: 'Quiénes Somos' },
+  { href: '/por-que-escogernos', label: '¿Por qué nosotros?' },
   { href: '/faq', label: 'FAQ' },
 ];
 
