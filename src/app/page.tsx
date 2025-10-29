@@ -1,4 +1,5 @@
 
+'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,6 +10,10 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
 import { teamMembers } from '@/lib/team';
+import React, { useRef, useEffect } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function ServiceCard({
   icon,
@@ -58,6 +63,59 @@ const whyUsFeatures = [
     description: 'Tu caso estará respaldado por un equipo que combina la solidez legal con una visión de negocios real, forjada en roles de alta dirección.',
   },
 ];
+
+const officeImages = [
+  { src: '/oficina1.png', alt: 'Recepción de nuestras oficinas', hint: 'modern office reception' },
+  { src: '/oficina2.png', alt: 'Sala de juntas principal', hint: 'conference room meeting' },
+  { src: '/oficina3.png', alt: 'Área de trabajo colaborativo', hint: 'collaborative workspace office' },
+  { src: '/oficina4.png', alt: 'Oficina privada con vista', hint: 'private office city view' },
+];
+
+
+function OfficeCarousel() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+    emblaApi.on('select', onSelect);
+    return () => emblaApi.off('select', onSelect);
+  }, [emblaApi]);
+
+  return (
+    <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg" ref={emblaRef}>
+      <div className="flex h-full">
+        {officeImages.map((img, index) => (
+          <div className="relative flex-[0_0_100%] h-full" key={index}>
+             <AnimatePresence>
+                {selectedIndex === index && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1 }}
+                        className="w-full h-full"
+                    >
+                        <Image
+                            src={img.src}
+                            alt={img.alt}
+                            fill
+                            className="object-cover"
+                            data-ai-hint={img.hint}
+                            priority={index === 0}
+                        />
+                     </motion.div>
+                )}
+            </AnimatePresence>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 
 export default function Home() {
@@ -245,15 +303,7 @@ export default function Home() {
                     <Link href="/nuestras-oficinas">Recorrido Virtual</Link>
                 </Button>
               </div>
-              <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
-                <Image
-                    src="/oficina2.png"
-                    alt="Sala de juntas moderna"
-                    fill
-                    className="object-cover"
-                    data-ai-hint="conference room meeting"
-                  />
-              </div>
+              <OfficeCarousel />
             </div>
           </div>
         </AnimatedSection>
@@ -278,3 +328,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
