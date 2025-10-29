@@ -9,20 +9,20 @@ import AnimatedSection from '@/components/animated-section';
 const features = [
   {
     icon: <Target className="h-12 w-12 text-primary" />,
-    title: 'Enfoque en Resultados, no en Procesos',
-    description: 'No medimos nuestro valor en horas, sino en resultados tangibles. Cada estrategia y acción legal está diseñada para impactar positivamente en sus objetivos de negocio, optimizando su retorno de inversión en servicios legales.',
+    title: 'Soluciones enfocadas en tus resultados',
+    description: 'Tu éxito es nuestra medida. Diseñamos cada estrategia legal no solo para resolver un problema, sino para que tu negocio obtenga un beneficio tangible. Tu inversión en asesoría legal se traduce en resultados concretos y medibles.',
     imageId: 'why-us-strategy',
   },
   {
     icon: <Users className="h-12 w-12 text-primary" />,
-    title: 'Socios Estratégicos, no solo Proveedores',
-    description: 'Nos integramos en su visión. Vamos más allá de la simple asesoría para convertirnos en socios que entienden su mercado, anticipan sus necesidades y se comprometen con su crecimiento a largo plazo.',
+    title: 'Un socio estratégico a tu lado',
+    description: 'Más que tus abogados, seremos parte de tu equipo. Nos involucramos para entender tu mercado, anticipar tus necesidades y comprometernos con tu crecimiento. Tendrás un aliado que comparte tu visión y trabaja por tus metas.',
     imageId: 'why-us-commitment',
   },
   {
     icon: <Zap className="h-12 w-12 text-primary" />,
-    title: 'Experiencia Ejecutiva, no solo Académica',
-    description: 'Nuestro equipo combina una profunda experiencia legal con una visión empresarial forjada en roles de alta dirección. Hablamos su idioma, entendemos la presión del negocio y ofrecemos soluciones que son legalmente sólidas y comercialmente viables.',
+    title: 'Experiencia que entiende tu negocio',
+    description: 'Tu caso estará respaldado por un equipo que combina la solidez legal con una visión de negocios real, forjada en roles de alta dirección. Hablamos tu idioma y te ofrecemos soluciones que no solo son correctas en papel, sino que funcionan en la práctica.',
     imageId: 'why-us-experience',
   },
 ];
@@ -34,10 +34,10 @@ export default function WhyUsPage() {
       <AnimatedSection className="py-20 md:py-28 text-center bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-            ¿Por Qué Elegirnos?
+            La tranquilidad de tener al socio correcto
           </h1>
           <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-            En un entorno de negocios complejo, necesita más que un abogado. Necesita un socio estratégico que proteja su presente y potencie su futuro. Descubra nuestro enfoque diferencial.
+            En un entorno de negocios complejo, no solo necesitas un abogado, sino un aliado que proteja tu presente y potencie tu futuro. Descubre cómo nuestro enfoque marca la diferencia para tu empresa.
           </p>
         </div>
       </AnimatedSection>
@@ -79,7 +79,7 @@ export default function WhyUsPage() {
       {/* Testimonial Quote */}
       <AnimatedSection className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-            <h2 className="text-3xl font-bold font-headline mb-4 text-white">Nuestra Promesa: Valor Estratégico</h2>
+            <h2 className="text-3xl font-bold font-headline mb-4 text-white">Nuestra Promesa: Valor Estratégico para tu Negocio</h2>
              <div className="text-left mx-auto max-w-3xl bg-card/80 border border-white/10 p-8 rounded-lg">
                 <blockquote className="text-xl italic text-white border-l-4 border-primary pl-6">
                   "Finalmente encontramos un despacho que no solo entiende las leyes, sino que entiende nuestro negocio. Su asesoría va más allá del cumplimiento; nos han ayudado a tomar decisiones más inteligentes y rentables. Son una extensión de nuestro equipo directivo."
@@ -93,9 +93,9 @@ export default function WhyUsPage() {
       {/* Call to Action */}
       <AnimatedSection className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl font-bold font-headline text-white">¿Listo para una Verdadera Asociación Legal?</h2>
+          <h2 className="text-3xl font-bold font-headline text-white">¿Listo para que trabajemos juntos?</h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Deje de ver los servicios legales como un gasto. Con nosotros, son una inversión en su éxito. Hablemos de cómo podemos generar valor para su empresa.
+            Los servicios legales no deberían ser un gasto, sino una inversión en tu éxito. Hablemos de cómo podemos generar valor para tu empresa.
           </p>
           <div className="mt-8">
             <Button size="lg" asChild>
