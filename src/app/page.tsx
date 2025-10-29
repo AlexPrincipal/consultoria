@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Scale, ShieldCheck, Briefcase, Landmark, FileText, Building, GitBranch, Anchor } from 'lucide-react';
+import { Scale, ShieldCheck, Briefcase, Landmark, FileText, Building, GitBranch, Anchor, Target, Users, Zap, Building2 } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
@@ -40,6 +40,25 @@ function ServiceCard({
     </Card>
   );
 }
+
+const whyUsFeatures = [
+  {
+    icon: <Target className="h-10 w-10 text-primary" />,
+    title: 'Soluciones enfocadas en tus resultados',
+    description: 'Diseñamos cada estrategia legal no solo para resolver un problema, sino para que tu negocio obtenga un beneficio tangible y medible.',
+  },
+  {
+    icon: <Users className="h-10 w-10 text-primary" />,
+    title: 'Un socio estratégico a tu lado',
+    description: 'Nos involucramos para entender tu mercado, anticipar tus necesidades y comprometernos con tu crecimiento como un aliado que comparte tu visión.',
+  },
+  {
+    icon: <Zap className="h-10 w-10 text-primary" />,
+    title: 'Experiencia que entiende tu negocio',
+    description: 'Tu caso estará respaldado por un equipo que combina la solidez legal con una visión de negocios real, forjada en roles de alta dirección.',
+  },
+];
+
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
@@ -141,8 +160,36 @@ export default function Home() {
           </div>
         </AnimatedSection>
         
+        {/* Why Choose Us Section */}
+        <AnimatedSection id="por-que-escogernos" className="py-20 md:py-28 bg-black">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
+                La Diferencia Estratégica
+              </h2>
+              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+                No solo somos abogados; somos socios de negocio. Descubra por qué nuestros clientes nos eligen.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+              {whyUsFeatures.map((feature) => (
+                <div key={feature.title} className="text-center">
+                  <div className="flex justify-center mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-bold font-headline text-white">{feature.title}</h3>
+                  <p className="text-muted-foreground mt-2 text-sm">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-16">
+              <Button variant="outline" asChild>
+                <Link href="/por-que-escogernos">Descubra más ventajas</Link>
+              </Button>
+            </div>
+          </div>
+        </AnimatedSection>
+
         {/* Team Preview Section */}
-        <AnimatedSection id="equipo" className="py-20 md:py-28 bg-black">
+        <AnimatedSection id="equipo" className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
@@ -180,6 +227,33 @@ export default function Home() {
               <Button variant="outline" asChild>
                 <Link href="/quienes-somos">Ver Todo el Equipo</Link>
               </Button>
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* Office Preview Section */}
+        <AnimatedSection id="oficinas" className="py-20 md:py-28 bg-black">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="space-y-4">
+                 <Building2 className="h-12 w-12 text-primary" />
+                <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Un Espacio a la Altura de sus Negocios</h2>
+                <p className="text-muted-foreground text-lg">
+                  Nuestras instalaciones están diseñadas para la excelencia, la confidencialidad y la colaboración estratégica. Le invitamos a conocer el entorno donde protegeremos sus intereses.
+                </p>
+                <Button variant="outline" asChild>
+                    <Link href="/nuestras-oficinas">Recorrido Virtual</Link>
+                </Button>
+              </div>
+              <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg">
+                <Image
+                    src="/oficina2.png"
+                    alt="Sala de juntas moderna"
+                    fill
+                    className="object-cover"
+                    data-ai-hint="conference room meeting"
+                  />
+              </div>
             </div>
           </div>
         </AnimatedSection>
