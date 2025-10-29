@@ -3,6 +3,13 @@ import Image from 'next/image';
 import AnimatedSection from '@/components/animated-section';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 const officeImages = [
   {
@@ -45,23 +52,35 @@ export default function NuestrasOficinasPage() {
       {/* Gallery Section */}
       <AnimatedSection className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-8">
-            {officeImages.map((image, index) => (
-              <div key={index} className="relative aspect-video rounded-lg overflow-hidden shadow-lg group">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={image.hint}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                 <div className="absolute inset-0 bg-black/20 flex items-end p-4">
-                    <h3 className="text-white font-semibold text-lg">{image.alt}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
+           <Carousel className="w-full max-w-4xl mx-auto"
+            opts={{
+                loop: true,
+            }}
+           >
+            <CarouselContent>
+              {officeImages.map((image, index) => (
+                <CarouselItem key={index}>
+                  <div className="p-1">
+                     <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg group">
+                        <Image
+                            src={image.src}
+                            alt={image.alt}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-ai-hint={image.hint}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h3 className="text-white font-semibold text-2xl font-headline">{image.alt}</h3>
+                        </div>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-[-50px]" />
+            <CarouselNext className="right-[-50px]" />
+          </Carousel>
         </div>
       </AnimatedSection>
       
