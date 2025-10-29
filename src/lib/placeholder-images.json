@@ -80,19 +80,19 @@
     },
     {
       "id": "why-us-strategy",
-      "description": "Chess pieces on a board, representing business strategy",
+      "description": "Business professionals analyzing data on a screen, representing a focus on results.",
       "imageUrl": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxidXNpbmVzcyUyMHN0cmF0ZWd5fGVufDB8fHx8MTc2MTcwMDkzMHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "business strategy"
     },
     {
       "id": "why-us-experience",
-      "description": "Experienced professionals in a modern office collaborating",
-      "imageUrl": "https://images.unsplash.com/photo-1758518732175-5d608ba3abdf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjB0ZWFtJTIwbWVldGluZ3xlbnwwfHx8fDE3NjE3MDgyMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "Experienced professionals in a modern office collaborating on a project.",
+      "imageUrl": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB0ZWFtJTIwbWVldGluZ3xlbnwwfHx8fDE3NjE4NTQxODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "professional team meeting"
     },
     {
       "id": "why-us-commitment",
-      "description": "A firm handshake sealing a business deal",
+      "description": "A firm handshake sealing a business deal, symbolizing a strategic partnership.",
       "imageUrl": "https://images.unsplash.com/photo-1549923746-c502d488b3ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxidXNpbmVzcyUyMHBhcnRuZXJzaGlwJTIwaGFuZHNoYWtlfGVufDB8fHx8MTc2MTcwODIzNnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "business partnership handshake"
     }
