@@ -36,6 +36,7 @@ const navLinks = [
     ]
   },
   { href: '/por-que-escogernos', label: '¿Por qué nosotros?' },
+  { href: '/nuestras-oficinas', label: 'Oficinas' },
   { href: '/faq', label: 'FAQ' },
 ];
 
