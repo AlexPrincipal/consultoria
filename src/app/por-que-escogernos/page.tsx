@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Target, Users, Zap } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import AnimatedSection from '@/components/animated-section';
 
 const features = [
   {
@@ -31,7 +31,7 @@ export default function WhyUsPage() {
   return (
     <div className="bg-background text-white">
       {/* Hero */}
-      <section className="py-20 md:py-28 text-center bg-black">
+      <AnimatedSection className="py-20 md:py-28 text-center bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
             ¿Por Qué Elegirnos?
@@ -40,10 +40,10 @@ export default function WhyUsPage() {
             En un entorno de negocios complejo, necesita más que un abogado. Necesita un socio estratégico que proteja su presente y potencie su futuro. Descubra nuestro enfoque diferencial.
           </p>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Features Section */}
-      <section className="py-20 md:py-28">
+      <AnimatedSection className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <div className="space-y-20">
             {features.map((feature, index) => {
@@ -74,10 +74,10 @@ export default function WhyUsPage() {
             })}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Testimonial Quote */}
-      <section className="py-20 md:py-28 bg-black">
+      <AnimatedSection className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
             <h2 className="text-3xl font-bold font-headline mb-4 text-white">Nuestra Promesa: Valor Estratégico</h2>
              <div className="text-left mx-auto max-w-3xl bg-card/80 border border-white/10 p-8 rounded-lg">
@@ -87,11 +87,11 @@ export default function WhyUsPage() {
                 <p className="text-right mt-6 text-primary font-semibold">- CEO, Empresa de Tecnología en Crecimiento</p>
             </div>
         </div>
-      </section>
+      </AnimatedSection>
 
 
       {/* Call to Action */}
-      <section className="py-20 md:py-28">
+      <AnimatedSection className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold font-headline text-white">¿Listo para una Verdadera Asociación Legal?</h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -103,7 +103,7 @@ export default function WhyUsPage() {
             </Button>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
     </div>
   );
 }
