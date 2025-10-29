@@ -6,6 +6,7 @@ export const teamMembers = [
     slug: "rene-casillas-gallardo",
     imageUrl: "/perfil.jpg",
     imageHint: "professional portrait lawyer",
+    imagePosition: "object-top",
     bio: "Experto en el diseño e implementación de sistemas de control y cumplimiento normativo para mitigar riesgos financieros, reputacionales y legales.",
     homeSummary: "Estratega en compliance y derecho corporativo, enfocado en proteger el valor y la reputación de su negocio.",
     fullBio: "Licenciado y Maestro en Derecho Corporativo con 10 años de experiencia en roles de Control, Cumplimiento Normativo (Compliance) y Asuntos Legales, alternando entre la Administración Pública y la Iniciativa Privada. Especializado en establecer y monitorear políticas y procedimientos para asegurar estándares éticos y prevenir riesgos financieros, reputacionales y legales.\nAsimismo, es especialista en asesoramiento en la constitución de sociedades, fusiones, adquisiciones, modificaciones de capital y elaboración de estatutos, manejando patentes, marcas, derechos de autor y licencias.",

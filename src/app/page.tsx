@@ -160,7 +160,10 @@ export default function Home() {
                       src={member.imageUrl}
                       alt={`Retrato de ${member.name}`}
                       fill
-                      className="rounded-full object-cover object-top border-4 border-primary/50"
+                      className={cn(
+                        "rounded-full object-cover border-4 border-primary/50",
+                        (member as any).imagePosition || ''
+                      )}
                       data-ai-hint={member.imageHint}
                     />
                   </div>
