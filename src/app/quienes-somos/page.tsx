@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { teamMembers } from '@/lib/team';
 import { cn } from '@/lib/utils';
+import { CheckCircle, Landmark } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 
 export default function QuienesSomosPage() {
   const teamImage = {
@@ -11,6 +13,14 @@ export default function QuienesSomosPage() {
     description: 'Nuestro equipo de abogados expertos',
     imageHint: 'lawyers team portrait',
   };
+  
+  const misionVisionImage = {
+      imageUrl: 'https://images.unsplash.com/photo-1613909207394-67a574507d83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxsYWR5JTIwanVzdGljZSUyMHN0YXR1ZXxlbnwwfHx8fDE3NjE4Nzg2NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      description: 'Estatua de la justicia',
+      imageHint: 'lady justice statue'
+  }
+
+  const valores = ["Integridad", "Excelencia", "Compromiso", "Innovación", "Confianza"];
 
   return (
     <div className="bg-background text-white">
@@ -26,38 +36,67 @@ export default function QuienesSomosPage() {
         </div>
       </section>
 
-      {/* Misión y Visión y Valores */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid md:grid-cols-3 gap-12">
+      {/* Misión y Visión */}
+       <section className="relative py-20 md:py-28">
+         <Image
+            src={misionVisionImage.imageUrl}
+            alt={misionVisionImage.description}
+            fill
+            className="object-cover opacity-10"
+            data-ai-hint={misionVisionImage.imageHint}
+          />
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
+            <div className="text-center mb-16">
+                 <Landmark className="h-12 w-12 text-primary mx-auto mb-4" />
+                 <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Nuestra Firma</h2>
+            </div>
+          <div className="grid md:grid-cols-2 gap-12 text-center md:text-left">
             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4 text-center text-primary">Nuestra Misión</h2>
-              <p className="text-muted-foreground leading-relaxed text-center">
+              <h3 className="text-3xl font-bold font-headline mb-4 text-primary">Nuestra Misión</h3>
+              <p className="text-muted-foreground leading-relaxed text-lg">
                 Ofrecer soluciones legales innovadoras, efectivas y a la medida, que no solo resuelvan los problemas actuales de nuestros clientes, sino que también anticipen desafíos futuros. Nos dedicamos a proteger los activos, la reputación y el crecimiento de cada empresa que confía en nosotros.
               </p>
             </div>
             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4 text-center text-primary">Nuestra Visión</h2>
-              <p className="text-muted-foreground leading-relaxed text-center">
-                Ser la firma de abogados líder en derecho corporativo y de negocios en México, reconocida por nuestro enfoque estratégico, nuestro compromiso inquebrantable con la excelencia y por construir relaciones de largo plazo con nuestros clientes, basadas en la confianza y los resultados.
-              </p>
-            </div>
-             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4 text-center text-primary">Nuestros Valores</h2>
-               <ul className="text-muted-foreground leading-relaxed text-center list-disc list-inside marker:text-primary">
-                  <li>Integridad</li>
-                  <li>Excelencia</li>
-                  <li>Compromiso</li>
-                  <li>Innovación</li>
-                  <li>Confianza</li>
-               </ul>
+              <h3 className="text-3xl font-bold font-headline mb-4 text-primary">Nuestra Visión</h3>
+              <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
+                    <span className="text-muted-foreground">Ser la firma de abogados líder en derecho corporativo y de negocios en México.</span>
+                  </li>
+                   <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
+                    <span className="text-muted-foreground">Reconocida por nuestro enfoque estratégico y compromiso inquebrantable con la excelencia.</span>
+                  </li>
+                   <li className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
+                    <span className="text-muted-foreground">Construir relaciones de largo plazo con nuestros clientes, basadas en la confianza y los resultados.</span>
+                  </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
       
+      {/* Valores */}
+      <section className="py-20 md:py-28 bg-black">
+        <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="text-3xl font-bold font-headline mb-4 text-white">Nuestros Valores</h2>
+              <p className="text-muted-foreground leading-relaxed">Los principios que guían cada una de nuestras acciones y decisiones.</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-5xl mx-auto">
+                {valores.map(valor => (
+                    <Card key={valor} className="bg-card/50 border-white/10 p-6 text-center flex items-center justify-center">
+                        <h4 className="text-xl font-headline text-white">{valor}</h4>
+                    </Card>
+                ))}
+            </div>
+        </div>
+      </section>
+
       {/* Team Section */}
-      <section id="equipo" className="py-20 md:py-28 bg-black">
+      <section id="equipo" className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4 md:px-6">
            <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Conozca a Nuestro Equipo</h2>
