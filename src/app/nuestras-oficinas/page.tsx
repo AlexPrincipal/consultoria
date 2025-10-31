@@ -52,7 +52,7 @@ export default function NuestrasOficinasPage() {
 
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             {/* Main Image Display */}
-            <div className="lg:w-2/3 relative aspect-video w-full h-[40vh] md:h-[60vh] rounded-lg overflow-hidden shadow-2xl bg-card">
+            <div className="lg:w-2/3 relative aspect-video w-full rounded-lg overflow-hidden shadow-2xl bg-card/50">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
@@ -66,7 +66,7 @@ export default function NuestrasOficinasPage() {
                     src={officeImages[activeIndex].src}
                     alt={officeImages[activeIndex].alt}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     data-ai-hint={officeImages[activeIndex].hint}
                     sizes="(max-width: 768px) 100vw, 66vw"
                     priority={activeIndex === 0}
