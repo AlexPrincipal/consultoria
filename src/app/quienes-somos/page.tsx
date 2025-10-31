@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { teamMembers } from '@/lib/team';
 import { cn } from '@/lib/utils';
-import { CheckCircle, Landmark } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { CheckCircle, Landmark, Shield, Star, Handshake, Sparkles, ShieldCheck } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import AnimatedSection from '@/components/animated-section';
 
 export default function QuienesSomosPage() {
   const teamImage = {
@@ -20,12 +21,18 @@ export default function QuienesSomosPage() {
       imageHint: 'lady justice statue'
   }
 
-  const valores = ["Integridad", "Excelencia", "Compromiso", "Innovación", "Confianza"];
+  const valores = [
+    { title: "Integridad", icon: <Shield className="h-10 w-10 text-muted-foreground group-hover:text-primary transition-colors" /> },
+    { title: "Excelencia", icon: <Star className="h-10 w-10 text-muted-foreground group-hover:text-primary transition-colors" /> },
+    { title: "Compromiso", icon: <Handshake className="h-10 w-10 text-muted-foreground group-hover:text-primary transition-colors" /> },
+    { title: "Innovación", icon: <Sparkles className="h-10 w-10 text-muted-foreground group-hover:text-primary transition-colors" /> },
+    { title: "Confianza", icon: <ShieldCheck className="h-10 w-10 text-muted-foreground group-hover:text-primary transition-colors" /> }
+  ];
 
   return (
     <div className="bg-background text-white">
       {/* Hero */}
-      <section className="py-20 md:py-28 text-center bg-black">
+      <AnimatedSection className="py-20 md:py-28 text-center bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
             ¿Quiénes somos?
@@ -34,10 +41,10 @@ export default function QuienesSomosPage() {
             Somos un grupo de abogados que ofrecemos servicios profesionales integrales en las áreas legales, contables, financieras, tributarias, mercantiles, laborales, administrativas, orientadas a la creación de tu PYME o negocio de punta a punta. En esencia, el objetivo es proporcionar soluciones legales y de gestión que permitan a la persona física o moral operar de forma segura, eficiente y exitosa.
           </p>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Misión y Visión */}
-       <section className="relative py-20 md:py-28">
+       <AnimatedSection className="relative py-20 md:py-28">
          <Image
             src={misionVisionImage.imageUrl}
             alt={misionVisionImage.description}
@@ -76,27 +83,30 @@ export default function QuienesSomosPage() {
             </div>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
       
       {/* Valores */}
-      <section className="py-20 md:py-28 bg-black">
+      <AnimatedSection className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-3xl font-bold font-headline mb-4 text-white">Nuestros Valores</h2>
               <p className="text-muted-foreground leading-relaxed">Los principios que guían cada una de nuestras acciones y decisiones.</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-5xl mx-auto">
-                {valores.map(valor => (
-                    <Card key={valor} className="bg-card/50 border-white/10 p-6 text-center flex items-center justify-center">
-                        <h4 className="text-xl font-headline text-white">{valor}</h4>
-                    </Card>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
+                {valores.map((valor, index) => (
+                    <div key={valor.title} className="fade-in-up opacity-0" style={{ animationDelay: `${index * 150}ms` }}>
+                        <Card className="group bg-card/50 border-white/10 p-6 text-center flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:-translate-y-2 hover:shadow-primary/20">
+                            {valor.icon}
+                            <h4 className="text-xl font-headline text-white">{valor.title}</h4>
+                        </Card>
+                    </div>
                 ))}
             </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Team Section */}
-      <section id="equipo" className="py-20 md:py-28 bg-background">
+      <AnimatedSection id="equipo" className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4 md:px-6">
            <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Conozca a Nuestro Equipo</h2>
@@ -132,10 +142,10 @@ export default function QuienesSomosPage() {
             ))}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
       {/* Equipo y Contacto */}
-      <section className="py-20 md:py-28 bg-secondary">
+      <AnimatedSection className="py-20 md:py-28 bg-secondary">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
              <div className="relative aspect-video rounded-lg overflow-hidden">
@@ -158,7 +168,7 @@ export default function QuienesSomosPage() {
             </div>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
     </div>
   );
 }
