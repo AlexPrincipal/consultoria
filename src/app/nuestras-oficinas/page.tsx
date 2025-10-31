@@ -113,7 +113,7 @@ export default function NuestrasOficinasPage() {
                     >
                       <h3 className="font-headline text-2xl text-white mb-2">{officeImages[activeIndex].title}</h3>
                       <p className="text-muted-foreground">
-                        {officeImages[activeIndex].alt}. Un entorno diseñado para inspirar confianza y alcanzar los mejores resultados para su empresa.
+                        {officeImages[activeIndex].alt}.
                       </p>
                     </motion.div>
                   </AnimatePresence>
