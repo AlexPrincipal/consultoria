@@ -50,9 +50,9 @@ export default function NuestrasOficinasPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
             {/* Main Image Display */}
-            <div className="lg:col-span-2 relative aspect-video w-full h-[60vh] rounded-lg overflow-hidden shadow-2xl bg-card">
+            <div className="lg:w-2/3 relative aspect-video w-full h-[40vh] md:h-[60vh] rounded-lg overflow-hidden shadow-2xl bg-card">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeIndex}
@@ -68,7 +68,7 @@ export default function NuestrasOficinasPage() {
                     fill
                     className="object-cover"
                     data-ai-hint={officeImages[activeIndex].hint}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, 66vw"
                     priority={activeIndex === 0}
                   />
                 </motion.div>
@@ -76,7 +76,7 @@ export default function NuestrasOficinasPage() {
             </div>
 
             {/* Thumbnails and Description */}
-            <div className="flex flex-col justify-between">
+            <div className="lg:w-1/3 flex flex-col justify-between">
               <div>
                 <h2 className="font-headline text-3xl text-primary mb-4">Nuestros Espacios</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-4">
