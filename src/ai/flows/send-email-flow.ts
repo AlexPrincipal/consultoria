@@ -34,8 +34,8 @@ const sendEmailFlow = ai.defineFlow(
     outputSchema: z.void(),
   },
   async (input) => {
-    // In a real implementation, we would use a tool to send an email.
-    // For now, we'll just log the intended action to the console.
+    // NOTE: This is a simulation. In a real implementation, we would use a tool 
+    // to send an email with a service like Resend or SendGrid.
     
     const subject = input.serviceContext
       ? `${SUBJECT_PREFIX} - Interés en ${input.serviceContext}`
@@ -53,14 +53,17 @@ const sendEmailFlow = ai.defineFlow(
       ${input.message}
     `;
 
-    console.log('--- SIMULATING EMAIL SEND ---');
+    console.log('--- SIMULATING EMAIL SEND (NOT ACTUALLY SENT) ---');
     console.log(`To: ${TO_EMAIL}`);
     console.log(`Subject: ${subject}`);
     console.log('Body:', body);
-    console.log('-----------------------------');
+    console.log('----------------------------------------------------');
+    console.log('To make this work, you need to integrate a real email sending service (e.g., Resend, SendGrid).');
 
-    // This is where you would integrate with an email service like SendGrid, Resend, or Nodemailer.
-    // For example (using a hypothetical 'sendEmail' tool):
-    // await ai.run('sendEmail', { to: TO_EMAIL, subject, body });
+
+    // Example of what a real implementation would look like:
+    // const sendEmailTool = ai.defineTool( ... );
+    // const emailPrompt = ai.definePrompt({ tools: [sendEmailTool], ... });
+    // await emailPrompt(input);
   }
 );
