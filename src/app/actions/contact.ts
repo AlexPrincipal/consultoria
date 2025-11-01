@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import { sendContactEmail } from '@/ai/flows/send-email-flow';
 
 const formSchema = z.object({
   name: z.string(),
@@ -17,18 +18,11 @@ export async function submitContactForm(formData: unknown) {
     return { success: false, message: 'Los datos del formulario no son válidos.' };
   }
 
-  const { name, email, phone, message, serviceContext } = parsedData.data;
-
-  // Aquí es donde procesarías los datos en el backend.
-  // Por ejemplo, podrías enviarlos a un CRM, una base de datos o un servicio de email.
-  console.log('--- Nueva consulta recibida ---');
-  console.log('Nombre:', name);
-  console.log('Email:', email);
-  console.log('Teléfono:', phone);
-  console.log('Servicio:', serviceContext || 'No especificado');
-  console.log('Mensaje:', message);
-  console.log('-----------------------------');
-  
-  // Por ahora, simulamos un envío exitoso.
-  return { success: true, message: 'Formulario recibido correctamente.' };
+  try {
+    await sendContactEmail(parsedData.data);
+    return { success: true, message: 'Formulario recibido correctamente.' };
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return { success: false, message: 'Hubo un error al enviar el mensaje. Intente de nuevo más tarde.' };
+  }
 }
