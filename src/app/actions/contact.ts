@@ -19,8 +19,12 @@ export async function submitContactForm(formData: unknown) {
   }
 
   try {
-    await sendContactEmail(parsedData.data);
-    return { success: true, message: 'Formulario recibido correctamente.' };
+    const result = await sendContactEmail(parsedData.data);
+    if (result.success) {
+      return { success: true, message: 'Formulario recibido correctamente.' };
+    } else {
+      throw new Error('El flujo de envío de correo indicó una falla.');
+    }
   } catch (error) {
     console.error('Error sending email:', error);
     return { success: false, message: 'Hubo un error al enviar el mensaje. Intente de nuevo más tarde.' };

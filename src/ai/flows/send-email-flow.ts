@@ -42,7 +42,7 @@ const sendEmailTool = ai.defineTool(
     name: 'sendEmail',
     description: 'Sends an email to a specified recipient.',
     inputSchema: SendEmailToolSchema,
-    outputSchema: z.void(),
+    outputSchema: z.object({ success: z.boolean() }),
   },
   async (input) => {
     if (!process.env.RESEND_API_KEY) {
@@ -52,7 +52,7 @@ const sendEmailTool = ai.defineTool(
       console.log(`Subject: ${input.subject}`);
       console.log('Body (HTML):', input.html);
       console.log('-----------------------------------------------------------');
-      return;
+      return { success: true };
     }
     
     try {
@@ -62,6 +62,7 @@ const sendEmailTool = ai.defineTool(
         subject: input.subject,
         html: input.html,
       });
+       return { success: true };
     } catch (error) {
       console.error('Error sending email via Resend:', error);
       // We re-throw the error so the calling flow knows it failed.
@@ -116,7 +117,7 @@ const emailPrompt = ai.definePrompt(
     const toolCall = llmResponse.toolCalls?.find(call => call.tool === 'sendEmail');
 
     if (toolCall) {
-        await sendEmailTool(toolCall.input);
+        return await sendEmailTool(toolCall.input);
     } else {
         // Fallback for simulation or if model fails to call tool
         const subject = input.serviceContext
@@ -136,7 +137,7 @@ const emailPrompt = ai.definePrompt(
           </body></html>
         `;
 
-        await sendEmailTool({
+        return await sendEmailTool({
             to: TO_EMAIL,
             from: FROM_EMAIL,
             subject: subject,
@@ -152,14 +153,14 @@ const sendEmailFlow = ai.defineFlow(
   {
     name: 'sendEmailFlow',
     inputSchema: ContactFormInputSchema,
-    outputSchema: z.void(),
+    outputSchema: z.object({ success: z.boolean() }),
   },
   async (input) => {
     // We call the prompt which has the logic to use the email tool.
-    await emailPrompt(input);
+    return await emailPrompt(input);
   }
 );
 
-export async function sendContactEmail(input: ContactFormInput): Promise<void> {
-  await sendEmailFlow(input);
+export async function sendContactEmail(input: ContactFormInput): Promise<{ success: boolean }> {
+  return await sendEmailFlow(input);
 }
