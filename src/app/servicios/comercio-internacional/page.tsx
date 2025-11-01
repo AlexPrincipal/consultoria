@@ -80,18 +80,15 @@ export default function ComercioInternacionalPage() {
 
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-           <h2 className="text-3xl font-bold font-headline mb-4 text-white">Abriendo Fronteras para su Negocio</h2>
-           <p className="text-muted-foreground mb-8">Nuestra asesoría convierte los desafíos del comercio internacional en ventajas competitivas.</p>
-          <div className="text-left mx-auto max-w-2xl bg-card/80 border border-white/10 p-8 rounded-lg">
-                <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
-                  "Su profundo expertise en derecho aduanero fue crucial para liberar una retención de mercancía que amenazaba con parar nuestra línea de producción. Actuaron con una rapidez y una eficacia que nos salvó de pérdidas millonarias."
-                </blockquote>
-                <p className="text-right mt-4 text-primary font-semibold">- Gerente de Logística, Empresa Automotriz</p>            </div>
-            <div className="mt-8">
-                <Button asChild variant="outline">
-                    <Link href="/testimoniales">Más sobre nuestros clientes</Link>
-                </Button>
-            </div>
+          <h2 className="text-3xl font-bold font-headline mb-4 text-white">¿Listo para Fortalecer su Empresa?</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Nuestro equipo está preparado para ofrecerle la asesoría estratégica que su negocio necesita. Contáctenos hoy para una evaluación de su caso.
+          </p>
+          <div className="mt-8">
+            <Button size="lg" asChild>
+              <Link href="/contacto">Agendar una Consulta</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>

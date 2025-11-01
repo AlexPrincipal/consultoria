@@ -76,22 +76,8 @@ export default function WhyUsPage() {
         </div>
       </AnimatedSection>
 
-      {/* Testimonial Quote */}
-      <AnimatedSection className="py-20 md:py-28 bg-black">
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-            <h2 className="text-3xl font-bold font-headline mb-4 text-white">Nuestra Promesa: Valor Estratégico para tu Negocio</h2>
-             <div className="text-left mx-auto max-w-3xl bg-card/80 border border-white/10 p-8 rounded-lg">
-                <blockquote className="text-xl italic text-white border-l-4 border-primary pl-6">
-                  "Finalmente encontramos un despacho que no solo entiende las leyes, sino que entiende nuestro negocio. Su asesoría va más allá del cumplimiento; nos han ayudado a tomar decisiones más inteligentes y rentables. Son una extensión de nuestro equipo directivo."
-                </blockquote>
-                <p className="text-right mt-6 text-primary font-semibold">- CEO, Empresa de Tecnología en Crecimiento</p>
-            </div>
-        </div>
-      </AnimatedSection>
-
-
       {/* Call to Action */}
-      <AnimatedSection className="py-20 md:py-28">
+      <AnimatedSection className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold font-headline text-white">¿Listo para que trabajemos juntos?</h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">

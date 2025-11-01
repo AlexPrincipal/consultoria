@@ -80,21 +80,15 @@ export default function AsesoriaPage() {
 
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-           <h2 className="text-3xl font-bold font-headline mb-4 text-white">Un Socio Estratégico, no solo un Abogado</h2>
-            <p className="text-muted-foreground mb-8">
-              Nuestra consultoría ha sido clave para el crecimiento y la seguridad jurídica de múltiples empresas.
-            </p>
-            <div className="text-left mx-auto max-w-2xl bg-card/80 border border-white/10 p-8 rounded-lg">
-                <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
-                  "La asesoría estratégica que recibimos fue fundamental para nuestra expansión internacional. Nos ayudaron a navegar un entorno regulatorio complejo con total seguridad y visión de futuro."
-                </blockquote>
-                <p className="text-right mt-4 text-primary font-semibold">- CEO, Fintech en Expansión</p>
-            </div>
-             <div className="mt-8">
-                <Button asChild variant="outline">
-                    <Link href="/testimoniales">Ver más historias de éxito</Link>
-                </Button>
-            </div>
+          <h2 className="text-3xl font-bold font-headline mb-4 text-white">¿Listo para Fortalecer su Empresa?</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Nuestro equipo está preparado para ofrecerle la asesoría estratégica que su negocio necesita. Contáctenos hoy para una evaluación de su caso.
+          </p>
+          <div className="mt-8">
+            <Button size="lg" asChild>
+              <Link href="/contacto">Agendar una Consulta</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>

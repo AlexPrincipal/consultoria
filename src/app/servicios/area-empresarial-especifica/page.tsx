@@ -95,21 +95,15 @@ export default function AreaEmpresarialPage() {
 
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-4xl">
-           <h2 className="text-3xl font-bold font-headline mb-4 text-white">Un Enfoque que Integra, una Solución que Simplifica</h2>
-            <p className="text-muted-foreground mb-8">
-              Nuestro enfoque multidisciplinario nos permite ofrecer soluciones completas, centralizando sus necesidades legales en un solo punto de contacto estratégico.
-            </p>
-          <div className="text-left mx-auto max-w-2xl bg-card/80 border border-white/10 p-8 rounded-lg">
-                <blockquote className="text-lg italic text-white border-l-2 border-primary pl-4">
-                  "Tener un solo punto de contacto para nuestras necesidades legales, fiscales y laborales ha sido un cambio radical. Su visión 360° nos ha ahorrado tiempo, evitado problemas de coordinación y nos ha dado una ventaja competitiva."
-                </blockquote>
-                <p className="text-right mt-4 text-primary font-semibold">- Director Financiero, Grupo Comercial</p>
-            </div>
-            <div className="mt-8">
-                <Button asChild variant="outline">
-                    <Link href="/testimoniales">Lea las opiniones de nuestros clientes</Link>
-                </Button>
-            </div>
+          <h2 className="text-3xl font-bold font-headline mb-4 text-white">¿Listo para Fortalecer su Empresa?</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Nuestro equipo está preparado para ofrecerle la asesoría estratégica que su negocio necesita. Contáctenos hoy para una evaluación de su caso.
+          </p>
+          <div className="mt-8">
+            <Button size="lg" asChild>
+              <Link href="/contacto">Agendar una Consulta</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>
