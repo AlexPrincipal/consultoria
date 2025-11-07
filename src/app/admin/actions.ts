@@ -1,7 +1,7 @@
 
 'use server';
 
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
@@ -56,7 +56,16 @@ export async function login(prevState: { error: string | null; success?: boolean
     } catch (e) {
         console.error("Dev login/setup failed", e);
         if (e instanceof FirebaseError) {
-             return { error: `Error de Firebase: ${e.message}` };
+            switch (e.code) {
+                case 'auth/invalid-credential':
+                    return { error: 'Las credenciales proporcionadas no son válidas.' };
+                case 'auth/user-not-found':
+                    return { error: 'No se encontró ningún usuario con este correo electrónico.' };
+                case 'auth/wrong-password':
+                    return { error: 'Contraseña incorrecta. Por favor, inténtelo de nuevo.' };
+                default:
+                    return { error: `Ocurrió un error inesperado de Firebase: ${e.message}` };
+            }
         }
         return { error: 'No se pudo procesar el inicio de sesión de desarrollo.' };
     }
