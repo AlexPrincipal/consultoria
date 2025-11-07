@@ -15,20 +15,20 @@ export async function login(prevState: { error: string | null } | null, formData
 
   // --- TEMPORARY DEVELOPMENT LOGIN ---
   if (email === 'admin@example.com' && password === 'admin') {
-    // This is insecure and for development ONLY.
+    // For dev mode, we just return success and let the client handle the redirect.
     // The client-side will set a sessionStorage item to track this dev login.
-    // We redirect to the root page where the admin toolbar will be visible.
-    redirect('/');
+    return { error: null, success: true };
   }
   // --- END TEMPORARY DEVELOPMENT LOGIN ---
 
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     if (userCredential.user) {
-        // On successful Firebase login, redirect to the root to use the admin toolbar.
-        redirect('/');
+        // On successful Firebase login, return success and let client redirect.
+        return { error: null, success: true };
     }
-    return { error: 'No se pudo redirigir.'};
+    // This case should ideally not be reached if signInWithEmailAndPassword succeeds
+    return { error: 'No se pudo iniciar sesión.'};
 
   } catch (e) {
     if (e instanceof FirebaseError) {

@@ -1,6 +1,7 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { login } from '@/app/(auth)/admin/login/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,11 +12,20 @@ import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(login, null);
   
   const isDevLogin = (form: FormData) => {
       return form.get('email') === 'admin@example.com' && form.get('password') === 'admin';
   }
+
+  useEffect(() => {
+    if (state?.success) {
+      // If the server action was successful, redirect on the client.
+      router.push('/');
+      router.refresh(); // This forces a refresh to re-evaluate auth state in layouts.
+    }
+  }, [state, router]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,12 +33,13 @@ export default function LoginPage() {
 
     if(isDevLogin(formData)) {
         // Set a session storage item for the dev bypass. This is checked on the client
-        // in the AdminLayout and AdminToolbar to enable edit mode.
+        // in the AdminLayout to enable edit mode.
         sessionStorage.setItem('dev-admin', 'true');
     } else {
         sessionStorage.removeItem('dev-admin');
     }
-    // The server action will handle the redirect.
+    
+    // The server action will now just return state, not redirect.
     formAction(formData);
   };
 
