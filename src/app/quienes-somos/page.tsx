@@ -180,8 +180,12 @@ export default function QuienesSomosPage() {
                     />
                   </div>
                   <div className="md:col-span-2 space-y-4 text-center md:text-left">
-                    <h3 className="text-3xl font-bold font-headline text-primary">{member.name}</h3>
-                    <p className="text-muted-foreground leading-relaxed text-lg">{member.bio}</p>
+                    <h3 className="text-3xl font-bold font-headline text-primary">
+                      <EditableText field="name" defaultText={member.name} isLoading={isLoading} collectionId="teamMembers" docId={member.id} />
+                    </h3>
+                    <div className="text-muted-foreground leading-relaxed text-lg">
+                      <EditableText field="bio" defaultText={member.bio} isLoading={isLoading} collectionId="teamMembers" docId={member.id} multiline/>
+                    </div>
                      <Button variant="link" asChild className="p-0 text-primary">
                         <Link href={`/quienes-somos/${member.slug}`}>Conocer trayectoria &rarr;</Link>
                     </Button>
