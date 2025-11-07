@@ -1,20 +1,49 @@
 
+'use client';
+
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { teamMembers } from '@/lib/team';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import EditableText from '@/components/editable-text';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export function generateStaticParams() {
-  return teamMembers.map((member) => ({
-    slug: member.slug,
-  }));
-}
+// This function can be removed if you are not using Next.js static generation
+// export async function generateStaticParams() {
+//   // Fetch all slugs from Firestore here to pre-render pages
+//   return [{ slug: 'rene-casillas-gallardo' }, { slug: 'jose-luis-pineda-nunez' }];
+// }
 
 export default function TeamMemberPage({ params }: { params: { slug: string } }) {
-  const member = teamMembers.find((m) => m.slug === params.slug);
+  const firestore = useFirestore();
+  const memberRef = useMemoFirebase(
+    () => (firestore ? doc(firestore, 'teamMembers', params.slug) : null),
+    [firestore, params.slug]
+  );
+  const { data: member, isLoading } = useDoc(memberRef);
+
+  if (isLoading) {
+    return (
+      <div className="bg-background text-white py-20 md:py-28">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+            <div className="md:col-span-1 flex flex-col items-center">
+              <Skeleton className="h-64 w-64 rounded-lg mb-6" />
+              <Skeleton className="h-8 w-48 mb-2" />
+              <Skeleton className="h-6 w-32" />
+            </div>
+            <div className="md:col-span-2">
+              <Skeleton className="h-96 w-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!member) {
     notFound();
@@ -35,8 +64,12 @@ export default function TeamMemberPage({ params }: { params: { slug: string } })
                 data-ai-hint={member.imageHint}
               />
             </div>
-            <h1 className="text-3xl font-bold font-headline text-center">{member.name}</h1>
-            <p className="text-primary text-lg font-medium text-center">{member.title}</p>
+             <h1 className="text-3xl font-bold font-headline text-center">
+                <EditableText field="name" defaultText={member.name} isLoading={isLoading} collectionId="teamMembers" docId={member.id} />
+             </h1>
+             <div className="text-primary text-lg font-medium text-center">
+                <EditableText field="title" defaultText={member.title} isLoading={isLoading} collectionId="teamMembers" docId={member.id} multiline/>
+             </div>
             <div className="mt-4">
               <Button variant="ghost" size="icon" asChild>
                 <Link href={member.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -55,15 +88,19 @@ export default function TeamMemberPage({ params }: { params: { slug: string } })
               <CardContent className="space-y-6">
                 <div>
                   <h3 className="font-semibold text-lg text-primary mb-2">Biografía</h3>
-                  <p className="text-muted-foreground leading-relaxed">{member.fullBio}</p>
+                  <div className="text-muted-foreground leading-relaxed">
+                    <EditableText field="fullBio" defaultText={member.fullBio} isLoading={isLoading} collectionId="teamMembers" docId={member.id} multiline/>
+                  </div>
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-primary mb-3">Logros Destacados</h3>
                   <ul className="space-y-3">
-                    {member.achievements.map((achievement, index) => (
+                    {(member.achievements || []).map((achievement: string, index: number) => (
                       <li key={index} className="flex items-start gap-3">
                         <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
-                        <span className="text-muted-foreground">{achievement}</span>
+                        <span className="text-muted-foreground">
+                            <EditableText field={`achievements.${index}`} defaultText={achievement} isLoading={isLoading} collectionId="teamMembers" docId={member.id} />
+                        </span>
                       </li>
                     ))}
                   </ul>

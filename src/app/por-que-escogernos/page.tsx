@@ -46,16 +46,18 @@ export default function WhyUsPage() {
     () => (firestore ? doc(firestore, 'pageContent', 'why-us') : null),
     [firestore]
   );
-  const { data: pageData, isLoading } = useDoc(contentRef, {
+  const { data: pageData, isLoading } = useDoc(contentRef);
+  
+  const defaultContent = {
       id: 'why-us',
       title: 'La tranquilidad de tener al socio correcto',
       subhead: 'En un entorno de negocios complejo, no solo necesitas un abogado, sino un aliado que proteja tu presente y potencie tu futuro. Descubre cómo nuestro enfoque marca la diferencia para tu empresa.',
       ctaTitle: '¿Listo para que trabajemos juntos?',
       ctaSubhead: 'Los servicios legales no deberían ser un gasto, sino una inversión en tu éxito. Hablemos de cómo podemos generar valor para tu empresa.',
       ctaButton: 'Agendar una Consulta Estratégica'
-  });
+  };
 
-  const content = pageData || {};
+  const content = pageData || defaultContent;
 
   return (
     <div className="bg-background text-white">
@@ -63,10 +65,10 @@ export default function WhyUsPage() {
       <AnimatedSection className="py-20 md:py-28 text-center bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-            <EditableText field="title" defaultText={content.title} isLoading={isLoading} pageId="why-us" />
+            <EditableText field="title" defaultText={content.title} isLoading={isLoading} collectionId="pageContent" docId="why-us" />
           </h1>
           <div className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-             <EditableText field="subhead" defaultText={content.subhead} isLoading={isLoading} pageId="why-us" multiline/>
+             <EditableText field="subhead" defaultText={content.subhead} isLoading={isLoading} collectionId="pageContent" docId="why-us" multiline/>
           </div>
         </div>
       </AnimatedSection>
@@ -84,11 +86,11 @@ export default function WhyUsPage() {
                     <div className="flex items-center gap-4">
                       {feature.icon}
                       <h2 className="text-3xl font-bold font-headline text-primary">
-                        <EditableText field={feature.titleField} defaultText={content[feature.titleField] ?? feature.defaultTitle} isLoading={isLoading} pageId="why-us" />
+                        <EditableText field={feature.titleField} defaultText={content[feature.titleField] ?? feature.defaultTitle} isLoading={isLoading} collectionId="pageContent" docId="why-us" />
                       </h2>
                     </div>
                     <div className="text-muted-foreground leading-relaxed text-lg">
-                       <EditableText field={feature.descriptionField} defaultText={content[feature.descriptionField] ?? feature.defaultDescription} isLoading={isLoading} pageId="why-us" multiline/>
+                       <EditableText field={feature.descriptionField} defaultText={content[feature.descriptionField] ?? feature.defaultDescription} isLoading={isLoading} collectionId="pageContent" docId="why-us" multiline/>
                     </div>
                   </div>
                   <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-lg">
@@ -113,15 +115,15 @@ export default function WhyUsPage() {
       <AnimatedSection className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl font-bold font-headline text-white">
-            <EditableText field="ctaTitle" defaultText={content.ctaTitle} isLoading={isLoading} pageId="why-us" />
+            <EditableText field="ctaTitle" defaultText={content.ctaTitle} isLoading={isLoading} collectionId="pageContent" docId="why-us" />
           </h2>
           <div className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-             <EditableText field="ctaSubhead" defaultText={content.ctaSubhead} isLoading={isLoading} pageId="why-us" multiline />
+             <EditableText field="ctaSubhead" defaultText={content.ctaSubhead} isLoading={isLoading} collectionId="pageContent" docId="why-us" multiline />
           </div>
           <div className="mt-8">
             <Button size="lg" asChild>
               <Link href="/contacto">
-                <EditableText field="ctaButton" defaultText={content.ctaButton} isLoading={isLoading} pageId="why-us" />
+                <EditableText field="ctaButton" defaultText={content.ctaButton} isLoading={isLoading} collectionId="pageContent" docId="why-us" />
               </Link>
             </Button>
           </div>
@@ -130,5 +132,3 @@ export default function WhyUsPage() {
     </div>
   );
 }
-
-    

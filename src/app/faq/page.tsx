@@ -42,13 +42,15 @@ export default function FAQPage() {
     [firestore]
   );
 
-  const { data: pageData, isLoading } = useDoc(contentRef, {
+  const { data: pageData, isLoading } = useDoc(contentRef);
+  
+  const defaultContent = {
       id: 'faq',
       title: 'Preguntas Frecuentes',
       subhead: 'Encuentre respuestas a las dudas más comunes sobre nuestros servicios legales y cómo podemos colaborar.',
-  });
+  };
 
-  const content = pageData || {};
+  const content = pageData || defaultContent;
 
   return (
     <div className="bg-background">
@@ -56,10 +58,10 @@ export default function FAQPage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">
-              <EditableText field="title" defaultText={content.title} isLoading={isLoading} pageId="faq" />
+              <EditableText field="title" defaultText={content.title} isLoading={isLoading} collectionId="pageContent" docId="faq" />
             </h1>
             <div className="mt-4 text-lg text-muted-foreground">
-               <EditableText field="subhead" defaultText={content.subhead} isLoading={isLoading} pageId="faq" multiline />
+               <EditableText field="subhead" defaultText={content.subhead} isLoading={isLoading} collectionId="pageContent" docId="faq" multiline />
             </div>
           </div>
           <div className="max-w-3xl mx-auto">
@@ -67,10 +69,10 @@ export default function FAQPage() {
               {defaultFaqItems.map((item, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="border-white/10">
                   <AccordionTrigger className="text-left text-lg font-semibold hover:no-underline text-white">
-                     <EditableText field={item.qField} defaultText={content[item.qField] ?? item.qDefault} isLoading={isLoading} pageId="faq" />
+                     <EditableText field={item.qField} defaultText={content[item.qField] ?? item.qDefault} isLoading={isLoading} collectionId="pageContent" docId="faq" />
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                     <EditableText field={item.aField} defaultText={content[item.aField] ?? item.aDefault} isLoading={isLoading} pageId="faq" multiline />
+                     <EditableText field={item.aField} defaultText={content[item.aField] ?? item.aDefault} isLoading={isLoading} collectionId="pageContent" docId="faq" multiline />
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -81,5 +83,3 @@ export default function FAQPage() {
     </div>
   )
 }
-
-    

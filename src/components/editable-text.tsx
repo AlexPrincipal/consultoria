@@ -1,16 +1,15 @@
 'use client';
 
 import { useAdminStore } from '@/lib/store';
-import { useUser } from '@/firebase';
+import { useUser, useFirestore } from '@/firebase';
 import { useState, useEffect, useRef, useTransition } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
 import { cn } from '@/lib/utils';
-import { updateHomePageContent, updatePageContent } from '@/app/(protected)/admin/actions';
 import { useToast } from '@/hooks/use-toast';
-import { Check, Loader, X } from 'lucide-react';
+import { Check, Loader } from 'lucide-react';
+import { doc, setDoc } from 'firebase/firestore';
 
 interface EditableTextProps {
   field: string;
@@ -18,7 +17,8 @@ interface EditableTextProps {
   isLoading: boolean;
   multiline?: boolean;
   className?: string;
-  pageId?: string; // e.g., 'home', 'why-us', 'faq'
+  collectionId: string;
+  docId: string;
 }
 
 export default function EditableText({
@@ -27,10 +27,12 @@ export default function EditableText({
   isLoading,
   multiline = false,
   className,
-  pageId = 'main' // 'main' refers to the homePageContent collection
+  collectionId,
+  docId
 }: EditableTextProps) {
   const { isEditMode } = useAdminStore();
   const { user } = useUser();
+  const firestore = useFirestore();
   const { toast } = useToast();
 
   const [isClient, setIsClient] = useState(false);
@@ -56,24 +58,31 @@ export default function EditableText({
   }, [isEditing]);
 
   const handleSave = () => {
+    if (!firestore) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'No se pudo conectar a la base de datos.',
+      });
+      return;
+    }
+
     startTransition(async () => {
       const data = { [field]: value };
-      const action = pageId === 'main' ? updateHomePageContent : updatePageContent;
-      const id = pageId === 'main' ? undefined : pageId;
+      const docRef = doc(firestore, collectionId, docId);
       
-      const result = await action(data, id);
-
-      if (result.success) {
+      try {
+        await setDoc(docRef, data, { merge: true });
         toast({
           title: 'Guardado',
           description: `El campo se ha actualizado correctamente.`,
           action: <Check className="h-5 w-5 text-green-500" />,
         });
-      } else {
-        toast({
+      } catch (error: any) {
+         toast({
           variant: 'destructive',
-          title: 'Error',
-          description: result.message,
+          title: 'Error de Permiso',
+          description: error.message || 'No tienes permiso para guardar cambios.',
         });
       }
       setIsEditing(false);
@@ -121,6 +130,25 @@ export default function EditableText({
       </div>
     );
   }
+  
+  const renderedValue = value || defaultText;
+
+  // For multiline, we need to render newlines correctly
+  if (multiline) {
+    return (
+        <div
+            onClick={() => canEdit && setIsEditing(true)}
+            className={cn(
+                'transition-all whitespace-pre-wrap',
+                canEdit && 'cursor-pointer hover:bg-primary/10 p-1 rounded-md border border-transparent hover:border-primary/50',
+                className
+            )}
+        >
+            {renderedValue}
+        </div>
+    );
+  }
+
 
   return (
     <span
@@ -131,9 +159,7 @@ export default function EditableText({
         className
       )}
     >
-      {value || defaultText}
+      {renderedValue}
     </span>
   );
 }
-
-    
