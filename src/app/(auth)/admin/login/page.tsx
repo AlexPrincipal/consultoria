@@ -15,10 +15,6 @@ export default function LoginPage() {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(login, null);
   
-  const isDevLogin = (form: FormData) => {
-      return form.get('email') === 'admin@example.com' && form.get('password') === 'admin';
-  }
-
   useEffect(() => {
     if (state?.success) {
       // If the server action was successful, redirect on the client.
@@ -26,23 +22,6 @@ export default function LoginPage() {
       router.refresh(); // This forces a refresh to re-evaluate auth state in layouts.
     }
   }, [state, router]);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-
-    if(isDevLogin(formData)) {
-        // Set a session storage item for the dev bypass. This is checked on the client
-        // in the AdminLayout to enable edit mode.
-        sessionStorage.setItem('dev-admin', 'true');
-    } else {
-        sessionStorage.removeItem('dev-admin');
-    }
-    
-    // The server action will now just return state, not redirect.
-    formAction(formData);
-  };
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -55,7 +34,19 @@ export default function LoginPage() {
           <CardDescription>Ingrese sus credenciales para administrar el contenido.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form 
+            action={(formData) => {
+              const email = formData.get('email');
+              const password = formData.get('password');
+              if (email === 'admin@example.com' && password === 'admin') {
+                  sessionStorage.setItem('dev-admin', 'true');
+              } else {
+                  sessionStorage.removeItem('dev-admin');
+              }
+              formAction(formData);
+            }} 
+            className="space-y-4"
+          >
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
