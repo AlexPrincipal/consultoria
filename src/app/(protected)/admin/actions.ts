@@ -8,6 +8,10 @@ import { getApp } from 'firebase/app';
 import { revalidatePath } from 'next/cache';
 
 export async function logout() {
+  // Clear the development session bypass
+  // In a real app, you would invalidate the session token here.
+  // For this dev example, we can't clear sessionStorage from the server,
+  // so the client will handle it on logout click.
   await signOut(auth);
   redirect('/admin/login');
 }

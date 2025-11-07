@@ -6,7 +6,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { Cinzel, Lato } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { FirebaseClientProvider } from '@/firebase';
-import AdminToolbar from '@/components/admin-toolbar';
 
 export const metadata: Metadata = {
   title: 'C+ Consultoría Legal',
@@ -36,7 +35,6 @@ export default function RootLayout({
     <html lang="es" className={cn('dark', cinzel.variable, lato.variable)}>
       <body className="font-body bg-background text-foreground antialiased">
         <FirebaseClientProvider>
-          <AdminToolbar />
           <Header />
           <main>{children}</main>
           <Footer />

@@ -3,27 +3,49 @@
 import { useUser } from '@/firebase';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
+import { logout } from './actions';
+import { Button } from '@/components/ui/button';
+import Logo from '@/components/logo';
 
-// This layout is now primarily for protecting potential future admin routes,
-// but the main editing experience is on the live site.
-// We will redirect any access to /admin back to the homepage.
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
 
-  useEffect(() => {
-      // Always redirect from /admin to the homepage,
-      // the new editing experience is there.
-      redirect('/');
-  }, []);
+  const isDevBypass =
+    typeof window !== 'undefined' && sessionStorage.getItem('dev-admin') === 'true';
 
-  // While redirecting, show a loading state.
-  if (isUserLoading || !user) {
+  useEffect(() => {
+    if (!isUserLoading && !user && !isDevBypass) {
+      redirect('/admin/login');
+    }
+  }, [user, isUserLoading, isDevBypass]);
+
+  if (isUserLoading && !isDevBypass) {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-background text-white">
-            <p>Redirigiendo...</p>
-        </div>
+      <div className="flex min-h-screen items-center justify-center bg-background text-white">
+        <p>Verificando sesión...</p>
+      </div>
     );
   }
 
-  return <>{children}</>;
+  // If we are here, the user is authenticated either via Firebase or dev bypass
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur-sm">
+        <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
+          <div className="flex items-center gap-4">
+             <div className="w-24 h-16 relative">
+                <Logo />
+             </div>
+            <h1 className="text-xl font-bold font-headline text-white">Panel de Administración</h1>
+          </div>
+          <form action={logout}>
+            <Button variant="outline" type="submit">
+              Cerrar Sesión
+            </Button>
+          </form>
+        </div>
+      </header>
+      <main className="container mx-auto p-4 md:p-6">{children}</main>
+    </div>
+  );
 }

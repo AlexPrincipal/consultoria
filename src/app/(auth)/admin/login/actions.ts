@@ -15,17 +15,18 @@ export async function login(prevState: { error: string | null } | null, formData
 
   // --- TEMPORARY DEVELOPMENT LOGIN ---
   if (email === 'admin@example.com' && password === 'admin') {
+    // We will set a session marker and redirect, the layout will handle the rest.
+    // Note: This is insecure and for development ONLY.
+    // The client-side will set a sessionStorage item to track this dev login.
     redirect('/admin');
   }
   // --- END TEMPORARY DEVELOPMENT LOGIN ---
 
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    // On successful sign-in, redirect to the admin dashboard.
     if (userCredential.user) {
         redirect('/admin');
     }
-    // This part should not be reached if redirect happens
     return { error: 'No se pudo redirigir.'};
 
   } catch (e) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { login } from '@/app/(auth)/admin/login/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,7 +11,25 @@ import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
 
 export default function LoginPage() {
-  const [state, formAction] = useActionState(login, null);
+  const [state, formAction, isPending] = useActionState(login, null);
+  
+  const isDevLogin = (form: FormData) => {
+      return form.get('email') === 'admin@example.com' && form.get('password') === 'admin';
+  }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    if(isDevLogin(formData)) {
+        // Set a session storage item for the dev bypass
+        sessionStorage.setItem('dev-admin', 'true');
+    } else {
+        sessionStorage.removeItem('dev-admin');
+    }
+    formAction(formData);
+  };
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -24,7 +42,7 @@ export default function LoginPage() {
           <CardDescription>Ingrese sus credenciales para administrar el contenido.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -49,8 +67,8 @@ export default function LoginPage() {
                   </AlertDescription>
                 </Alert>
             )}
-            <Button type="submit" className="w-full">
-              Iniciar Sesión
+            <Button type="submit" className="w-full" disabled={isPending}>
+              {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
         </CardContent>

@@ -15,7 +15,6 @@ import Autoplay from 'embla-carousel-autoplay';
 import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
-import EditableText from '@/components/editable-text';
 
 function ServiceCard({
   icon,
@@ -23,28 +22,24 @@ function ServiceCard({
   description,
   href,
   className,
-  fieldTitle,
-  fieldDescription,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
   href: string;
   className?: string;
-  fieldTitle: string;
-  fieldDescription: string;
 }) {
   return (
     <Card className={cn("bg-card/50 text-card-foreground text-left flex flex-col shadow-lg hover:shadow-primary/20 hover:-translate-y-2 transition-all duration-300 border border-white/10", className)}>
       <CardHeader>
         {icon}
         <CardTitle className="pt-4 font-headline text-xl text-white">
-          <EditableText field={fieldTitle} defaultText={title} />
+          {title}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow">
         <p className="text-muted-foreground text-sm leading-relaxed">
-          <EditableText field={fieldDescription} defaultText={description} />
+          {description}
         </p>
       </CardContent>
       <CardFooter>
@@ -118,6 +113,22 @@ export default function Home() {
   const { data: homePageData, isLoading } = useDoc(homePageContentRef);
 
   const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
+  
+  const content = {
+      heroHeadline: homePageData?.heroHeadline || "C+ Consultoría Legal",
+      heroSubhead: homePageData?.heroSubhead || "Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza.",
+      heroPrimaryCtaText: homePageData?.heroPrimaryCtaText || "Agendar una Consulta",
+      heroSecondaryCtaText: homePageData?.heroSecondaryCtaText || "Nuestros Servicios",
+      servicesOverviewTitle: homePageData?.servicesOverviewTitle || "Nuestras Áreas de Práctica",
+      service1Title: homePageData?.service1Title || "Asesoría y Consultoría",
+      service1Description: homePageData?.service1Description || "Orientación estratégica para la resolución de problemas complejos y el diseño de proyectos empresariales a largo plazo.",
+      service2Title: homePageData?.service2Title || "Representación y Defensa",
+      service2Description: homePageData?.service2Description || "Defensa experta en negociaciones y litigios mercantiles, laborales y administrativos ante diversas instancias.",
+      service3Title: homePageData?.service3Title || "Compliance",
+      service3Description: homePageData?.service3Description || "Implementamos programas de cumplimiento para mitigar riesgos, asegurar el marco legal y proteger la reputación de su empresa.",
+      contactUsTitle: homePageData?.contactUsTitle || "¿Listo para Fortalecer su Empresa?",
+  }
+
 
   return (
     <div className="flex flex-col">
@@ -135,20 +146,20 @@ export default function Home() {
           )}
           <div className="relative z-10 p-4 space-y-8 container mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">
-              <EditableText field="heroHeadline" defaultText="C+ Consultoría Legal" isLoading={isLoading} />
+               {isLoading ? <Skeleton className="h-20 w-3/4 mx-auto" /> : content.heroHeadline}
             </h1>
             <div className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-               <EditableText field="heroSubhead" defaultText="Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza." isLoading={isLoading} as="textarea" />
+               {isLoading ? <Skeleton className="h-12 w-full mx-auto" /> : content.heroSubhead}
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                <Button size="lg" asChild>
                 <Link href="/contacto">
-                   <EditableText field="heroPrimaryCtaText" defaultText="Agendar una Consulta" isLoading={isLoading} />
+                   {isLoading ? <Skeleton className="h-6 w-36" /> : content.heroPrimaryCtaText}
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link href="/servicios">
-                   <EditableText field="heroSecondaryCtaText" defaultText="Nuestros Servicios" isLoading={isLoading} />
+                   {isLoading ? <Skeleton className="h-6 w-36" /> : content.heroSecondaryCtaText}
                 </Link>
               </Button>
             </div>
@@ -160,7 +171,7 @@ export default function Home() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
-                <EditableText field="servicesOverviewTitle" defaultText="Nuestras Áreas de Práctica" isLoading={isLoading} />
+                {isLoading ? <Skeleton className="h-12 w-1/2 mx-auto" /> : content.servicesOverviewTitle}
               </h2>
                <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                 Ofrecemos asesoramiento y representación experta en las áreas cruciales del derecho corporativo para proteger y potenciar su negocio.
@@ -169,67 +180,51 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <ServiceCard
                 icon={<Briefcase className="h-10 w-10 text-primary" />}
-                title={homePageData?.service1Title || "Asesoría y Consultoría"}
-                description={homePageData?.service1Description || "Orientación estratégica para la resolución de problemas complejos y el diseño de proyectos empresariales a largo plazo."}
+                title={isLoading ? "Cargando..." : content.service1Title}
+                description={isLoading ? "Cargando descripción..." : content.service1Description}
                 href="/servicios/asesoria-consultoria-legal"
-                fieldTitle="service1Title"
-                fieldDescription="service1Description"
               />
               <ServiceCard
                 icon={<Scale className="h-10 w-10 text-primary" />}
-                title={homePageData?.service2Title || "Representación y Defensa"}
-                description={homePageData?.service2Description || "Defensa experta en negociaciones y litigios mercantiles, laborales y administrativos ante diversas instancias."}
+                title={isLoading ? "Cargando..." : content.service2Title}
+                description={isLoading ? "Cargando descripción..." : content.service2Description}
                 href="/servicios/representacion-defensa"
-                fieldTitle="service2Title"
-                fieldDescription="service2Description"
               />
               <ServiceCard
                 icon={<ShieldCheck className="h-10 w-10 text-primary" />}
-                title={homePageData?.service3Title || "Compliance"}
-                description={homePageData?.service3Description || "Implementamos programas de cumplimiento para mitigar riesgos, asegurar el marco legal y proteger la reputación de su empresa."}
+                title={isLoading ? "Cargando..." : content.service3Title}
+                description={isLoading ? "Cargando descripción..." : content.service3Description}
                 href="/servicios/compliance"
-                fieldTitle="service3Title"
-                fieldDescription="service3Description"
               />
               <ServiceCard
                 icon={<Anchor className="h-10 w-10 text-primary" />}
                 title="Comercio Internacional"
                 description="Garantizamos que sus operaciones de importación y exportación se realicen de manera legal, eficiente y estratégica."
                  href="/servicios/comercio-internacional"
-                 fieldTitle="service4Title"
-                 fieldDescription="service4Description"
               />
                <ServiceCard
                 icon={<GitBranch className="h-10 w-10 text-primary" />}
                 title="MASC"
                 description="Resolvemos disputas de forma más rápida, económica y confidencial a través de la mediación y el arbitraje."
                  href="/servicios/masc"
-                 fieldTitle="service5Title"
-                 fieldDescription="service5Description"
               />
                <ServiceCard
                 icon={<FileText className="h-10 w-10 text-primary" />}
                 title="Gestión y Trámites"
                 description="Nos encargamos de la elaboración de contratos, constitución de sociedades y legalización de documentos."
                  href="/servicios/gestion-tramites"
-                 fieldTitle="service6Title"
-                 fieldDescription="service6Description"
               />
               <ServiceCard
                 icon={<Building className="h-10 w-10 text-primary" />}
                 title="Área Empresarial Específica"
                 description="Ofrecemos una asesoría 360° en derecho corporativo, mercantil, laboral, fiscal y gestión administrativa."
                  href="/servicios/area-empresarial-especifica"
-                 fieldTitle="service7Title"
-                 fieldDescription="service7Description"
               />
                <ServiceCard
                 icon={<Briefcase className="h-10 w-10 text-primary" />}
                 title="Creación de Empresas"
                 description="Asesoramiento proactivo para iniciar su negocio sobre cimientos sólidos, minimizando riesgos y maximizando oportunidades."
                 href="/servicios/consultoria-creacion-empresas"
-                fieldTitle="service8Title"
-                fieldDescription="service8Description"
               />
             </div>
           </div>
@@ -347,7 +342,7 @@ export default function Home() {
         <AnimatedSection className="py-20 md:py-28 bg-black">
             <div className="container mx-auto px-4 md:px-6 text-center">
             <h2 className="text-3xl font-bold font-headline text-white">
-              <EditableText field="contactUsTitle" defaultText="¿Listo para Fortalecer su Empresa?" isLoading={isLoading} />
+                {isLoading ? <Skeleton className="h-10 w-3/4 mx-auto" /> : content.contactUsTitle}
             </h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
                 Los servicios legales no deberían ser un gasto, sino una inversión en tu éxito. Hablemos de cómo podemos generar valor para tu empresa.
@@ -362,5 +357,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
