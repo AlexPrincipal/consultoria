@@ -4,7 +4,7 @@
 import { signOut } from 'firebase/auth';
 import { auth } from '@/firebase/server';
 import { redirect } from 'next/navigation';
-import { collection, doc, getFirestore, writeBatch } from 'firebase/firestore';
+import { collection, doc, getFirestore, writeBatch, setDoc } from 'firebase/firestore';
 import { getApp } from 'firebase/app';
 import { revalidatePath } from 'next/cache';
 import { defaultTeamMembers } from '@/lib/team';
@@ -64,3 +64,5 @@ export async function syncTeamMembersWithFirestore() {
     return { success: false, message: errorMessage };
   }
 }
+
+    

@@ -1,11 +1,10 @@
-
 'use client';
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { CheckCircle, Landmark, Shield, Star, Handshake, Sparkles, ShieldCheck, DatabaseSync, AlertTriangle } from 'lucide-react';
+import { CheckCircle, Landmark, Shield, Star, Handshake, Sparkles, ShieldCheck, Database, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AnimatedSection from '@/components/animated-section';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -48,14 +47,14 @@ function AdminTeamSync() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-                <h3 className="font-headline text-2xl text-white flex items-center gap-3"><DatabaseSync className="h-8 w-8 text-primary" /> Módulo de Administración de Equipo</h3>
+                <h3 className="font-headline text-2xl text-white flex items-center gap-3"><Database className="h-8 w-8 text-primary" /> Módulo de Administración de Equipo</h3>
                 <p className="text-muted-foreground mt-2 max-w-2xl">
-                    Utilice esta herramienta para sincronizar la información de los miembros del equipo desde el archivo local (`src/lib/team.ts`) a la base de datos de Firestore. Esto asegura que los perfiles estén actualizados y permite la edición en vivo.
+                    Utilice esta herramienta para poblar la base de datos de Firestore con la información del archivo local (`src/lib/team.ts`). Este es un paso inicial. Una vez sincronizado, podrá editar cada campo directamente en la página.
                 </p>
                  <div className="mt-4 p-4 bg-yellow-900/50 border border-yellow-400/50 rounded-lg text-sm text-yellow-200 flex items-start gap-3">
                     <AlertTriangle className="h-5 w-5 mt-0.5 flex-shrink-0"/>
                     <span>
-                        <strong>Atención:</strong> Al sincronizar, se sobrescribirán los datos existentes en Firestore con la información del archivo local. Asegúrese de que el archivo contenga la información correcta antes de proceder.
+                        <strong>Atención:</strong> Al sincronizar, se sobrescribirán los datos existentes en Firestore con la información del archivo local. Use esto para la configuración inicial.
                     </span>
                  </div>
             </div>
@@ -220,10 +219,10 @@ export default function QuienesSomosPage() {
         <div className="container mx-auto px-4 md:px-6">
            <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
-              <EditableText field="teamTitle" defaultText={content.teamTitle} isLoading={isLoading} collectionId="pageContent" docId="quienes-somos" />
+              <EditableText field="teamTitle" defaultText={content.teamTitle} isLoading={isTeamLoading} collectionId="pageContent" docId="quienes-somos" />
             </h2>
             <div className="mt-4 text-lg text-muted-foreground">
-              <EditableText field="teamSubhead" defaultText={content.teamSubhead} isLoading={isLoading} collectionId="pageContent" docId="quienes-somos" multiline/>
+              <EditableText field="teamSubhead" defaultText={content.teamSubhead} isLoading={isTeamLoading} collectionId="pageContent" docId="quienes-somos" multiline/>
             </div>
           </div>
           <div className="space-y-16">
@@ -241,13 +240,13 @@ export default function QuienesSomosPage() {
                   </div>
                   <div className="md:col-span-2 space-y-4 text-center md:text-left">
                     <h3 className="text-3xl font-bold font-headline text-primary">
-                      {member.name}
+                      <EditableText field="name" defaultText={member.name} isLoading={isTeamLoading} collectionId="teamMembers" docId={member.slug} />
                     </h3>
                      <div className="text-lg font-medium text-white">
-                        {member.title}
+                        <EditableText field="title" defaultText={member.title} isLoading={isTeamLoading} collectionId="teamMembers" docId={member.slug} />
                     </div>
                     <div className="text-muted-foreground leading-relaxed text-lg">
-                      {member.bio}
+                      <EditableText field="bio" defaultText={member.bio} isLoading={isTeamLoading} collectionId="teamMembers" docId={member.slug} multiline />
                     </div>
                      <Button variant="link" asChild className="p-0 text-primary">
                         <Link href={`/quienes-somos/${member.slug}`}>Conocer trayectoria &rarr;</Link>
