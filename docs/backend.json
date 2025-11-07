@@ -96,6 +96,24 @@
       "required": [
         "id"
       ]
+    },
+    "role_admin": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "role_admin",
+      "type": "object",
+      "description": "An entity representing an administrative role. The existence of a document with the user's UID in the 'roles_admin' collection grants them admin privileges.",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The UID of the user with admin role."
+        },
+        "assignedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the admin role was assigned."
+        }
+      },
+      "required": ["uid", "assignedAt"]
     }
   },
   "auth": {
