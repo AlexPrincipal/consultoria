@@ -37,7 +37,7 @@ export function Footer() {
                 <li><Link href="/por-que-escogernos" className="hover:text-primary transition-colors">¿Por qué nosotros?</Link></li>
                 <li><Link href="/nuestras-oficinas" className="hover:text-primary transition-colors">Oficinas</Link></li>
                 <li><Link href="/faq" className="hover:text-primary transition-colors">FAQ</Link></li>
-                <li><Link href="/contacto" className="hovertext-primary transition-colors">Contacto</Link></li>
+                <li><Link href="/contacto" className="hover:text-primary transition-colors">Contacto</Link></li>
               </ul>
             </div>
 
