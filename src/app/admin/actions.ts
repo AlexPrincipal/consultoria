@@ -1,12 +1,13 @@
 
 'use server';
 
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth, db } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, writeBatch } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
+import { defaultTeamMembers } from '@/lib/team';
 
 async function isUserAdmin(uid: string): Promise<boolean> {
   try {
@@ -14,9 +15,10 @@ async function isUserAdmin(uid: string): Promise<boolean> {
     const adminRoleDoc = await getDoc(adminRoleDocRef);
     return adminRoleDoc.exists();
   } catch (error) {
-    console.error("An unexpected error occurred in isUserAdmin:", error);
-    // Re-throw a generic error to be handled by the login action
-    throw new Error('An unexpected error occurred while checking user permissions.');
+    console.error("Error checking admin status:", error);
+    // This is a critical failure, likely permissions on the rules themselves.
+    // We deny admin status by default on error.
+    return false;
   }
 }
 
@@ -27,50 +29,7 @@ export async function login(prevState: { error: string | null; success?: boolean
   if (!email || !password) {
     return { error: 'Email y contraseña son requeridos.' };
   }
-
-  // Handle dev login separately
-  if (process.env.NODE_ENV === 'development' && email === 'admin@example.com' && password === 'admin') {
-     try {
-       // Sign in with dev credentials
-       const userCredential = await signInWithEmailAndPassword(auth, email, password).catch(async (e) => {
-         // If user doesn't exist, create it for dev purposes.
-         if (e.code === 'auth/user-not-found') {
-           return await createUserWithEmailAndPassword(auth, email, password);
-         }
-         throw e;
-       });
-
-       const user = userCredential.user;
-
-       // Assign admin role in Firestore if it doesn't exist.
-       const adminRoleRef = doc(db, 'roles_admin', user.uid);
-       const adminDoc = await getDoc(adminRoleRef);
-       if (!adminDoc.exists()) {
-           await setDoc(adminRoleRef, { uid: user.uid, assignedAt: serverTimestamp() });
-           console.log(`Dev admin role created for ${user.uid}`);
-       }
-       
-       revalidatePath('/'); // Revalidate to reflect new auth state
-       redirect('/'); // Redirect on success
-       
-    } catch (e) {
-        console.error("Dev login/setup failed", e);
-        if (e instanceof FirebaseError) {
-            switch (e.code) {
-                case 'auth/invalid-credential':
-                    return { error: 'Las credenciales proporcionadas no son válidas.' };
-                case 'auth/user-not-found':
-                    return { error: 'No se encontró ningún usuario con este correo electrónico.' };
-                case 'auth/wrong-password':
-                    return { error: 'Contraseña incorrecta. Por favor, inténtelo de nuevo.' };
-                default:
-                    return { error: `Ocurrió un error inesperado de Firebase: ${e.message}` };
-            }
-        }
-        return { error: 'No se pudo procesar el inicio de sesión de desarrollo.' };
-    }
-  }
-
+  
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -78,36 +37,38 @@ export async function login(prevState: { error: string | null; success?: boolean
     if (user) {
       const isAdmin = await isUserAdmin(user.uid);
       if (isAdmin) {
-        revalidatePath('/');
-        redirect('/');
+        // The redirection is now handled on the client-side upon successful state change
+        return { error: null, success: true };
       } else {
         await signOut(auth);
         return { error: 'No tienes los permisos de administrador necesarios.' };
       }
     }
     
-    return { error: 'No se pudo iniciar sesión.'};
+    // This case should ideally not be reached if signInWithEmailAndPassword succeeds
+    return { error: 'No se pudo verificar el usuario.'};
 
   } catch (e) {
     if (e instanceof FirebaseError) {
         switch (e.code) {
             case 'auth/invalid-credential':
-                return { error: 'Las credenciales proporcionadas no son válidas.' };
             case 'auth/user-not-found':
-                 return { error: 'No se encontró ningún usuario con este correo electrónico.' };
             case 'auth/wrong-password':
-                return { error: 'Contraseña incorrecta. Por favor, inténtelo de nuevo.' };
+                return { error: 'Las credenciales proporcionadas no son válidas.' };
             default:
+                console.error(`Unexpected Firebase error: ${e.code}`, e);
                 return { error: `Ocurrió un error inesperado de Firebase: ${e.message}` };
         }
     }
+    // Handle generic errors
     if (e instanceof Error) {
-        return { error: e.message };
+      console.error("Generic error in login action:", e);
+      return { error: e.message };
     }
-    return { error: 'Un error inesperado ocurrió.' };
+
+    return { error: 'Un error inesperado ocurrió durante el inicio de sesión.' };
   }
 }
-
 
 export async function logout() {
   await signOut(auth);
@@ -115,36 +76,29 @@ export async function logout() {
   redirect('/admin');
 }
 
-export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean; message: string }> {
-  // This function remains unchanged as it's not related to the login issue.
-  // ... (keeping existing implementation)
-  const { defaultTeamMembers } = await import('@/lib/team');
-  const { writeBatch } = await import('firebase/firestore');
 
-  try {
-    const batch = writeBatch(db);
+export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean; message: string; }> {
+    try {
+        const batch = writeBatch(db);
 
-    defaultTeamMembers.forEach((member) => {
-      const docRef = doc(db, 'teamMembers', member.slug);
-      batch.set(docRef, member, { merge: true });
-    });
+        defaultTeamMembers.forEach(member => {
+            const docRef = doc(db, 'teamMembers', member.slug);
+            // We need to remove the 'id' field as it's the document ID, not part of the data.
+            const { id, ...memberData } = member;
+            batch.set(docRef, memberData, { merge: true });
+        });
 
-    await batch.commit();
-    
-    revalidatePath('/quienes-somos');
+        await batch.commit();
 
-    return { success: true, message: 'La información del equipo ha sido sincronizada correctamente con la base de datos.' };
-  } catch (error) {
-    console.error('Error syncing team members with Firestore:', error);
-    
-    let errorMessage = 'Ocurrió un error desconocido.';
-    if (error instanceof Error) {
-        errorMessage = error.message;
+        // Revalidate the path to ensure the page shows the latest data.
+        revalidatePath('/quienes-somos');
+
+        return { success: true, message: 'Los miembros del equipo se han sincronizado con Firestore.' };
+    } catch (error) {
+        console.error('Error syncing team members with Firestore:', error);
+         if (error instanceof Error) {
+            return { success: false, message: `Error del servidor: ${error.message}` };
+        }
+        return { success: false, message: 'Un error desconocido ocurrió durante la sincronización.' };
     }
-    if ((error as any).code === 'permission-denied') {
-      errorMessage = 'Permiso denegado. Asegúrese de tener los permisos de administrador para realizar esta acción.';
-    }
-
-    return { success: false, message: `Error de sincronización: ${errorMessage}` };
-  }
 }

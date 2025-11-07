@@ -1,7 +1,8 @@
 
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { login } from '@/app/admin/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,9 +11,17 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push('/');
+    }
+  }, [state, router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -54,6 +63,15 @@ export default function LoginPage() {
               {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
+           {process.env.NODE_ENV === 'development' && (
+            <div className="mt-6 text-center text-xs text-muted-foreground">
+              <p>¿Primera vez?
+                <Link href="/admin/setup" className="underline hover:text-primary ml-1">
+                  Configurar admin de desarrollo
+                </Link>
+              </p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
