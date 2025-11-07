@@ -131,4 +131,3 @@ export default function EditableText({
 
   return <span className={className} {...props}>{currentText}</span>;
 }
-
