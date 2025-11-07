@@ -14,8 +14,8 @@ export const defaultTeamMembers = [
       'Consejero en múltiples consejos de administración de empresas de alto perfil.',
       'Autor de diversas publicaciones sobre derecho corporativo y arbitraje comercial.'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYWxlJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxODUyOTAyfDA&ixlib=rb-4.1.0&q=80&w=400',
-    imageHint: 'male professional portrait',
+    imageUrl: '/rene-casillas-gallardo.jpg',
+    imageHint: 'professional male portrait',
     imagePosition: "object-top",
     linkedinUrl: 'https://www.linkedin.com/in/rene-casillas-gallardo/',
     order: 1,
