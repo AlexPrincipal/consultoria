@@ -15,6 +15,8 @@ export async function login(prevState: { error: string | null } | null, formData
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    // On successful sign-in, redirect to the admin dashboard.
+    redirect('/admin');
   } catch (e) {
     if (e instanceof FirebaseError) {
         switch (e.code) {
@@ -30,6 +32,4 @@ export async function login(prevState: { error: string | null } | null, formData
     }
     return { error: 'Un error inesperado ocurrió.' };
   }
-  
-  return redirect('/admin');
 }
