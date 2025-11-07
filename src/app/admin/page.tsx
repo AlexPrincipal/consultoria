@@ -57,22 +57,35 @@ function AdminDashboard() {
 
   if (isLoading) {
     return (
-      <div className="p-8 space-y-6">
-        <Skeleton className="h-8 w-1/4" />
-        <div className="space-y-4">
-          <Skeleton className="h-6 w-1/5" />
-          <Skeleton className="h-10 w-full" />
-        </div>
-        <div className="space-y-4">
-          <Skeleton className="h-6 w-1/5" />
-          <Skeleton className="h-20 w-full" />
-        </div>
-        <div className="space-y-4">
-          <Skeleton className="h-6 w-1/5" />
-          <Skeleton className="h-10 w-full" />
-        </div>
-        <Skeleton className="h-12 w-32" />
-      </div>
+      <Card className="w-full max-w-4xl bg-card border-border/50">
+        <CardHeader>
+            <div className="flex justify-between items-start">
+                <div>
+                    <Skeleton className="h-8 w-64 mb-2" />
+                    <Skeleton className="h-4 w-96" />
+                </div>
+                <Skeleton className="h-10 w-24" />
+            </div>
+        </CardHeader>
+        <CardContent className="space-y-6 p-6">
+            <div className="space-y-2 p-4 border rounded-md border-border/50">
+                 <Skeleton className="h-6 w-48 mb-4" />
+                <div className="space-y-4">
+                    <div>
+                        <Skeleton className="h-5 w-24 mb-2" />
+                        <Skeleton className="h-10 w-full" />
+                    </div>
+                     <div>
+                        <Skeleton className="h-5 w-20 mb-2" />
+                        <Skeleton className="h-20 w-full" />
+                    </div>
+                </div>
+            </div>
+        </CardContent>
+        <CardFooter>
+          <Skeleton className="h-12 w-36" />
+        </CardFooter>
+      </Card>
     );
   }
 
@@ -192,11 +205,12 @@ export default function AdminPage() {
         )
     }
 
+    // El layout ya se encarga de redirigir si no hay usuario,
+    // pero mantenemos esto como una capa extra de seguridad.
     if (!user) {
-        // This case should be handled by the layout redirect, but as a fallback:
         return (
              <div className="flex items-center justify-center min-h-screen">
-                <p>No autorizado.</p>
+                <p>No autorizado. Redirigiendo a login...</p>
             </div>
         );
     }
