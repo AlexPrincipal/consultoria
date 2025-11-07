@@ -9,8 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AnimatedSection from '@/components/animated-section';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import EditableText from '@/components/editable-text';
-import { useDoc, useFirestore, useMemoFirebase, useCollection } from '@/firebase';
-import { collection, doc, query, orderBy } from 'firebase/firestore';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
 import { defaultTeamMembers } from '@/lib/team';
 
 export default function QuienesSomosPage() {
@@ -21,13 +21,7 @@ export default function QuienesSomosPage() {
   );
   const { data: pageData, isLoading: isPageLoading } = useDoc(contentRef);
   
-  const teamQuery = useMemoFirebase(
-    () => (firestore ? query(collection(firestore, 'teamMembers'), orderBy('order', 'asc')) : null),
-    [firestore]
-  );
-  const { data: teamMembers, isLoading: isTeamLoading } = useCollection(teamQuery);
-
-  const isLoading = isPageLoading || isTeamLoading;
+  const isLoading = isPageLoading;
   
   const defaultContent = {
     id: 'quienes-somos',
@@ -49,8 +43,7 @@ export default function QuienesSomosPage() {
   };
 
   const content = pageData || defaultContent;
-  const currentTeam = (teamMembers && teamMembers.length > 0) ? teamMembers : defaultTeamMembers;
-
+  
   const teamImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-team');
   const misionVisionImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-mision-vision');
 
@@ -168,7 +161,7 @@ export default function QuienesSomosPage() {
             </div>
           </div>
           <div className="space-y-16">
-            {currentTeam.map((member, index) => (
+            {defaultTeamMembers.map((member, index) => (
               <div key={member.slug}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
                   <div className={cn("relative aspect-[4/5] w-full max-w-sm mx-auto", index % 2 !== 0 && "md:order-last")}>
@@ -182,20 +175,20 @@ export default function QuienesSomosPage() {
                   </div>
                   <div className="md:col-span-2 space-y-4 text-center md:text-left">
                     <h3 className="text-3xl font-bold font-headline text-primary">
-                      <EditableText field="name" defaultText={member.name} isLoading={isLoading} collectionId="teamMembers" docId={member.id} />
+                      {member.name}
                     </h3>
                      <div className="text-lg font-medium text-white">
-                        <EditableText field="title" defaultText={member.title} isLoading={isLoading} collectionId="teamMembers" docId={member.id} multiline/>
+                        {member.title}
                     </div>
                     <div className="text-muted-foreground leading-relaxed text-lg">
-                      <EditableText field="bio" defaultText={member.bio} isLoading={isLoading} collectionId="teamMembers" docId={member.id} multiline/>
+                      {member.bio}
                     </div>
                      <Button variant="link" asChild className="p-0 text-primary">
                         <Link href={`/quienes-somos/${member.slug}`}>Conocer trayectoria &rarr;</Link>
                     </Button>
                   </div>
                 </div>
-                {index < currentTeam.length - 1 && (
+                {index < defaultTeamMembers.length - 1 && (
                   <hr className="mt-16 border-white/10" />
                 )}
               </div>

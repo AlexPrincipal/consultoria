@@ -11,8 +11,8 @@ import AnimatedSection from '@/components/animated-section';
 import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { useDoc, useFirestore, useMemoFirebase, useCollection }from '@/firebase';
-import { collection, doc, query, orderBy } from 'firebase/firestore';
+import { useDoc, useFirestore, useMemoFirebase }from '@/firebase';
+import { doc } from 'firebase/firestore';
 import EditableText from '@/components/editable-text';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { defaultTeamMembers } from '@/lib/team';
@@ -96,14 +96,7 @@ export default function Home() {
   
   const { data: homePageData, isLoading: isHomePageLoading } = useDoc(homePageContentRef);
   
-   const teamQuery = useMemoFirebase(
-    () => (firestore ? query(collection(firestore, 'teamMembers'), orderBy('order', 'asc')) : null),
-    [firestore]
-  );
-  const { data: teamMembers, isLoading: isTeamLoading } = useCollection(teamQuery);
-
-  const currentTeam = (teamMembers && teamMembers.length > 0) ? teamMembers : defaultTeamMembers;
-  const mainTeamMembers = currentTeam.slice(0, 2);
+  const mainTeamMembers = defaultTeamMembers.slice(0, 2);
   
   const defaultContent = {
       heroHeadline: "C+ Consultoría Legal",
@@ -152,7 +145,7 @@ export default function Home() {
       contactUsCtaText: "Agendar una Consulta Estratégica"
   }
   
-  const isLoading = isHomePageLoading || isTeamLoading;
+  const isLoading = isHomePageLoading;
   const content = homePageData || {};
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-background');
 
