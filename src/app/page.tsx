@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -43,9 +44,9 @@ function ServiceCard({
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow">
-        <p className="text-muted-foreground text-sm leading-relaxed">
+        <div className="text-muted-foreground text-sm leading-relaxed">
           <EditableText field={descriptionField} defaultText={description} isLoading={isLoading} multiline />
-        </p>
+        </div>
       </CardContent>
       <CardFooter>
         <Button variant="link" asChild className="p-0 text-primary">
@@ -191,9 +192,9 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
                 <EditableText field="servicesOverviewTitle" defaultText={content.servicesOverviewTitle ?? defaultContent.servicesOverviewTitle} isLoading={isLoading} />
               </h2>
-               <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+               <div className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                  <EditableText field="servicesOverviewSubhead" defaultText={content.servicesOverviewSubhead ?? defaultContent.servicesOverviewSubhead} isLoading={isLoading} multiline/>
-              </p>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <ServiceCard
@@ -279,9 +280,9 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
                  <EditableText field="whyUsTitle" defaultText={content.whyUsTitle ?? defaultContent.whyUsTitle} isLoading={isLoading} />
               </h2>
-              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+              <div className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                  <EditableText field="whyUsSubhead" defaultText={content.whyUsSubhead ?? defaultContent.whyUsSubhead} isLoading={isLoading} multiline/>
-              </p>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
               <div className="text-center">
@@ -289,27 +290,27 @@ export default function Home() {
                 <h3 className="text-xl font-bold font-headline text-white">
                   <EditableText field="whyUsFeature1Title" defaultText={content.whyUsFeature1Title ?? defaultContent.whyUsFeature1Title} isLoading={isLoading} />
                 </h3>
-                <p className="text-muted-foreground mt-2 text-sm">
+                <div className="text-muted-foreground mt-2 text-sm">
                   <EditableText field="whyUsFeature1Desc" defaultText={content.whyUsFeature1Desc ?? defaultContent.whyUsFeature1Desc} isLoading={isLoading} multiline />
-                </p>
+                </div>
               </div>
               <div className="text-center">
                 <div className="flex justify-center mb-4"><Users className="h-10 w-10 text-primary" /></div>
                 <h3 className="text-xl font-bold font-headline text-white">
                   <EditableText field="whyUsFeature2Title" defaultText={content.whyUsFeature2Title ?? defaultContent.whyUsFeature2Title} isLoading={isLoading} />
                 </h3>
-                <p className="text-muted-foreground mt-2 text-sm">
+                <div className="text-muted-foreground mt-2 text-sm">
                   <EditableText field="whyUsFeature2Desc" defaultText={content.whyUsFeature2Desc ?? defaultContent.whyUsFeature2Desc} isLoading={isLoading} multiline />
-                </p>
+                </div>
               </div>
               <div className="text-center">
                 <div className="flex justify-center mb-4"><Zap className="h-10 w-10 text-primary" /></div>
                 <h3 className="text-xl font-bold font-headline text-white">
                   <EditableText field="whyUsFeature3Title" defaultText={content.whyUsFeature3Title ?? defaultContent.whyUsFeature3Title} isLoading={isLoading} />
                 </h3>
-                <p className="text-muted-foreground mt-2 text-sm">
+                <div className="text-muted-foreground mt-2 text-sm">
                   <EditableText field="whyUsFeature3Desc" defaultText={content.whyUsFeature3Desc ?? defaultContent.whyUsFeature3Desc} isLoading={isLoading} multiline />
-                </p>
+                </div>
               </div>
             </div>
             <div className="text-center mt-16">
@@ -329,9 +330,9 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
                 <EditableText field="teamTitle" defaultText={content.teamTitle ?? defaultContent.teamTitle} isLoading={isLoading} />
               </h2>
-              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+              <div className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                  <EditableText field="teamSubhead" defaultText={content.teamSubhead ?? defaultContent.teamSubhead} isLoading={isLoading} multiline />
-              </p>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {mainTeamMembers.map((member) => (
@@ -376,9 +377,9 @@ export default function Home() {
                 <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
                   <EditableText field="officeTitle" defaultText={content.officeTitle ?? defaultContent.officeTitle} isLoading={isLoading} />
                 </h2>
-                <p className="text-muted-foreground text-lg">
+                <div className="text-muted-foreground text-lg">
                   <EditableText field="officeSubhead" defaultText={content.officeSubhead ?? defaultContent.officeSubhead} isLoading={isLoading} multiline />
-                </p>
+                </div>
                 <Button variant="outline" asChild>
                     <Link href="/nuestras-oficinas">
                       <EditableText field="officeCtaText" defaultText={content.officeCtaText ?? defaultContent.officeCtaText} isLoading={isLoading} />
@@ -398,9 +399,9 @@ export default function Home() {
                <h2 className="text-4xl md:text-5xl font-bold font-headline text-white mb-4">
                 <EditableText field="aboutTitle" defaultText={content.aboutTitle ?? defaultContent.aboutTitle} isLoading={isLoading} />
               </h2>
-              <p className="text-gray-300 leading-relaxed mb-8 text-lg">
+              <div className="text-gray-300 leading-relaxed mb-8 text-lg">
                 <EditableText field="aboutSubhead" defaultText={content.aboutSubhead ?? defaultContent.aboutSubhead} isLoading={isLoading} multiline />
-              </p>
+              </div>
               <Button variant="outline" asChild>
                 <Link href="/quienes-somos">
                   <EditableText field="aboutCtaText" defaultText={content.aboutCtaText ?? defaultContent.aboutCtaText} isLoading={isLoading} />
@@ -416,9 +417,9 @@ export default function Home() {
             <h2 className="text-3xl font-bold font-headline text-white">
                 <EditableText field="contactUsTitle" defaultText={content.contactUsTitle ?? defaultContent.contactUsTitle} isLoading={isLoading} />
             </h2>
-            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            <div className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
                 <EditableText field="contactUsSubhead" defaultText={content.contactUsSubhead ?? defaultContent.contactUsSubhead} isLoading={isLoading} multiline />
-            </p>
+            </div>
             <div className="mt-8">
                 <Button size="lg" asChild>
                 <Link href="/contacto">
@@ -431,3 +432,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
