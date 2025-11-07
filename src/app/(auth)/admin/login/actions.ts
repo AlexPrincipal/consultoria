@@ -1,4 +1,3 @@
-
 'use server';
 
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -15,18 +14,20 @@ export async function login(prevState: { error: string | null } | null, formData
   }
 
   // --- TEMPORARY DEVELOPMENT LOGIN ---
-  // If the user is 'admin@example.com' and password is 'admin', redirect to the dashboard.
   if (email === 'admin@example.com' && password === 'admin') {
-    // This is a temporary bypass for development. For a real app,
-    // the user should be created in the Firebase Console and this block removed.
     redirect('/admin');
   }
   // --- END TEMPORARY DEVELOPMENT LOGIN ---
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
     // On successful sign-in, redirect to the admin dashboard.
-    redirect('/admin');
+    if (userCredential.user) {
+        redirect('/admin');
+    }
+    // This part should not be reached if redirect happens
+    return { error: 'No se pudo redirigir.'};
+
   } catch (e) {
     if (e instanceof FirebaseError) {
         switch (e.code) {
