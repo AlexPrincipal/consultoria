@@ -11,33 +11,7 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import EditableText from '@/components/editable-text';
 import { useDoc, useFirestore, useMemoFirebase, useCollection } from '@/firebase';
 import { collection, doc, query, orderBy } from 'firebase/firestore';
-
-const defaultTeamMembers = [
-    {
-      id: 'rene-casillas-gallardo',
-      slug: 'rene-casillas-gallardo',
-      name: 'René Casillas Gallardo',
-      title: 'Socio, Especialista en Derecho Corporativo y MASC',
-      bio: 'René es el socio fundador de la firma. Su práctica se centra en la consultoría de alto nivel para empresas, la estructuración de negocios complejos y la resolución de conflictos a través de mecanismos alternativos como el arbitraje y la mediación, donde es un experto reconocido.',
-      homeSummary: 'Socio fundador con más de 20 años de experiencia en derecho corporativo y resolución de disputas.',
-      imageUrl: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYWxlJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxODUyOTAyfDA&ixlib=rb-4.1.0&q=80&w=400',
-      imageHint: 'male professional portrait',
-      imagePosition: "object-top",
-      order: 1,
-    },
-    {
-      id: 'jose-luis-pineda-nunez',
-      slug: 'jose-luis-pineda-nunez',
-      name: 'José Luis Pineda Nuñez',
-      title: 'Socio, Especialista en Derecho Mercantil y Administrativo',
-      bio: 'José Luis es un abogado litigante con una trayectoria destacada en la defensa de empresas ante autoridades administrativas y en complejos litigios mercantiles. Su enfoque estratégico es clave para proteger los intereses de nuestros clientes en los tribunales.',
-      homeSummary: 'Socio experto en litigio mercantil y defensa administrativa, garantizando la seguridad jurídica de su empresa.',
-      imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYWxlJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxODUyOTAyfDA&ixlib=rb-4.1.0&q=80&w=400',
-      imageHint: 'male professional portrait',
-      imagePosition: "object-top",
-      order: 2,
-    },
-];
+import { defaultTeamMembers } from '@/lib/team';
 
 export default function QuienesSomosPage() {
   const firestore = useFirestore();
@@ -75,7 +49,7 @@ export default function QuienesSomosPage() {
   };
 
   const content = pageData || defaultContent;
-  const currentTeam = teamMembers && teamMembers.length > 0 ? teamMembers : defaultTeamMembers;
+  const currentTeam = (teamMembers && teamMembers.length > 0) ? teamMembers : defaultTeamMembers;
 
   const teamImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-team');
   const misionVisionImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-mision-vision');
@@ -221,7 +195,7 @@ export default function QuienesSomosPage() {
                     </Button>
                   </div>
                 </div>
-                {index < (currentTeam?.length ?? 0) - 1 && (
+                {index < currentTeam.length - 1 && (
                   <hr className="mt-16 border-white/10" />
                 )}
               </div>
@@ -262,5 +236,3 @@ export default function QuienesSomosPage() {
     </div>
   );
 }
-
-    

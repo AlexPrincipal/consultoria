@@ -15,6 +15,7 @@ import { useDoc, useFirestore, useMemoFirebase, useCollection }from '@/firebase'
 import { collection, doc, query, orderBy } from 'firebase/firestore';
 import EditableText from '@/components/editable-text';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { defaultTeamMembers } from '@/lib/team';
 
 function ServiceCard({
   icon,
@@ -101,7 +102,8 @@ export default function Home() {
   );
   const { data: teamMembers, isLoading: isTeamLoading } = useCollection(teamQuery);
 
-  const mainTeamMembers = teamMembers ? teamMembers.slice(0, 2) : [];
+  const currentTeam = (teamMembers && teamMembers.length > 0) ? teamMembers : defaultTeamMembers;
+  const mainTeamMembers = currentTeam.slice(0, 2);
   
   const defaultContent = {
       heroHeadline: "C+ Consultoría Legal",
