@@ -137,9 +137,9 @@ export default function Home() {
             <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">
               <EditableText field="heroHeadline" defaultText="C+ Consultoría Legal" isLoading={isLoading} />
             </h1>
-            <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
+            <div className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
                <EditableText field="heroSubhead" defaultText="Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza." isLoading={isLoading} as="textarea" />
-            </p>
+            </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                <Button size="lg" asChild>
                 <Link href="/contacto">
@@ -362,3 +362,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
