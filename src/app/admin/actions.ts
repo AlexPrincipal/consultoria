@@ -1,13 +1,15 @@
 
 'use server';
 
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth, db } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
-import { doc, getDoc, writeBatch } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc, writeBatch } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 import { defaultTeamMembers } from '@/lib/team';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
 
 async function isUserAdmin(uid: string): Promise<boolean> {
   try {
@@ -15,10 +17,14 @@ async function isUserAdmin(uid: string): Promise<boolean> {
     const adminRoleDoc = await getDoc(adminRoleDocRef);
     return adminRoleDoc.exists();
   } catch (error) {
-    console.error("Error checking admin status:", error);
-    // This is a critical failure, likely permissions on the rules themselves.
-    // We deny admin status by default on error.
-    return false;
+     if (error instanceof Error) {
+        // This is a more structured way to throw server-side errors
+        // that can be caught and inspected if needed.
+        const customError = new Error(`Error checking admin status: ${error.message}`);
+        (customError as any).code = 'ADMIN_CHECK_FAILED';
+        throw customError;
+    }
+    throw new Error("An unknown error occurred while checking admin status.");
   }
 }
 
@@ -34,22 +40,40 @@ export async function login(prevState: { error: string | null; success?: boolean
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    if (user) {
-      const isAdmin = await isUserAdmin(user.uid);
-      if (isAdmin) {
-        // The redirection is now handled on the client-side upon successful state change
-        return { error: null, success: true };
-      } else {
+    const isAdmin = await isUserAdmin(user.uid);
+    if (!isAdmin) {
         await signOut(auth);
         return { error: 'No tienes los permisos de administrador necesarios.' };
-      }
     }
-    
-    // This case should ideally not be reached if signInWithEmailAndPassword succeeds
-    return { error: 'No se pudo verificar el usuario.'};
+     return { error: null, success: true };
 
   } catch (e) {
     if (e instanceof FirebaseError) {
+        // If it's the dev admin and the user doesn't exist, create it.
+        if (process.env.NODE_ENV === 'development' && email === 'admin@example.com' && (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential')) {
+             try {
+                console.log('Development admin user not found. Attempting to create...');
+                const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const newUser = newUserCredential.user;
+
+                // Assign admin role
+                const adminRoleRef = doc(db, 'roles_admin', newUser.uid);
+                await setDoc(adminRoleRef, { uid: newUser.uid, assignedAt: serverTimestamp() });
+                console.log(`Development admin user created and role assigned: ${newUser.uid}`);
+
+                // Proceed with successful login
+                return { error: null, success: true };
+
+             } catch(creationError) {
+                 if (creationError instanceof FirebaseError) {
+                     console.error(`Failed to create dev admin user: ${creationError.code}`, creationError);
+                     return { error: `No se pudo crear el usuario admin de desarrollo: ${creationError.message}` };
+                 }
+                 console.error("Generic error during dev admin creation:", creationError);
+                 return { error: 'Ocurrió un error inesperado al crear el usuario admin.' };
+             }
+        }
+
         switch (e.code) {
             case 'auth/invalid-credential':
             case 'auth/user-not-found':
@@ -102,3 +126,4 @@ export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean
         return { success: false, message: 'Un error desconocido ocurrió durante la sincronización.' };
     }
 }
+

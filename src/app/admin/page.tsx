@@ -11,7 +11,6 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
-import Link from 'next/link';
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, null);
@@ -19,6 +18,8 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (state?.success) {
+      // On successful login, redirect to the homepage.
+      // The AdminLayout and other components will then pick up the new auth state.
       router.push('/');
     }
   }, [state, router]);
@@ -63,15 +64,6 @@ export default function LoginPage() {
               {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
-           {process.env.NODE_ENV === 'development' && (
-            <div className="mt-6 text-center text-xs text-muted-foreground">
-              <p>¿Primera vez?
-                <Link href="/admin/setup" className="underline hover:text-primary ml-1">
-                  Configurar admin de desarrollo
-                </Link>
-              </p>
-            </div>
-          )}
         </CardContent>
       </Card>
     </div>
