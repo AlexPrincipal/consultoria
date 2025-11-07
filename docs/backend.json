@@ -1,0 +1,144 @@
+{
+  "entities": {
+    "HomePage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "HomePage",
+      "type": "object",
+      "description": "Represents the content of the homepage, allowing administrative modification of texts and images.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the HomePage entity."
+        },
+        "heroHeadline": {
+          "type": "string",
+          "description": "Main headline text in the hero section."
+        },
+        "heroSubhead": {
+          "type": "string",
+          "description": "Subheadline text in the hero section."
+        },
+        "heroPrimaryCtaText": {
+          "type": "string",
+          "description": "Text for the primary call-to-action button in the hero section."
+        },
+        "heroSecondaryCtaText": {
+          "type": "string",
+          "description": "Text for the secondary call-to-action button in the hero section."
+        },
+        "servicesOverviewTitle": {
+          "type": "string",
+          "description": "Title for the services overview section."
+        },
+        "service1Title": {
+          "type": "string",
+          "description": "Title for the first service card."
+        },
+        "service1Description": {
+          "type": "string",
+          "description": "Description for the first service card."
+        },
+        "service2Title": {
+          "type": "string",
+          "description": "Title for the second service card."
+        },
+        "service2Description": {
+          "type": "string",
+          "description": "Description for the second service card."
+        },
+        "service3Title": {
+          "type": "string",
+          "description": "Title for the third service card."
+        },
+        "service3Description": {
+          "type": "string",
+          "description": "Description for the third service card."
+        },
+        "testimonialQuote": {
+          "type": "string",
+          "description": "Testimonial quote text."
+        },
+        "testimonialClientName": {
+          "type": "string",
+          "description": "Client name for the testimonial."
+        },
+        "contactUsTitle": {
+          "type": "string",
+          "description": "Title for the contact us mini-form."
+        },
+        "footerAddress": {
+          "type": "string",
+          "description": "Address text in the footer."
+        },
+        "footerMissionLinkText": {
+          "type": "string",
+          "description": "Text for the Mission link in the footer."
+        },
+        "footerValuesLinkText": {
+          "type": "string",
+          "description": "Text for the Values link in the footer."
+        },
+        "footerContactLinkText": {
+          "type": "string",
+          "description": "Text for the Contact link in the footer."
+        },
+        "heroBackgroundImageUrl": {
+          "type": "string",
+          "description": "URL of the background image in the hero section.",
+          "format": "uri"
+        },
+        "testimonialClientLogoUrl": {
+          "type": "string",
+          "description": "URL of the client logo in the testimonial section.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/homePageContent/{homePageId}",
+        "definition": {
+          "entityName": "HomePage",
+          "schema": {
+            "$ref": "#/backend/entities/HomePage"
+          },
+          "description": "Stores the content for the homepage. Only admins can modify the content.",
+          "params": [
+            {
+              "name": "homePageId",
+              "description": "The ID of the homepage document. Should be a single, well-known ID (e.g., 'main')."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{userId}",
+        "definition": {
+          "entityName": "role_admin",
+          "schema": {
+            "$ref": "#/backend/entities/role_admin"
+          },
+          "description": "Collection to store admin roles. Existence of a document with the user's ID grants admin access.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The UID of the user."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to manage the content of the CMXS Jurídico homepage, allowing administrators to easily update texts and images. A single collection, `homePageContent`, stores the homepage data. An admin role is used to control write access to the collection.\n\n**Authorization Independence**: Authorization independence is achieved by using a separate `/roles_admin/{uid}` collection to determine administrative privileges. Security rules check for the existence of a document in this collection to grant write access, avoiding the need to read data from other documents to determine permissions. This ensures atomic operations are possible and simplifies debugging.\n\n**QAPs (Rules are not Filters)**: The `homePageContent` collection contains only one document (or a small, manageable number) representing the homepage content, so `list` operations are not a primary concern. The focus is on controlling write access to this document.\n\n**Admin Role**: The `/roles_admin/{uid}` collection facilitates global roles. The existence of a document indicates admin status, simplifying rules and avoiding custom claims."
+  }
+}

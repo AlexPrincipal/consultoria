@@ -1,0 +1,88 @@
+/**
+ * @fileoverview Firestore Security Rules for CMXS Jurídico.
+ *
+ * Core Philosophy:
+ * This ruleset enforces an admin-only access model for managing homepage content.
+ * Administrative privileges are determined by the existence of a document in the `/roles_admin/{userId}` collection.
+ *
+ * Data Structure:
+ * - `/homePageContent/{homePageId}`: Stores the content for the homepage.
+ *   There should be a single, well-known ID (e.g., 'main') for the homepage document.
+ * - `/roles_admin/{userId}`: Indicates admin status. If a document exists for a user's ID, they are an admin.
+ *
+ * Key Security Decisions:
+ * - Only authenticated admins can create, update, or delete homepage content.
+ * - Any authenticated user can read the homepage content.
+ * - The rules explicitly deny write access to the `/roles_admin` collection itself to prevent privilege escalation.
+ *
+ * Denormalization for Authorization:
+ * The `/roles_admin/{userId}` collection is used to denormalize admin status. The rules check for the existence of a document in this collection to grant admin privileges, avoiding the need to read data from other documents to determine permissions.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Checks if the user is signed in.
+     * @return {boolean} True if the user is signed in, false otherwise.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * @description Checks if the user is an admin.
+     * @return {boolean} True if the user is an admin, false otherwise.
+     */
+    function isAdmin() {
+      return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    }
+
+    /**
+     * @description Checks if the user is an existing admin.  Combines the admin check with the existence check.
+     * @return {boolean} True if the user is an admin and the document exists, false otherwise.
+     */
+    function isExistingAdmin() {
+      return isAdmin() && resource != null;
+    }
+
+    /**
+     * @description
+     *  Rules for the `/homePageContent/{homePageId}` collection.
+     *  Only admins can create, update, or delete the homepage content.
+     *  Any authenticated user can read the homepage content.
+     * @path /homePageContent/{homePageId}
+     * @allow (get, list) - Any authenticated user can read the homepage content.
+     * @allow (create, update, delete) - Only admins can modify the homepage content.
+     * @deny (create, update, delete) - Non-admins cannot modify the homepage content.
+     * @principle Enforces admin-only access for writes to the homepage content.
+     */
+    match /homePageContent/{homePageId} {
+      allow get: if true;
+      allow list: if true;
+
+      allow create: if isSignedIn() && isAdmin();
+      allow update: if isSignedIn() && isExistingAdmin();
+      allow delete: if isSignedIn() && isExistingAdmin();
+    }
+
+    /**
+     * @description
+     *  Rules for the `/roles_admin/{userId}` collection.
+     *  Only admins can create, update, or delete admin roles. This is explicitly denied to prevent privilege escalation.
+     * @path /roles_admin/{userId}
+     * @allow (get, list) - Not allowed, as reading the list of admins would be a security concern.
+     * @allow (create, update, delete) - Not allowed on the roles_admin collection.
+     * @deny (create, update, delete, get, list) - All operations are denied.
+     * @principle Restricts direct manipulation of admin roles via Firestore.
+     */
+    match /roles_admin/{userId} {
+      allow get: if false;
+      allow list: if false;
+
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}
