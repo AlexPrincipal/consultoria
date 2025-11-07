@@ -194,9 +194,12 @@ function AdminDashboard() {
 export default function AdminPage() {
     const { user, isUserLoading } = useUser();
 
-    // El layout se encarga de la redirección y el estado de carga principal
     if (isUserLoading) {
-        return null; // O un spinner si se prefiere, pero el layout ya muestra uno.
+        return (
+             <div className="flex items-center justify-center min-h-[calc(100vh-7rem)]">
+                <p>Cargando panel de administración...</p>
+            </div>
+        );
     }
   
     // El layout ya se encarga de redirigir si no hay usuario,
