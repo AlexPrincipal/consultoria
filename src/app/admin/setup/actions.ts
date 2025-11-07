@@ -2,7 +2,7 @@
 'use server';
 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/firebase/server';
 import { FirebaseError } from 'firebase/app';
 
@@ -38,16 +38,21 @@ export async function setupDevAdmin(): Promise<SetupResult> {
 
     } catch (error) {
         if (error instanceof FirebaseError) {
-            // If the user already exists, that's okay. We'll just ensure the role is set.
+            // If the user already exists, that's okay. We just inform the user.
             if (error.code === 'auth/email-already-in-use') {
                 console.log('El usuario administrador de desarrollo ya existe.');
                 return { success: true, message: 'El usuario administrador ya existe. Puede iniciar sesión directamente.'};
             }
             console.error('Error de Firebase al crear el usuario administrador:', error);
-            return { success: false, message: `Error de Firebase: ${error.message}` };
+            return { success: false, message: `Error de Firebase: ${error.message} - ${error.code}` };
         }
 
         console.error('Error desconocido al configurar el administrador de desarrollo:', error);
+        
+        if (error instanceof Error) {
+            return { success: false, message: `Ocurrió un error desconocido: ${error.message}` };
+        }
+
         return { success: false, message: 'Ocurrió un error desconocido.' };
     }
 }
