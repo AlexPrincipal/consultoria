@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -19,10 +18,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 // }
 
 export default function TeamMemberPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const firestore = useFirestore();
   const memberRef = useMemoFirebase(
-    () => (firestore ? doc(firestore, 'teamMembers', params.slug) : null),
-    [firestore, params.slug]
+    () => (firestore ? doc(firestore, 'teamMembers', slug) : null),
+    [firestore, slug]
   );
   const { data: member, isLoading } = useDoc(memberRef);
 
