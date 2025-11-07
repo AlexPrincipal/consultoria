@@ -1,7 +1,7 @@
 'use client';
 
-import { useUser } from '@/firebase';
 import { useAdminStore } from '@/lib/store';
+import { useUser } from '@/firebase';
 import { Button } from './ui/button';
 import { logout } from '@/app/(protected)/admin/actions';
 import { Label } from './ui/label';
@@ -30,32 +30,37 @@ export default function AdminToolbar() {
   }
 
   return (
-    <div className="fixed top-4 right-4 z-[100] bg-card/80 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-border/50 flex items-center gap-6">
-      <div className="flex items-center space-x-2">
-        <Switch
-          id="edit-mode-toggle"
-          checked={isEditMode}
-          onCheckedChange={toggleEditMode}
-          aria-label="Toggle Edit Mode"
-        />
-        <Label htmlFor="edit-mode-toggle" className={cn("font-semibold", isEditMode ? "text-primary" : "text-foreground")}>
-          <div className="flex items-center gap-2">
-            <Edit className="h-4 w-4" />
-            Modo Edición
+    <div className="fixed top-0 left-0 right-0 z-[100] bg-background/90 backdrop-blur-sm shadow-md border-b border-border/50">
+      <div className="container mx-auto px-4 md:px-6 h-14 flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <span className="font-semibold text-sm uppercase tracking-wider text-primary">Admin</span>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="edit-mode-toggle"
+              checked={isEditMode}
+              onCheckedChange={toggleEditMode}
+              aria-label="Toggle Edit Mode"
+            />
+            <Label htmlFor="edit-mode-toggle" className={cn("font-semibold text-sm", isEditMode ? "text-primary" : "text-foreground")}>
+              <div className="flex items-center gap-2">
+                <Edit className="h-4 w-4" />
+                Modo Edición
+              </div>
+            </Label>
           </div>
-        </Label>
+        </div>
+        <form action={() => {
+            if (isClient) {
+              sessionStorage.removeItem('dev-admin');
+            }
+            logout();
+        }}>
+          <Button variant="ghost" size="sm" type="submit">
+            <LogOut className="h-4 w-4 mr-2" />
+            Cerrar Sesión
+          </Button>
+        </form>
       </div>
-      <form action={() => {
-          if (isClient) {
-            sessionStorage.removeItem('dev-admin');
-          }
-          logout();
-      }}>
-        <Button variant="ghost" size="sm" type="submit">
-          <LogOut className="h-4 w-4 mr-2" />
-          Cerrar Sesión
-        </Button>
-      </form>
     </div>
   );
 }

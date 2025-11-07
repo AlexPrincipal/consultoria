@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={cn('dark', cinzel.variable, lato.variable)}>
-      <body className="font-body bg-background text-foreground antialiased">
+      <body className="font-body bg-background text-foreground antialiased pt-14">
         <FirebaseClientProvider>
           <AdminToolbar />
           <Header />
