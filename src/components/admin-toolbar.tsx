@@ -1,31 +1,15 @@
 'use client';
 
 import { useAdminStore } from '@/lib/store';
-import { useUser } from '@/firebase';
 import { Button } from './ui/button';
-import { logout } from '@/app/(auth)/admin/login/actions';
+import { logout } from '@/app/admin/actions';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 import { Edit, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
 
 export default function AdminToolbar() {
   const { isEditMode, toggleEditMode } = useAdminStore();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    // Disable edit mode on logout
-    if (isEditMode) {
-      toggleEditMode();
-    }
-    await logout();
-    // No need to redirect here, the server action handles it.
-    // But we refresh to ensure all client-side state is cleared.
-    router.refresh();
-  }
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[100] bg-background/90 backdrop-blur-sm shadow-md border-b border-border/50">
@@ -47,7 +31,7 @@ export default function AdminToolbar() {
             </Label>
           </div>
         </div>
-        <form action={handleLogout}>
+        <form action={logout}>
           <Button variant="ghost" size="sm" type="submit">
             <LogOut className="h-4 w-4 mr-2" />
             Cerrar Sesión

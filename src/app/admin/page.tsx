@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { login } from '@/app/(auth)/admin/login/actions';
+import { login } from '@/app/admin/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -15,13 +15,28 @@ import { useUser } from '@/firebase';
 export default function LoginPage() {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(login, null);
-  const { user } = useUser();
+  const { user, isUserLoading, isAdmin } = useUser();
   
   useEffect(() => {
-    if (state?.success) {
-      // If the server action was successful, refresh the page.
-      // The new admin role will be picked up by the layout, which will redirect home.
-      router.refresh(); 
+    // If the user is already an admin (checked by the useUser hook), redirect them.
+    if (isAdmin) {
+      router.push('/'); 
+    }
+  }, [isAdmin, router]);
+  
+  // This handles the successful login from the form action
+  useEffect(() => {
+     if (state?.success) {
+      // In dev mode, we just need to refresh to allow the useUser hook to re-evaluate with the new state.
+      if ((document.getElementById('email') as HTMLInputElement)?.value === 'admin@example.com') {
+         // A simple way to signal dev login is to set a session storage item and reload.
+         // The `useUser` hook will handle the rest. This is a bit of a hack for dev convenience.
+         sessionStorage.setItem('dev-admin', 'true');
+         router.push('/');
+         // window.location.href = '/'; // Or a full reload
+      } else {
+        router.push('/');
+      }
     }
   }, [state, router]);
 
@@ -37,8 +52,6 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <form action={formAction} className="space-y-4">
-             {/* Hidden input to pass the current user's UID to the server action */}
-            {user && <input type="hidden" name="uid" value={user.uid} />}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -63,7 +76,7 @@ export default function LoginPage() {
                   </AlertDescription>
                 </Alert>
             )}
-            <Button type="submit" className="w-full" disabled={isPending || !user}>
+            <Button type="submit" className="w-full" disabled={isPending || isUserLoading}>
               {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
