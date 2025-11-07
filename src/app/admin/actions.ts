@@ -8,8 +8,6 @@ import { FirebaseError } from 'firebase/app';
 import { doc, getDoc, serverTimestamp, setDoc, writeBatch } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 import { defaultTeamMembers } from '@/lib/team';
-import { errorEmitter } from '@/firebase/error-emitter';
-import { FirestorePermissionError } from '@/firebase/errors';
 
 async function isUserAdmin(uid: string): Promise<boolean> {
   try {
@@ -17,9 +15,13 @@ async function isUserAdmin(uid: string): Promise<boolean> {
     const adminRoleDoc = await getDoc(adminRoleDocRef);
     return adminRoleDoc.exists();
   } catch (error) {
+     if (error instanceof Error && error.message.includes('permission-denied')) {
+        // This is likely a security rule issue. We can throw a more specific error.
+         const permissionError = new Error(`Permission denied when checking admin status for UID: ${uid}. Ensure Firestore rules allow this read.`);
+         (permissionError as any).code = 'ADMIN_CHECK_PERMISSION_DENIED';
+         throw permissionError;
+     }
      if (error instanceof Error) {
-        // This is a more structured way to throw server-side errors
-        // that can be caught and inspected if needed.
         const customError = new Error(`Error checking admin status: ${error.message}`);
         (customError as any).code = 'ADMIN_CHECK_FAILED';
         throw customError;
@@ -49,31 +51,6 @@ export async function login(prevState: { error: string | null; success?: boolean
 
   } catch (e) {
     if (e instanceof FirebaseError) {
-        // If it's the dev admin and the user doesn't exist, create it.
-        if (process.env.NODE_ENV === 'development' && email === 'admin@example.com' && (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential')) {
-             try {
-                console.log('Development admin user not found. Attempting to create...');
-                const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const newUser = newUserCredential.user;
-
-                // Assign admin role
-                const adminRoleRef = doc(db, 'roles_admin', newUser.uid);
-                await setDoc(adminRoleRef, { uid: newUser.uid, assignedAt: serverTimestamp() });
-                console.log(`Development admin user created and role assigned: ${newUser.uid}`);
-
-                // Proceed with successful login
-                return { error: null, success: true };
-
-             } catch(creationError) {
-                 if (creationError instanceof FirebaseError) {
-                     console.error(`Failed to create dev admin user: ${creationError.code}`, creationError);
-                     return { error: `No se pudo crear el usuario admin de desarrollo: ${creationError.message}` };
-                 }
-                 console.error("Generic error during dev admin creation:", creationError);
-                 return { error: 'Ocurrió un error inesperado al crear el usuario admin.' };
-             }
-        }
-
         switch (e.code) {
             case 'auth/invalid-credential':
             case 'auth/user-not-found':
@@ -84,8 +61,12 @@ export async function login(prevState: { error: string | null; success?: boolean
                 return { error: `Ocurrió un error inesperado de Firebase: ${e.message}` };
         }
     }
-    // Handle generic errors
+    
     if (e instanceof Error) {
+      // Catch custom errors from isUserAdmin
+      if ((e as any).code === 'ADMIN_CHECK_PERMISSION_DENIED') {
+          return { error: `Error de permisos: ${e.message}` };
+      }
       console.error("Generic error in login action:", e);
       return { error: e.message };
     }
@@ -126,4 +107,3 @@ export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean
         return { success: false, message: 'Un error desconocido ocurrió durante la sincronización.' };
     }
 }
-
