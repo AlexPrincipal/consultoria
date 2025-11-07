@@ -210,6 +210,9 @@ export default function QuienesSomosPage() {
                     <h3 className="text-3xl font-bold font-headline text-primary">
                       <EditableText field="name" defaultText={member.name} isLoading={isLoading} collectionId="teamMembers" docId={member.id} />
                     </h3>
+                     <div className="text-lg font-medium text-white">
+                        <EditableText field="title" defaultText={member.title} isLoading={isLoading} collectionId="teamMembers" docId={member.id} multiline/>
+                    </div>
                     <div className="text-muted-foreground leading-relaxed text-lg">
                       <EditableText field="bio" defaultText={member.bio} isLoading={isLoading} collectionId="teamMembers" docId={member.id} multiline/>
                     </div>
@@ -259,3 +262,5 @@ export default function QuienesSomosPage() {
     </div>
   );
 }
+
+    
