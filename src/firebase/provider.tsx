@@ -1,9 +1,10 @@
+
 'use client';
 
 import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
 import { FirebaseApp } from 'firebase/app';
 import { Firestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { Auth, User, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
+import { Auth, User, onAuthStateChanged, signInAnonymously, createUserWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 import { useDoc } from './firestore/use-doc';
 
@@ -78,19 +79,8 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       (firebaseUser) => {
         if (firebaseUser) {
           setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
-
-          // If it's a dev login, grant admin role
-          if (sessionStorage.getItem('dev-admin') === 'true') {
-              const adminRoleRef = doc(firestore, 'roles_admin', firebaseUser.uid);
-              setDoc(adminRoleRef, { uid: firebaseUser.uid, assignedAt: serverTimestamp() }, { merge: true })
-                .then(() => {
-                    console.log('Dev admin role assigned.');
-                    sessionStorage.removeItem('dev-admin'); // Clean up
-                })
-                .catch(e => console.error("Failed to assign dev admin role", e));
-          }
-
         } else {
+            // If no user is logged in, sign in anonymously.
             signInAnonymously(auth).catch((error) => {
                  console.error("FirebaseProvider: Anonymous sign-in failed:", error);
                  setUserAuthState({ user: null, isUserLoading: false, userError: error });

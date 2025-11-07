@@ -1,7 +1,7 @@
+
 'use client';
 
-import { useActionState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useActionState } from 'react';
 import { login } from '@/app/admin/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,19 +12,7 @@ import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [state, formAction, isPending] = useActionState(login, null);
-
-  useEffect(() => {
-    if (state?.success) {
-      if (state.devAdmin) {
-        // Set a flag for the provider to handle role assignment on auth state change
-        sessionStorage.setItem('dev-admin', 'true');
-      }
-      // A full page refresh is more reliable to ensure all providers and layouts re-evaluate auth state.
-      window.location.href = '/';
-    }
-  }, [state, router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
