@@ -1,6 +1,11 @@
 import { create } from 'zustand';
 
-// Este store ya no es necesario con el panel de administración centralizado.
-// Se puede eliminar o dejar vacío si otras funcionalidades lo usan en el futuro.
+type AdminState = {
+  isEditMode: boolean;
+  toggleEditMode: () => void;
+};
 
-export const useStore = create(() => ({}));
+export const useAdminStore = create<AdminState>((set) => ({
+  isEditMode: false,
+  toggleEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
+}));
