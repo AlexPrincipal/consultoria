@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Scale, ShieldCheck, Briefcase, Landmark, FileText, Building, GitBranch, Anchor, Target, Users, Zap, Building2 } from 'lucide-react';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
 import { teamMembers } from '@/lib/team';
@@ -111,14 +110,13 @@ export default function Home() {
   );
   
   const { data: homePageData, isLoading } = useDoc(homePageContentRef);
-
-  const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
   
   const content = {
       heroHeadline: homePageData?.heroHeadline || "C+ Consultoría Legal",
       heroSubhead: homePageData?.heroSubhead || "Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza.",
       heroPrimaryCtaText: homePageData?.heroPrimaryCtaText || "Agendar una Consulta",
       heroSecondaryCtaText: homePageData?.heroSecondaryCtaText || "Nuestros Servicios",
+      heroBackgroundImageUrl: homePageData?.heroBackgroundImageUrl || "https://images.unsplash.com/photo-1730629689669-5567c3d00ad5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGxlZ2FsfGVufDB8fHx8MTc2MTAxODk4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
       servicesOverviewTitle: homePageData?.servicesOverviewTitle || "Nuestras Áreas de Práctica",
       service1Title: homePageData?.service1Title || "Asesoría y Consultoría",
       service1Description: homePageData?.service1Description || "Orientación estratégica para la resolución de problemas complejos y el diseño de proyectos empresariales a largo plazo.",
@@ -134,13 +132,13 @@ export default function Home() {
     <div className="flex flex-col">
         {/* Hero Section */}
         <section className="relative flex items-center justify-center min-h-[700px] text-center text-white bg-black">
-          {heroImage && (
+          {content.heroBackgroundImageUrl && (
             <Image
-              src={homePageData?.heroBackgroundImageUrl || heroImage.imageUrl}
-              alt={heroImage.description}
+              src={content.heroBackgroundImageUrl}
+              alt="Fondo abstracto legal"
               fill
               className="object-cover opacity-20"
-              data-ai-hint={heroImage.imageHint}
+              data-ai-hint="abstract legal"
               priority
             />
           )}
