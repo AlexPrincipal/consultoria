@@ -37,7 +37,7 @@ export function Footer() {
                 <li><Link href="/por-que-escogernos" className="hover:text-primary transition-colors">¿Por qué nosotros?</Link></li>
                 <li><Link href="/nuestras-oficinas" className="hover:text-primary transition-colors">Oficinas</Link></li>
                 <li><Link href="/faq" className="hover:text-primary transition-colors">FAQ</Link></li>
-                <li><Link href="/contacto" className="hover:text-primary transition-colors">Contacto</Link></li>
+                <li><Link href="/contacto" className="hovertext-primary transition-colors">Contacto</Link></li>
               </ul>
             </div>
 
@@ -61,6 +61,7 @@ export function Footer() {
             </div>
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8 text-center text-sm">
+             <p className="mb-2"><Link href="/admin" className="hover:text-primary transition-colors">Admin</Link></p>
             <p>&copy; {new Date().getFullYear()} Jurídico Empresarial y Comercial. Todos los derechos reservados.</p>
           </div>
         </div>
