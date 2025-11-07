@@ -130,5 +130,3 @@
     "reasoning": "The Firestore structure is designed to manage the content of the CMXS Jurídico homepage and other static pages, allowing administrators to easily update texts and images. A collection `homePageContent` stores the homepage data, while a generic `pageContent` collection stores content for other pages, using the document ID to identify the page. An admin role is used to control write access to all content collections."
   }
 }
-
-    

@@ -2,7 +2,7 @@
 'use client';
 
 import Image from 'next/image';
-import { notFound, useParams } from 'next/navigation';
+import { useParams, notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ export default function TeamMemberPage() {
   const slug = params.slug as string;
 
   const member = defaultTeamMembers.find((m) => m.slug === slug);
-  const isLoading = false; // Data is now static
+  const isLoading = false; // Data is now static from lib/team.ts
 
   if (!member) {
     notFound();
