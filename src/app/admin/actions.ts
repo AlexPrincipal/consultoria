@@ -16,19 +16,25 @@ async function isUserAdmin(uid: string): Promise<boolean> {
     const adminRoleDoc = await getDoc(adminRoleDocRef);
     return adminRoleDoc.exists();
   } catch (error) {
-    // This is a server-side action, we cannot emit a client-side error.
-    // We will throw a more informative error to be caught by the login action.
     if (error.code === 'permission-denied') {
-        const readableError = new Error(`Permission denied when checking admin role for UID: ${uid}. Path: /roles_admin/${uid}. Ensure server-side code has adequate permissions or rules allow this check.`);
-        (readableError as any).originalError = error;
-        throw readableError;
+      // Create a more informative, structured error to be thrown.
+      // This will be caught by the login action and propagated to the UI.
+      const permissionError = new Error(
+        `Firestore Permission Denied: The server-side action was not allowed to read the admin role document. ` +
+        `Path: /roles_admin/${uid}. ` +
+        `Check Firestore rules to ensure the server environment or authenticated user has read access.`
+      );
+      // Attach original error for deeper debugging if needed
+      (permissionError as any).originalError = error;
+      throw permissionError;
     }
-    console.error("Error checking admin status:", error);
-    return false;
+    // For other errors, log them on the server and re-throw a generic message.
+    console.error("An unexpected error occurred in isUserAdmin:", error);
+    throw new Error('An unexpected error occurred while checking user permissions.');
   }
 }
 
-export async function login(prevState: { error: string | null; success?: boolean } | null, formData: FormData): Promise<{ error: string | null; success?: boolean }> {
+export async function login(prevState: { error: string | null; success?: boolean } | null, formData: FormData): Promise<{ error: string | null; success?: boolean; devAdmin?: boolean; }> {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
@@ -77,8 +83,8 @@ export async function login(prevState: { error: string | null; success?: boolean
                 return { error: `Ocurrió un error inesperado de Firebase: ${e.message}` };
         }
     }
+    // This will now catch the more descriptive error from isUserAdmin
     if (e instanceof Error) {
-        // Catch the custom error from isUserAdmin
         return { error: e.message };
     }
     return { error: 'Un error inesperado ocurrió.' };
