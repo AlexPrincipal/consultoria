@@ -61,7 +61,6 @@ export function Footer() {
             </div>
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8 text-center text-sm">
-             <p className="mb-2"><Link href="/admin" className="hover:text-primary transition-colors">Admin</Link></p>
             <p>&copy; {new Date().getFullYear()} Jurídico Empresarial y Comercial. Todos los derechos reservados.</p>
           </div>
         </div>

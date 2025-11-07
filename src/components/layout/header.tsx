@@ -40,6 +40,10 @@ const navLinks = [
   { href: '/faq', label: 'FAQ' },
 ];
 
+if (process.env.NODE_ENV === 'development') {
+  navLinks.push({ href: '/admin', label: 'Admin' });
+}
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
