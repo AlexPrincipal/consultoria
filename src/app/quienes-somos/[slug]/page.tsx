@@ -12,8 +12,9 @@ import EditableText from '@/components/editable-text';
 import { Skeleton } from '@/components/ui/skeleton';
 import { defaultTeamMembers } from '@/lib/team';
 
-export default function TeamMemberPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default function TeamMemberPage() {
+  const params = useParams();
+  const slug = params.slug as string;
 
   // Find the default member data from the static file first.
   const defaultMember = defaultTeamMembers.find((m) => m.slug === slug);
