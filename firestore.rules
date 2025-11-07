@@ -12,7 +12,7 @@
  *
  * Key Security Decisions:
  * - Only authenticated admins can create, update, or delete homepage content.
- * - Any authenticated user can read the homepage content.
+ * - Any user (authenticated or not) can read the homepage content.
  * - The rules explicitly deny write access to the `/roles_admin` collection itself to prevent privilege escalation.
  *
  * Denormalization for Authorization:
@@ -39,50 +39,33 @@ service cloud.firestore {
     }
 
     /**
-     * @description Checks if the user is an existing admin.  Combines the admin check with the existence check.
-     * @return {boolean} True if the user is an admin and the document exists, false otherwise.
-     */
-    function isExistingAdmin() {
-      return isAdmin() && resource != null;
-    }
-
-    /**
      * @description
      *  Rules for the `/homePageContent/{homePageId}` collection.
      *  Only admins can create, update, or delete the homepage content.
-     *  Any authenticated user can read the homepage content.
+     *  Anyone can read the homepage content.
      * @path /homePageContent/{homePageId}
-     * @allow (get, list) - Any authenticated user can read the homepage content.
+     * @allow (get, list) - Anyone can read the homepage content.
      * @allow (create, update, delete) - Only admins can modify the homepage content.
-     * @deny (create, update, delete) - Non-admins cannot modify the homepage content.
      * @principle Enforces admin-only access for writes to the homepage content.
      */
     match /homePageContent/{homePageId} {
       allow get: if true;
       allow list: if true;
-
-      allow create: if isSignedIn() && isAdmin();
-      allow update: if isSignedIn() && isExistingAdmin();
-      allow delete: if isSignedIn() && isExistingAdmin();
+      allow write: if isSignedIn() && isAdmin();
     }
 
     /**
      * @description
      *  Rules for the `/roles_admin/{userId}` collection.
-     *  Only admins can create, update, or delete admin roles. This is explicitly denied to prevent privilege escalation.
+     *  Direct client-side manipulation of admin roles is prohibited to prevent privilege escalation.
+     *  Admin roles should only be managed through a secure backend or the Firebase Console.
      * @path /roles_admin/{userId}
-     * @allow (get, list) - Not allowed, as reading the list of admins would be a security concern.
-     * @allow (create, update, delete) - Not allowed on the roles_admin collection.
-     * @deny (create, update, delete, get, list) - All operations are denied.
-     * @principle Restricts direct manipulation of admin roles via Firestore.
+     * @allow (read, write) - All direct client access is denied.
+     * @principle Restricts direct manipulation of admin roles via Firestore clients.
      */
     match /roles_admin/{userId} {
-      allow get: if false;
-      allow list: if false;
-
-      allow create: if false;
-      allow update: if false;
-      allow delete: if false;
+      allow read: if false;
+      allow write: if false;
     }
   }
 }
