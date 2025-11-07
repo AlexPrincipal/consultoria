@@ -15,6 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const isDevLogin = isClient && sessionStorage.getItem('dev-admin') === 'true';
 
   useEffect(() => {
+    // Wait until the user status is determined and we are on the client
     if (!isUserLoading && isClient) {
        if (!user && !isDevLogin) {
         // If not logged in (and not in dev mode), redirect to the login page.
