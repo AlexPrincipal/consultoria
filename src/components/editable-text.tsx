@@ -1,7 +1,7 @@
 'use client';
 
 import { useAdminStore } from '@/lib/store';
-import { useUser, useFirestore } from '@/firebase';
+import { useUser, useFirestore, FirestorePermissionError, errorEmitter } from '@/firebase';
 import { useState, useEffect, useRef, useTransition } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -67,24 +67,37 @@ export default function EditableText({
       return;
     }
 
-    startTransition(async () => {
+    startTransition(() => {
       const data = { [field]: value };
       const docRef = doc(firestore, collectionId, docId);
       
-      try {
-        await setDoc(docRef, data, { merge: true });
-        toast({
-          title: 'Guardado',
-          description: `El campo se ha actualizado correctamente.`,
-          action: <Check className="h-5 w-5 text-green-500" />,
+      // Use non-blocking write with structured error handling
+      setDoc(docRef, data, { merge: true })
+        .then(() => {
+            toast({
+              title: 'Guardado',
+              description: `El campo se ha actualizado correctamente.`,
+              action: <Check className="h-5 w-5 text-green-500" />,
+            });
+        })
+        .catch((serverError) => {
+            const permissionError = new FirestorePermissionError({
+              path: docRef.path,
+              operation: 'update', // or 'create' if applicable
+              requestResourceData: data,
+            });
+            
+            // This will be caught by the FirebaseErrorListener and displayed in the dev overlay
+            errorEmitter.emit('permission-error', permissionError);
+
+            // Also show a user-friendly toast
+            toast({
+              variant: 'destructive',
+              title: 'Error de Permiso',
+              description: 'No tienes permiso para guardar estos cambios.',
+            });
         });
-      } catch (error: any) {
-         toast({
-          variant: 'destructive',
-          title: 'Error de Permiso',
-          description: error.message || 'No tienes permiso para guardar cambios.',
-        });
-      }
+
       setIsEditing(false);
     });
   };
