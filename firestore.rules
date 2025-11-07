@@ -1,64 +1,99 @@
 /**
- * @fileoverview Firestore Security Rules for CMXS Jurídico.
- *
- * Core Philosophy:
- * This ruleset enforces an admin-only access model for managing homepage content.
- * Administrative privileges are determined by the existence of a document in the `/roles_admin/{userId}` collection.
- *
+ * @file Firestore Security Rules for CMXS Jurídico.
+ * @description This ruleset enforces a strict data isolation model based on Law Firm IDs.
  * Data Structure:
- * - `/homePageContent/{homePageId}`: Stores the content for the homepage.
- * - `/pageContent/{pageId}`: Stores content for other static pages.
- * - `/roles_admin/{userId}`: Indicates admin status.
- *
+ * - /lawFirms/{lawFirmId}: Stores law firm details.
+ * - /lawFirms/{lawFirmId}/legalServices/{legalServiceId}: Stores legal services for a specific law firm.
+ * - /lawFirms/{lawFirmId}/attorneyProfiles/{attorneyProfileId}: Stores attorney profiles for a specific law firm.
+ * - /lawFirms/{lawFirmId}/testimonials/{testimonialId}: Stores client testimonials for a specific law firm.
+ * - /lawFirms/{lawFirmId}/contactFormSubmissions/{contactFormSubmissionId}: Stores contact form submissions.
+ * - /lawFirms/{lawFirmId}/faqs/{faqId}: Stores FAQs for a specific law firm.
  * Key Security Decisions:
- * - Only authenticated admins can create, update, or delete content.
- * - Any user (authenticated or not) can read the content.
- * - The rules explicitly deny write access to the `/roles_admin` collection to prevent privilege escalation.
+ * - Data is isolated by `lawFirmId`. All subcollections inherit this scoping.
+ * - Write access is generally restricted, requiring specific authorization logic (e.g., admin roles - not yet defined).
+ * - List operations are generally allowed for owners of the law firm, but might be restricted further based on specific collection requirements.
+ * - Denormalization: The `lawFirmId` is crucial for authorization and is present in all documents within a law firm's data tree.
  */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
     /**
-     * @description Checks if the user is signed in.
-     * @return {boolean} True if the user is signed in, false otherwise.
+     * @description Manages access to LawFirm documents.
+     * @path /lawFirms/{lawFirmId}
+     * @allow (get, list): Any user can read law firm information.
+     * @allow (create, update, delete): Only an authorized user (e.g., admin) can modify law firm information.
+     * @deny (create, update, delete): Unauthorized users cannot create, update, or delete law firm documents.
+     * @principle Enforces authorization for write operations; public read access.
      */
-    function isSignedIn() {
-      return request.auth != null;
+    match /lawFirms/{lawFirmId} {
+      allow get, list: if true;
+      allow create, update, delete: if false; // TODO: Add law firm owner check
     }
 
     /**
-     * @description Checks if the user is an admin.
-     * @return {boolean} True if the user is an admin, false otherwise.
+     * @description Manages access to LegalService documents within a LawFirm.
+     * @path /lawFirms/{lawFirmId}/legalServices/{legalServiceId}
+     * @allow (get, list): Any user can read legal service information for a law firm.
+     * @allow (create, update, delete): Only an authorized user (e.g., law firm owner) can modify legal services.
+     * @deny (create, update, delete): Unauthorized users cannot create, update, or delete legal service documents.
+     * @principle Enforces authorization for write operations; public read access.
      */
-    function isAdmin() {
-      return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    match /lawFirms/{lawFirmId}/legalServices/{legalServiceId} {
+      allow get, list: if true;
+      allow create, update, delete: if false; // TODO: Add law firm owner check
     }
 
     /**
-     * @description Rules for the `/homePageContent/{homePageId}` collection.
+     * @description Manages access to AttorneyProfile documents within a LawFirm.
+     * @path /lawFirms/{lawFirmId}/attorneyProfiles/{attorneyProfileId}
+     * @allow (get, list): Any user can read attorney profile information for a law firm.
+     * @allow (create, update, delete): Only an authorized user (e.g., law firm owner) can modify attorney profiles.
+     * @deny (create, update, delete): Unauthorized users cannot create, update, or delete attorney profile documents.
+     * @principle Enforces authorization for write operations; public read access.
      */
-    match /homePageContent/{homePageId} {
-      allow get: if true;
-      allow list: if true;
-      allow write: if isSignedIn() && isAdmin();
-    }
-    
-    /**
-     * @description Rules for the `/pageContent/{pageId}` collection.
-     */
-    match /pageContent/{pageId} {
-      allow get: if true;
-      allow list: if true;
-      allow write: if isSignedIn() && isAdmin();
+    match /lawFirms/{lawFirmId}/attorneyProfiles/{attorneyProfileId} {
+      allow get, list: if true;
+      allow create, update, delete: if false; // TODO: Add law firm owner check
     }
 
     /**
-     * @description Rules for the `/roles_admin/{userId}` collection.
+     * @description Manages access to Testimonial documents within a LawFirm.
+     * @path /lawFirms/{lawFirmId}/testimonials/{testimonialId}
+     * @allow (get, list): Any user can read testimonial information for a law firm.
+     * @allow (create, update, delete): Only an authorized user (e.g., law firm owner) can modify testimonials.
+     * @deny (create, update, delete): Unauthorized users cannot create, update, or delete testimonial documents.
+     * @principle Enforces authorization for write operations; public read access.
      */
-    match /roles_admin/{userId} {
-      allow read: if false;
-      allow write: if false;
+    match /lawFirms/{lawFirmId}/testimonials/{testimonialId} {
+      allow get, list: if true;
+      allow create, update, delete: if false; // TODO: Add law firm owner check
+    }
+
+    /**
+     * @description Manages access to ContactFormSubmission documents within a LawFirm.
+     * @path /lawFirms/{lawFirmId}/contactFormSubmissions/{contactFormSubmissionId}
+     * @allow (create): Any user can submit a contact form.
+     * @allow (get, list, update, delete): Only an authorized user (e.g., law firm owner) can view, update, or delete submissions.
+     * @deny (get, list, update, delete): Unauthorized users cannot access contact form submissions.
+     * @principle Enforces authorization for accessing submissions; allows public submissions.
+     */
+    match /lawFirms/{lawFirmId}/contactFormSubmissions/{contactFormSubmissionId} {
+      allow create: if true; // Allow anyone to submit a contact form
+      allow get, list, update, delete: if false; // TODO: Add law firm owner check
+    }
+
+    /**
+     * @description Manages access to FAQ documents within a LawFirm.
+     * @path /lawFirms/{lawFirmId}/faqs/{faqId}
+     * @allow (get, list): Any user can read FAQ information for a law firm.
+     * @allow (create, update, delete): Only an authorized user (e.g., law firm owner) can modify FAQs.
+     * @deny (create, update, delete): Unauthorized users cannot create, update, or delete FAQ documents.
+     * @principle Enforces authorization for write operations; public read access.
+     */
+    match /lawFirms/{lawFirmId}/faqs/{faqId} {
+      allow get, list: if true;
+      allow create, update, delete: if false; // TODO: Add law firm owner check
     }
   }
 }

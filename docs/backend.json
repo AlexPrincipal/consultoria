@@ -1,119 +1,243 @@
 {
   "entities": {
-    "HomePage": {
+    "LawFirm": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "HomePage",
+      "title": "LawFirm",
       "type": "object",
-      "description": "Represents the content of the homepage, allowing administrative modification of texts and images.",
+      "description": "Represents the law firm and its core information.",
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier for the HomePage entity."
+          "description": "Unique identifier for the law firm entity."
         },
-        "heroHeadline": {
+        "name": {
           "type": "string",
-          "description": "Main headline text in the hero section."
+          "description": "The name of the law firm."
         },
-        "heroSubhead": {
+        "address": {
           "type": "string",
-          "description": "Subheadline text in the hero section."
+          "description": "The physical address of the law firm."
         },
-        "heroPrimaryCtaText": {
+        "email": {
           "type": "string",
-          "description": "Text for the primary call-to-action button in the hero section."
+          "description": "The email address of the law firm.",
+          "format": "email"
         },
-        "heroSecondaryCtaText": {
+        "phoneNumber": {
           "type": "string",
-          "description": "Text for the secondary call-to-action button in the hero section."
+          "description": "The phone number of the law firm."
         },
-        "servicesOverviewTitle": {
+        "privacyPolicyUrl": {
           "type": "string",
-          "description": "Title for the services overview section."
-        },
-        "service1Title": {
-          "type": "string",
-          "description": "Title for the first service card."
-        },
-        "service1Description": {
-          "type": "string",
-          "description": "Description for the first service card."
-        },
-        "service2Title": {
-          "type": "string",
-          "description": "Title for the second service card."
-        },
-        "service2Description": {
-          "type": "string",
-          "description": "Description for the second service card."
-        },
-        "service3Title": {
-          "type": "string",
-          "description": "Title for the third service card."
-        },
-        "service3Description": {
-          "type": "string",
-          "description": "Description for the third service card."
-        },
-        "testimonialQuote": {
-          "type": "string",
-          "description": "Testimonial quote text."
-        },
-        "testimonialClientName": {
-          "type": "string",
-          "description": "Client name for the testimonial."
-        },
-        "contactUsTitle": {
-          "type": "string",
-          "description": "Title for the contact us mini-form."
-        },
-        "footerAddress": {
-          "type": "string",
-          "description": "Address text in the footer."
-        },
-        "footerMissionLinkText": {
-          "type": "string",
-          "description": "Text for the Mission link in the footer."
-        },
-        "footerValuesLinkText": {
-          "type": "string",
-          "description": "Text for the Values link in the footer."
-        },
-        "footerContactLinkText": {
-          "type": "string",
-          "description": "Text for the Contact link in the footer."
-        },
-        "heroBackgroundImageUrl": {
-          "type": "string",
-          "description": "URL of the background image in the hero section.",
-          "format": "uri"
-        },
-        "testimonialClientLogoUrl": {
-          "type": "string",
-          "description": "URL of the client logo in the testimonial section.",
+          "description": "URL to the privacy policy.",
           "format": "uri"
         }
       },
       "required": [
-        "id"
+        "id",
+        "name",
+        "address",
+        "email",
+        "phoneNumber"
       ]
     },
-    "role_admin": {
+    "LegalService": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "role_admin",
+      "title": "LegalService",
       "type": "object",
-      "description": "An entity representing an administrative role. The existence of a document with the user's UID in the 'roles_admin' collection grants them admin privileges.",
+      "description": "Represents a specific legal service offered by the firm.",
       "properties": {
-        "uid": {
+        "id": {
           "type": "string",
-          "description": "The UID of the user with admin role."
+          "description": "Unique identifier for the legal service."
         },
-        "assignedAt": {
+        "lawFirmId": {
           "type": "string",
-          "format": "date-time",
-          "description": "The timestamp when the admin role was assigned."
+          "description": "Reference to LawFirm. (Relationship: LawFirm 1:N LegalService)"
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the legal service (e.g., 'Compliance')."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed description of the legal service."
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon associated with the service, could be a URL or icon name."
         }
       },
-      "required": ["uid", "assignedAt"]
+      "required": [
+        "id",
+        "lawFirmId",
+        "title",
+        "description"
+      ]
+    },
+    "AttorneyProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "AttorneyProfile",
+      "type": "object",
+      "description": "Represents the profile of an attorney at the law firm.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the attorney profile."
+        },
+        "lawFirmId": {
+          "type": "string",
+          "description": "Reference to LawFirm. (Relationship: LawFirm 1:N AttorneyProfile)"
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the attorney."
+        },
+        "bio": {
+          "type": "string",
+          "description": "A biography or description of the attorney."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the attorney.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The phone number of the attorney."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL to the attorney's profile image.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "lawFirmId",
+        "name",
+        "bio",
+        "email"
+      ]
+    },
+    "Testimonial": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Testimonial",
+      "type": "object",
+      "description": "Represents a testimonial from a client.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the testimonial."
+        },
+        "lawFirmId": {
+          "type": "string",
+          "description": "Reference to LawFirm. (Relationship: LawFirm 1:N Testimonial)"
+        },
+        "clientName": {
+          "type": "string",
+          "description": "The name of the client providing the testimonial."
+        },
+        "companyName": {
+          "type": "string",
+          "description": "The company name of the client."
+        },
+        "quote": {
+          "type": "string",
+          "description": "The actual testimonial quote."
+        },
+        "logoUrl": {
+          "type": "string",
+          "description": "URL to the client's company logo.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "lawFirmId",
+        "clientName",
+        "quote"
+      ]
+    },
+    "ContactFormSubmission": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ContactFormSubmission",
+      "type": "object",
+      "description": "Represents a submission from the contact form.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the contact form submission."
+        },
+        "lawFirmId": {
+          "type": "string",
+          "description": "Reference to LawFirm. (Relationship: LawFirm 1:N ContactFormSubmission)"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the person submitting the form."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the person submitting the form.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The phone number of the person submitting the form."
+        },
+        "message": {
+          "type": "string",
+          "description": "The message from the contact form."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "The date and time the form was submitted.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "lawFirmId",
+        "name",
+        "email",
+        "message",
+        "submissionDate"
+      ]
+    },
+    "FAQ": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "FAQ",
+      "type": "object",
+      "description": "Represents a frequently asked question and its answer.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the FAQ."
+        },
+        "lawFirmId": {
+          "type": "string",
+          "description": "Reference to LawFirm. (Relationship: LawFirm 1:N FAQ)"
+        },
+        "question": {
+          "type": "string",
+          "description": "The question being asked."
+        },
+        "answer": {
+          "type": "string",
+          "description": "The answer to the question."
+        },
+        "order": {
+          "type": "number",
+          "description": "The display order of the FAQ."
+        }
+      },
+      "required": [
+        "id",
+        "lawFirmId",
+        "question",
+        "answer"
+      ]
     }
   },
   "auth": {
@@ -125,38 +249,122 @@
   "firestore": {
     "structure": [
       {
-        "path": "/homePageContent/{homePageId}",
+        "path": "/lawFirms/{lawFirmId}",
         "definition": {
-          "entityName": "HomePage",
+          "entityName": "LawFirm",
           "schema": {
-            "$ref": "#/backend/entities/HomePage"
+            "$ref": "#/backend/entities/LawFirm"
           },
-          "description": "Stores the content for the homepage. Only admins can modify the content.",
+          "description": "Stores law firm details. Each law firm has a unique ID.",
           "params": [
             {
-              "name": "homePageId",
-              "description": "The ID of the homepage document. Should be a single, well-known ID (e.g., 'main')."
+              "name": "lawFirmId",
+              "description": "Unique identifier for the law firm."
             }
           ]
         }
       },
       {
-        "path": "/roles_admin/{userId}",
+        "path": "/lawFirms/{lawFirmId}/legalServices/{legalServiceId}",
         "definition": {
-          "entityName": "role_admin",
+          "entityName": "LegalService",
           "schema": {
-            "$ref": "#/backend/entities/role_admin"
+            "$ref": "#/backend/entities/LegalService"
           },
-          "description": "Collection to store admin roles. Existence of a document with the user's ID grants admin access.",
+          "description": "Stores legal services offered by a specific law firm.",
           "params": [
             {
-              "name": "userId",
-              "description": "The UID of the user."
+              "name": "lawFirmId",
+              "description": "Unique identifier for the law firm."
+            },
+            {
+              "name": "legalServiceId",
+              "description": "Unique identifier for the legal service."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/lawFirms/{lawFirmId}/attorneyProfiles/{attorneyProfileId}",
+        "definition": {
+          "entityName": "AttorneyProfile",
+          "schema": {
+            "$ref": "#/backend/entities/AttorneyProfile"
+          },
+          "description": "Stores attorney profiles for a specific law firm.",
+          "params": [
+            {
+              "name": "lawFirmId",
+              "description": "Unique identifier for the law firm."
+            },
+            {
+              "name": "attorneyProfileId",
+              "description": "Unique identifier for the attorney profile."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/lawFirms/{lawFirmId}/testimonials/{testimonialId}",
+        "definition": {
+          "entityName": "Testimonial",
+          "schema": {
+            "$ref": "#/backend/entities/Testimonial"
+          },
+          "description": "Stores client testimonials for a specific law firm.",
+          "params": [
+            {
+              "name": "lawFirmId",
+              "description": "Unique identifier for the law firm."
+            },
+            {
+              "name": "testimonialId",
+              "description": "Unique identifier for the testimonial."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/lawFirms/{lawFirmId}/contactFormSubmissions/{contactFormSubmissionId}",
+        "definition": {
+          "entityName": "ContactFormSubmission",
+          "schema": {
+            "$ref": "#/backend/entities/ContactFormSubmission"
+          },
+          "description": "Stores contact form submissions received by a specific law firm.",
+          "params": [
+            {
+              "name": "lawFirmId",
+              "description": "Unique identifier for the law firm."
+            },
+            {
+              "name": "contactFormSubmissionId",
+              "description": "Unique identifier for the contact form submission."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/lawFirms/{lawFirmId}/faqs/{faqId}",
+        "definition": {
+          "entityName": "FAQ",
+          "schema": {
+            "$ref": "#/backend/entities/FAQ"
+          },
+          "description": "Stores frequently asked questions for a specific law firm.",
+          "params": [
+            {
+              "name": "lawFirmId",
+              "description": "Unique identifier for the law firm."
+            },
+            {
+              "name": "faqId",
+              "description": "Unique identifier for the FAQ."
             }
           ]
         }
       }
     ],
-    "reasoning": "The Firestore structure is designed to manage the content of the CMXS Jurídico homepage, allowing administrators to easily update texts and images. A single collection, `homePageContent`, stores the homepage data. An admin role is used to control write access to the collection.\n\n**Authorization Independence**: Authorization independence is achieved by using a separate `/roles_admin/{uid}` collection to determine administrative privileges. Security rules check for the existence of a document in this collection to grant write access, avoiding the need to read data from other documents to determine permissions. This ensures atomic operations are possible and simplifies debugging.\n\n**QAPs (Rules are not Filters)**: The `homePageContent` collection contains only one document (or a small, manageable number) representing the homepage content, so `list` operations are not a primary concern. The focus is on controlling write access to this document.\n\n**Admin Role**: The `/roles_admin/{uid}` collection facilitates global roles. The existence of a document indicates admin status, simplifying rules and avoiding custom claims."
+    "reasoning": "This Firestore structure is designed to support the CMXS Jurídico website, focusing on simplicity, scalability, and security. The structure uses path-based ownership for law firm specific data. Each top-level collection is associated with a `lawFirmId` enabling easy querying and data isolation between law firms. This structure avoids the need for complex `get()` calls in security rules, promoting Authorization Independence. \n\nAll data associated with a law firm is stored under collections with the `lawFirmId` such as `/lawFirms/{lawFirmId}/legalServices/{legalServiceId}`. This ensures that all the data is scoped to a particular law firm. This approach also facilitates secure `list` operations (QAPs) as security rules can easily filter based on the `lawFirmId`.\n\nThe use of explicit state modeling is not directly applicable in this scenario as there is no explicit state needed. The design prioritizes a predictable schema by adhering to semantic naming conventions, specifically using `lawFirmId` to indicate the parent-child relationship and `{entityId}` to represent document IDs.\n"
   }
 }
