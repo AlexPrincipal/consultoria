@@ -1,3 +1,4 @@
+
 'use server';
 
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -12,6 +13,15 @@ export async function login(prevState: { error: string | null } | null, formData
   if (!email || !password) {
     return { error: 'Email y contraseña son requeridos.' };
   }
+
+  // --- TEMPORARY DEVELOPMENT LOGIN ---
+  // If the user is 'admin@example.com' and password is 'admin', redirect to the dashboard.
+  if (email === 'admin@example.com' && password === 'admin') {
+    // This is a temporary bypass for development. For a real app,
+    // the user should be created in the Firebase Console and this block removed.
+    redirect('/admin');
+  }
+  // --- END TEMPORARY DEVELOPMENT LOGIN ---
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
