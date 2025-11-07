@@ -36,20 +36,31 @@ export interface UseDocResult<T> {
  * @template T Optional type for document data. Defaults to any.
  * @param {DocumentReference<DocumentData> | null | undefined} docRef -
  * The Firestore DocumentReference. Waits if null/undefined.
+ * @param {T} [initialData] - Optional initial data to use before the first fetch.
  * @returns {UseDocResult<T>} Object with data, isLoading, error.
  */
 export function useDoc<T = any>(
   memoizedDocRef: DocumentReference<DocumentData> | null | undefined,
+  initialData?: T
 ): UseDocResult<T> {
   type StateDataType = WithId<T> | null;
 
-  const [data, setData] = useState<StateDataType>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const getInitialState = (): StateDataType => {
+    if (initialData) {
+      // Ensure initialData has an 'id' if it's meant to conform to WithId<T>
+      // This might require initialData to include an id field.
+      return { id: '', ...initialData } as WithId<T>;
+    }
+    return null;
+  };
+
+  const [data, setData] = useState<StateDataType>(getInitialState());
+  const [isLoading, setIsLoading] = useState<boolean>(!!memoizedDocRef);
   const [error, setError] = useState<FirestoreError | Error | null>(null);
 
   useEffect(() => {
     if (!memoizedDocRef) {
-      setData(null);
+      setData(getInitialState());
       setIsLoading(false);
       setError(null);
       return;
@@ -57,7 +68,6 @@ export function useDoc<T = any>(
 
     setIsLoading(true);
     setError(null);
-    // Optional: setData(null); // Clear previous data instantly
 
     const unsubscribe = onSnapshot(
       memoizedDocRef,
@@ -65,10 +75,10 @@ export function useDoc<T = any>(
         if (snapshot.exists()) {
           setData({ ...(snapshot.data() as T), id: snapshot.id });
         } else {
-          // Document does not exist
-          setData(null);
+          // Document does not exist, use initial data if available
+          setData(getInitialState());
         }
-        setError(null); // Clear any previous error on successful snapshot (even if doc doesn't exist)
+        setError(null);
         setIsLoading(false);
       },
       (error: FirestoreError) => {
@@ -78,16 +88,18 @@ export function useDoc<T = any>(
         })
 
         setError(contextualError)
-        setData(null)
+        setData(getInitialState()) // Fallback to initial data on error
         setIsLoading(false)
 
-        // trigger global error propagation
         errorEmitter.emit('permission-error', contextualError);
       }
     );
 
     return () => unsubscribe();
-  }, [memoizedDocRef]); // Re-run if the memoizedDocRef changes.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memoizedDocRef]); 
 
   return { data, isLoading, error };
 }
+
+    

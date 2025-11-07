@@ -1,4 +1,6 @@
 
+'use client';
+
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -8,8 +10,37 @@ import { CheckCircle, Landmark, Shield, Star, Handshake, Sparkles, ShieldCheck }
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AnimatedSection from '@/components/animated-section';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import EditableText from '@/components/editable-text';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
 
 export default function QuienesSomosPage() {
+  const firestore = useFirestore();
+  const contentRef = useMemoFirebase(
+    () => (firestore ? doc(firestore, 'pageContent', 'quienes-somos') : null),
+    [firestore]
+  );
+  const { data: pageData, isLoading } = useDoc(contentRef, {
+    id: 'quienes-somos',
+    title: '¿Quiénes somos?',
+    subhead: 'Somos un grupo de abogados que ofrecemos servicios profesionales integrales en las áreas legales, contables, financieras, tributarias, mercantiles, laborales, administrativas, orientadas a la creación de tu PYME o negocio de punta a punta. En esencia, el objetivo es proporcionar soluciones legales y de gestión que permitan a la persona física o moral operar de forma segura, eficiente y exitosa.',
+    missionTitle: 'Nuestra Misión',
+    missionDesc: 'Ofrecer soluciones legales innovadoras, efectivas y a la medida, que no solo resuelvan los problemas actuales de nuestros clientes, sino que también anticipen desafíos futuros. Nos dedicamos a proteger los activos, la reputación y el crecimiento de cada empresa que confía en nosotros.',
+    visionTitle: 'Nuestra Visión',
+    visionItem1: 'Ser la firma de abogados líder en derecho corporativo y de negocios en México.',
+    visionItem2: 'Reconocida por nuestro enfoque estratégico y compromiso inquebrantable con la excelencia.',
+    visionItem3: 'Construir relaciones de largo plazo con nuestros clientes, basadas en la confianza y los resultados.',
+    valuesTitle: 'Nuestros Valores',
+    valuesSubhead: 'Los principios que guían cada una de nuestras acciones y decisiones.',
+    teamTitle: 'Conozca a Nuestro Equipo',
+    teamSubhead: 'Profesionales dedicados a la excelencia, con la experiencia y el conocimiento para proteger sus intereses.',
+    ctaTitle: 'Un Equipo de Expertos a su Disposición',
+    ctaSubhead: 'Nuestro equipo está compuesto por abogados con una profunda especialización y una vasta experiencia en diversas áreas del derecho. Combinamos el conocimiento técnico con una visión práctica de los negocios para ofrecer un servicio legal que verdaderamente agrega valor.',
+    ctaButton: 'Contacte a Nuestro Equipo'
+  });
+
+  const content = pageData || {};
+
   const teamImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-team');
   const misionVisionImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-mision-vision');
 
@@ -27,16 +58,16 @@ export default function QuienesSomosPage() {
       <AnimatedSection className="py-20 md:py-28 text-center bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-            ¿Quiénes somos?
+            <EditableText field="title" defaultText={content.title} isLoading={isLoading} pageId="quienes-somos" />
           </h1>
-          <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-            Somos un grupo de abogados que ofrecemos servicios profesionales integrales en las áreas legales, contables, financieras, tributarias, mercantiles, laborales, administrativas, orientadas a la creación de tu PYME o negocio de punta a punta. En esencia, el objetivo es proporcionar soluciones legales y de gestión que permitan a la persona física o moral operar de forma segura, eficiente y exitosa.
-          </p>
+          <div className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
+            <EditableText field="subhead" defaultText={content.subhead} isLoading={isLoading} pageId="quienes-somos" multiline />
+          </div>
         </div>
       </AnimatedSection>
 
       {/* Misión y Visión */}
-       <AnimatedSection className="relative py-20 md:py-28">
+       <AnimatedSection className="relative py-20 md:py-28 overflow-hidden">
         {misionVisionImage && <Image
             src={misionVisionImage.imageUrl}
             alt={misionVisionImage.description}
@@ -47,29 +78,41 @@ export default function QuienesSomosPage() {
         <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="text-center mb-16">
                  <Landmark className="h-12 w-12 text-primary mx-auto mb-4" />
-                 <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Nuestra Firma</h2>
+                 <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
+                   <EditableText field="firmTitle" defaultText="Nuestra Firma" isLoading={isLoading} pageId="quienes-somos" />
+                 </h2>
             </div>
           <div className="grid md:grid-cols-2 gap-12 text-center md:text-left">
             <div>
-              <h3 className="text-3xl font-bold font-headline mb-4 text-primary">Nuestra Misión</h3>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                Ofrecer soluciones legales innovadoras, efectivas y a la medida, que no solo resuelvan los problemas actuales de nuestros clientes, sino que también anticipen desafíos futuros. Nos dedicamos a proteger los activos, la reputación y el crecimiento de cada empresa que confía en nosotros.
-              </p>
+              <h3 className="text-3xl font-bold font-headline mb-4 text-primary">
+                <EditableText field="missionTitle" defaultText={content.missionTitle} isLoading={isLoading} pageId="quienes-somos" />
+              </h3>
+              <div className="text-muted-foreground leading-relaxed text-lg">
+                <EditableText field="missionDesc" defaultText={content.missionDesc} isLoading={isLoading} pageId="quienes-somos" multiline />
+              </div>
             </div>
             <div>
-              <h3 className="text-3xl font-bold font-headline mb-4 text-primary">Nuestra Visión</h3>
+              <h3 className="text-3xl font-bold font-headline mb-4 text-primary">
+                <EditableText field="visionTitle" defaultText={content.visionTitle} isLoading={isLoading} pageId="quienes-somos" />
+              </h3>
               <ul className="space-y-3">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="text-muted-foreground">Ser la firma de abogados líder en derecho corporativo y de negocios en México.</span>
+                    <span className="text-muted-foreground">
+                      <EditableText field="visionItem1" defaultText={content.visionItem1} isLoading={isLoading} pageId="quienes-somos" />
+                    </span>
                   </li>
                    <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="text-muted-foreground">Reconocida por nuestro enfoque estratégico y compromiso inquebrantable con la excelencia.</span>
+                    <span className="text-muted-foreground">
+                      <EditableText field="visionItem2" defaultText={content.visionItem2} isLoading={isLoading} pageId="quienes-somos" />
+                    </span>
                   </li>
                    <li className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
-                    <span className="text-muted-foreground">Construir relaciones de largo plazo con nuestros clientes, basadas en la confianza y los resultados.</span>
+                    <span className="text-muted-foreground">
+                      <EditableText field="visionItem3" defaultText={content.visionItem3} isLoading={isLoading} pageId="quienes-somos" />
+                    </span>
                   </li>
               </ul>
             </div>
@@ -81,8 +124,12 @@ export default function QuienesSomosPage() {
       <AnimatedSection className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="text-3xl font-bold font-headline mb-4 text-white">Nuestros Valores</h2>
-              <p className="text-muted-foreground leading-relaxed">Los principios que guían cada una de nuestras acciones y decisiones.</p>
+              <h2 className="text-3xl font-bold font-headline mb-4 text-white">
+                <EditableText field="valuesTitle" defaultText={content.valuesTitle} isLoading={isLoading} pageId="quienes-somos" />
+              </h2>
+              <div className="text-muted-foreground leading-relaxed">
+                <EditableText field="valuesSubhead" defaultText={content.valuesSubhead} isLoading={isLoading} pageId="quienes-somos" />
+              </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
                 {valores.map((valor, index) => (
@@ -101,10 +148,12 @@ export default function QuienesSomosPage() {
       <AnimatedSection id="equipo" className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-4 md:px-6">
            <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">Conozca a Nuestro Equipo</h2>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Profesionales dedicados a la excelencia, con la experiencia y el conocimiento para proteger sus intereses.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
+              <EditableText field="teamTitle" defaultText={content.teamTitle} isLoading={isLoading} pageId="quienes-somos" />
+            </h2>
+            <div className="mt-4 text-lg text-muted-foreground">
+              <EditableText field="teamSubhead" defaultText={content.teamSubhead} isLoading={isLoading} pageId="quienes-somos" multiline/>
+            </div>
           </div>
           <div className="space-y-16">
             {teamMembers.map((member, index) => (
@@ -150,12 +199,16 @@ export default function QuienesSomosPage() {
                 />
               </div>}
             <div>
-              <h2 className="text-3xl font-bold font-headline mb-4">Un Equipo de Expertos a su Disposición</h2>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                Nuestro equipo está compuesto por abogados con una profunda especialización y una vasta experiencia en diversas áreas del derecho. Combinamos el conocimiento técnico con una visión práctica de los negocios para ofrecer un servicio legal que verdaderamente agrega valor.
-              </p>
+              <h2 className="text-3xl font-bold font-headline mb-4">
+                <EditableText field="ctaTitle" defaultText={content.ctaTitle} isLoading={isLoading} pageId="quienes-somos" />
+              </h2>
+              <div className="text-muted-foreground leading-relaxed mb-6">
+                <EditableText field="ctaSubhead" defaultText={content.ctaSubhead} isLoading={isLoading} pageId="quienes-somos" multiline />
+              </div>
                <Button asChild>
-                <Link href="/contacto">Contacte a Nuestro Equipo</Link>
+                <Link href="/contacto">
+                  <EditableText field="ctaButton" defaultText={content.ctaButton} isLoading={isLoading} pageId="quienes-somos" />
+                </Link>
               </Button>
             </div>
           </div>
@@ -164,3 +217,5 @@ export default function QuienesSomosPage() {
     </div>
   );
 }
+
+    

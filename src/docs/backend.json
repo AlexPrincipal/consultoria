@@ -64,6 +64,36 @@
         "assignedAt": { "type": "string", "format": "date-time", "description": "The timestamp when the admin role was assigned." }
       },
       "required": ["uid", "assignedAt"]
+    },
+    "PageContent": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "PageContent",
+      "type": "object",
+      "description": "A generic entity to hold editable content for various pages, identified by the document ID.",
+      "properties": {
+        "id": { "type": "string", "description": "The unique identifier for the content, typically matching the page slug or a section name." },
+        "title": { "type": "string", "description": "Main title for the page or section." },
+        "subhead": { "type": "string", "description": "Subheadline or descriptive text." },
+        "body": { "type": "string", "description": "Main body content, can be multi-line." },
+        "ctaText": { "type": "string", "description": "Text for a primary call-to-action button." },
+        "feature1Title": { "type": "string" },
+        "feature1Desc": { "type": "string" },
+        "feature2Title": { "type": "string" },
+        "feature2Desc": { "type": "string" },
+        "feature3Title": { "type": "string" },
+        "feature3Desc": { "type": "string" },
+        "faq1q": { "type": "string" },
+        "faq1a": { "type": "string" },
+        "faq2q": { "type": "string" },
+        "faq2a": { "type": "string" },
+        "faq3q": { "type": "string" },
+        "faq3a": { "type": "string" },
+        "faq4q": { "type": "string" },
+        "faq4a": { "type": "string" },
+        "faq5q": { "type": "string" },
+        "faq5a": { "type": "string" }
+      },
+      "required": ["id"]
     }
   },
   "auth": { "providers": ["password", "anonymous"] },
@@ -79,6 +109,15 @@
         }
       },
       {
+        "path": "/pageContent/{pageId}",
+        "definition": {
+          "entityName": "PageContent",
+          "schema": { "$ref": "#/backend/entities/PageContent" },
+          "description": "Stores editable content for various site pages. The document ID corresponds to the page or section (e.g., 'why-us', 'faq', 'contact').",
+          "params": [{ "name": "pageId", "description": "The unique ID for the page content." }]
+        }
+      },
+      {
         "path": "/roles_admin/{userId}",
         "definition": {
           "entityName": "role_admin",
@@ -88,6 +127,8 @@
         }
       }
     ],
-    "reasoning": "The Firestore structure is designed to manage the content of the CMXS Jurídico homepage, allowing administrators to easily update texts and images. A single collection, `homePageContent`, stores the homepage data. An admin role is used to control write access to the collection.\n\n**Authorization Independence**: Authorization independence is achieved by using a separate `/roles_admin/{uid}` collection to determine administrative privileges. Security rules check for the existence of a document in this collection to grant write access, avoiding the need to read data from other documents to determine permissions. This ensures atomic operations are possible and simplifies debugging.\n\n**QAPs (Rules are not Filters)**: The `homePageContent` collection contains only one document (or a small, manageable number) representing the homepage content, so `list` operations are not a primary concern. The focus is on controlling write access to this document.\n\n**Admin Role**: The `/roles_admin/{uid}` collection facilitates global roles. The existence of a document indicates admin status, simplifying rules and avoiding custom claims."
+    "reasoning": "The Firestore structure is designed to manage the content of the CMXS Jurídico homepage and other static pages, allowing administrators to easily update texts and images. A collection `homePageContent` stores the homepage data, while a generic `pageContent` collection stores content for other pages, using the document ID to identify the page. An admin role is used to control write access to all content collections."
   }
 }
+
+    

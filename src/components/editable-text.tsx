@@ -8,7 +8,7 @@ import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Skeleton } from './ui/skeleton';
 import { cn } from '@/lib/utils';
-import { updateHomePageContent } from '@/app/(protected)/admin/actions';
+import { updateHomePageContent, updatePageContent } from '@/app/(protected)/admin/actions';
 import { useToast } from '@/hooks/use-toast';
 import { Check, Loader, X } from 'lucide-react';
 
@@ -18,6 +18,7 @@ interface EditableTextProps {
   isLoading: boolean;
   multiline?: boolean;
   className?: string;
+  pageId?: string; // e.g., 'home', 'why-us', 'faq'
 }
 
 export default function EditableText({
@@ -26,6 +27,7 @@ export default function EditableText({
   isLoading,
   multiline = false,
   className,
+  pageId = 'main' // 'main' refers to the homePageContent collection
 }: EditableTextProps) {
   const { isEditMode } = useAdminStore();
   const { user } = useUser();
@@ -55,7 +57,12 @@ export default function EditableText({
 
   const handleSave = () => {
     startTransition(async () => {
-      const result = await updateHomePageContent({ [field]: value });
+      const data = { [field]: value };
+      const action = pageId === 'main' ? updateHomePageContent : updatePageContent;
+      const id = pageId === 'main' ? undefined : pageId;
+      
+      const result = await action(data, id);
+
       if (result.success) {
         toast({
           title: 'Guardado',
@@ -128,3 +135,5 @@ export default function EditableText({
     </span>
   );
 }
+
+    

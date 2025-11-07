@@ -15,14 +15,10 @@ export async function logout() {
 export async function updateHomePageContent(data: any) {
   try {
     const db = getFirestore(getApp());
-    // The data is a single field update, e.g., { heroHeadline: "New Text" }
     const docRef = doc(db, 'homePageContent', 'main');
     await setDoc(docRef, data, { merge: true });
-
-    // Invalidate the cache for the homepage to show the new content
     revalidatePath('/');
-    
-    return { success: true, message: 'Contenido actualizado.' };
+    return { success: true, message: 'Contenido de la página de inicio actualizado.' };
   } catch (error) {
     console.error("Error updating document: ", error);
     let errorMessage = 'Ocurrió un error desconocido al guardar.';
@@ -32,3 +28,28 @@ export async function updateHomePageContent(data: any) {
     return { success: false, message: errorMessage };
   }
 }
+
+export async function updatePageContent(data: any, pageId: string) {
+    if (!pageId) {
+        return { success: false, message: 'Se requiere un ID de página.' };
+    }
+  try {
+    const db = getFirestore(getApp());
+    const docRef = doc(db, 'pageContent', pageId);
+    await setDoc(docRef, data, { merge: true });
+
+    revalidatePath(`/${pageId}`); // Revalidate the specific page
+    revalidatePath('/quienes-somos'); // Also revalidate related pages just in case
+    
+    return { success: true, message: 'Contenido actualizado.' };
+  } catch (error) {
+    console.error(`Error updating document [${pageId}]: `, error);
+    let errorMessage = 'Ocurrió un error desconocido al guardar.';
+    if (error instanceof Error) {
+        errorMessage = error.message;
+    }
+    return { success: false, message: errorMessage };
+  }
+}
+
+    
