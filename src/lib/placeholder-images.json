@@ -7,34 +7,28 @@
       "imageHint": "abstract legal"
     },
     {
-      "id": "testimonial-logo",
-      "description": "Client company logo for testimonial section",
-      "imageUrl": "https://images.unsplash.com/photo-1627843563095-f6e94676cfe0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29tcGFueSUyMGxvZ298ZW58MHx8fHwxNzYwOTE5NzU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "company logo"
+      "id": "oficina-1",
+      "description": "Recepción de nuestras oficinas",
+      "imageUrl": "https://images.unsplash.com/photo-1758448656987-cfae6bf225e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW9kZXJuJTIwb2ZmaWNlJTIwcmVjZXB0aW9ufGVufDB8fHx8MTc2MjQ5NzYyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern office reception"
     },
     {
-      "id": "testimonial-logo-2",
-      "description": "Client company logo for testimonial section",
-      "imageUrl": "https://images.unsplash.com/photo-1661347998423-b15d37d6f61e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZWNoJTIwY29tcGFueSUyMGxvZ298ZW58MHx8fHwxNzYxMDE3NDU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "tech company logo"
+      "id": "oficina-2",
+      "description": "Sala de juntas principal",
+      "imageUrl": "https://images.unsplash.com/photo-1744095407215-66e40734e23a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb25mZXJlbmNlJTIwcm9vbSUyMG1lZXRpbmd8ZW58MHx8fHwxNzYyNDk3NjI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "conference room meeting"
     },
     {
-      "id": "testimonial-logo-3",
-      "description": "Client company logo for testimonial section",
-      "imageUrl": "https://images.unsplash.com/photo-1750079521605-9ac6f0edd902?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb25zdHJ1Y3Rpb24lMjBjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NjEwMTkzNjB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "construction company logo"
+      "id": "oficina-3",
+      "description": "Área de trabajo colaborativo",
+      "imageUrl": "https://images.unsplash.com/photo-1590649681928-4b179f773bd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb2xsYWJvcmF0aXZlJTIwd29ya3NwYWNlJTIwb2ZmaWNlfGVufDB8fHx8MTc2MjQ5NzYyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "collaborative workspace office"
     },
     {
-      "id": "testimonial-logo-4",
-      "description": "Client company logo for testimonial section",
-      "imageUrl": "https://images.unsplash.com/photo-1622465911368-72162f8da3e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NjEwMjIyOTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "company logo"
-    },
-    {
-      "id": "testimonial-logo-5",
-      "description": "Client company logo for testimonial section",
-      "imageUrl": "https://images.unsplash.com/photo-1618588429012-0559f1cbc5aa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjb3Jwb3JhdGUlMjBsb2dvfGVufDB8fHx8MTc2MDkzODExMHww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "corporate logo"
+      "id": "oficina-4",
+      "description": "Oficina privada con vista",
+      "imageUrl": "https://images.unsplash.com/photo-1655566967151-649ec10f7177?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwcml2YXRlJTIwb2ZmaWNlJTIwY2l0eXxlbnwwfHx8fDE3NjI0OTc2MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "private office city"
     },
     {
       "id": "servicio-asesoria",
@@ -95,6 +89,18 @@
       "description": "A firm handshake sealing a business deal, symbolizing a strategic partnership.",
       "imageUrl": "https://images.unsplash.com/photo-1549923746-c502d488b3ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxidXNpbmVzcyUyMHBhcnRuZXJzaGlwJTIwaGFuZHNoYWtlfGVufDB8fHx8MTc2MTcwODIzNnww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "business partnership handshake"
+    },
+    {
+      "id": "quienes-somos-team",
+      "description": "Nuestro equipo de abogados expertos",
+      "imageUrl": "https://images.unsplash.com/photo-1650784854945-264d5b0b6b07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxsYXd5ZXJzJTIwdGVhbSUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MjQ5NzYyNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "lawyers team portrait"
+    },
+    {
+      "id": "quienes-somos-mision-vision",
+      "description": "Estatua de la justicia",
+      "imageUrl": "https://images.unsplash.com/photo-1613909207394-67a574507d83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxsYWR5JTIwanVzdGljZSUyMHN0YXR1ZXxlbnwwfHx8fDE3NjE4Nzg2NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "lady justice statue"
     }
   ]
 }

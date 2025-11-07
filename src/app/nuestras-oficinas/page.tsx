@@ -6,33 +6,19 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
-const officeImages = [
-  {
-    src: '/oficina1.png',
-    alt: 'Recepción de nuestras oficinas',
-    hint: 'modern office reception',
-    title: 'Una Bienvenida Profesional'
-  },
-  {
-    src: '/oficina2.png',
-    alt: 'Sala de juntas principal',
-    hint: 'conference room meeting',
-    title: 'Decisiones Estratégicas'
-  },
-  {
-    src: '/oficina3.png',
-    alt: 'Área de trabajo colaborativo',
-    hint: 'collaborative workspace office',
-    title: 'Innovación y Colaboración'
-  },
-  {
-    src: '/oficina4.png',
-    alt: 'Oficina privada con vista',
-    hint: 'private office city view',
-    title: 'Confidencialidad y Enfoque'
-  },
-];
+const officeImageIds = ['oficina-1', 'oficina-2', 'oficina-3', 'oficina-4'];
+const officeImages = PlaceHolderImages.filter(p => officeImageIds.includes(p.id)).map(image => ({
+    src: image.imageUrl,
+    alt: image.description,
+    hint: image.imageHint,
+    title: image.id === 'oficina-1' ? 'Una Bienvenida Profesional' :
+           image.id === 'oficina-2' ? 'Decisiones Estratégicas' :
+           image.id === 'oficina-3' ? 'Innovación y Colaboración' :
+           'Confidencialidad y Enfoque'
+}));
+
 
 export default function NuestrasOficinasPage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -66,7 +52,7 @@ export default function NuestrasOficinasPage() {
                     src={officeImages[activeIndex].src}
                     alt={officeImages[activeIndex].alt}
                     fill
-                    className="object-contain"
+                    className="object-cover"
                     data-ai-hint={officeImages[activeIndex].hint}
                     sizes="(max-width: 768px) 100vw, 66vw"
                     priority={activeIndex === 0}

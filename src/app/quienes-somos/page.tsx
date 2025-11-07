@@ -7,19 +7,11 @@ import { cn } from '@/lib/utils';
 import { CheckCircle, Landmark, Shield, Star, Handshake, Sparkles, ShieldCheck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AnimatedSection from '@/components/animated-section';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function QuienesSomosPage() {
-  const teamImage = {
-    imageUrl: 'https://picsum.photos/seed/lawteam/1200/800',
-    description: 'Nuestro equipo de abogados expertos',
-    imageHint: 'lawyers team portrait',
-  };
-  
-  const misionVisionImage = {
-      imageUrl: 'https://images.unsplash.com/photo-1613909207394-67a574507d83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxsYWR5JTIwanVzdGljZSUyMHN0YXR1ZXxlbnwwfHx8fDE3NjE4Nzg2NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      description: 'Estatua de la justicia',
-      imageHint: 'lady justice statue'
-  }
+  const teamImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-team');
+  const misionVisionImage = PlaceHolderImages.find(p => p.id === 'quienes-somos-mision-vision');
 
   const valores = [
     { title: "Integridad", icon: <Shield className="h-10 w-10 text-muted-foreground group-hover:text-primary transition-colors" /> },
@@ -45,13 +37,13 @@ export default function QuienesSomosPage() {
 
       {/* Misión y Visión */}
        <AnimatedSection className="relative py-20 md:py-28">
-         <Image
+        {misionVisionImage && <Image
             src={misionVisionImage.imageUrl}
             alt={misionVisionImage.description}
             fill
             className="object-cover opacity-10"
             data-ai-hint={misionVisionImage.imageHint}
-          />
+          />}
         <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="text-center mb-16">
                  <Landmark className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -148,7 +140,7 @@ export default function QuienesSomosPage() {
       <AnimatedSection className="py-20 md:py-28 bg-secondary">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-             <div className="relative aspect-video rounded-lg overflow-hidden">
+             {teamImage && <div className="relative aspect-video rounded-lg overflow-hidden">
                 <Image
                   src={teamImage.imageUrl}
                   alt={teamImage.description}
@@ -156,7 +148,7 @@ export default function QuienesSomosPage() {
                   className="object-cover"
                   data-ai-hint={teamImage.imageHint}
                 />
-              </div>
+              </div>}
             <div>
               <h2 className="text-3xl font-bold font-headline mb-4">Un Equipo de Expertos a su Disposición</h2>
               <p className="text-muted-foreground leading-relaxed mb-6">

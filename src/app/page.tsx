@@ -15,6 +15,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { useDoc, useFirestore, useMemoFirebase }from '@/firebase';
 import { doc } from 'firebase/firestore';
 import EditableText from '@/components/editable-text';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 function ServiceCard({
   icon,
@@ -57,12 +58,8 @@ function ServiceCard({
   );
 }
 
-const officeImages = [
-  { src: '/oficina1.png', alt: 'Recepción de nuestras oficinas', hint: 'modern office reception' },
-  { src: '/oficina2.png', alt: 'Sala de juntas principal', hint: 'conference room meeting' },
-  { src: '/oficina3.png', alt: 'Área de trabajo colaborativo', hint: 'collaborative workspace office' },
-  { src: '/oficina4.png', alt: 'Oficina privada con vista', hint: 'private office city view' },
-];
+const officeImageIds = ['oficina-1', 'oficina-2', 'oficina-3', 'oficina-4'];
+const officeImages = PlaceHolderImages.filter(p => officeImageIds.includes(p.id));
 
 
 function OfficeCarousel() {
@@ -74,11 +71,11 @@ function OfficeCarousel() {
         {officeImages.map((img, index) => (
           <div className="relative flex-[0_0_100%] h-full" key={index}>
             <Image
-                src={img.src}
-                alt={img.alt}
+                src={img.imageUrl}
+                alt={img.description}
                 fill
                 className="object-cover"
-                data-ai-hint={img.hint}
+                data-ai-hint={img.imageHint}
                 priority={index === 0}
             />
           </div>
@@ -148,18 +145,19 @@ export default function Home() {
   }
 
   const content = homePageData || {};
+  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-background');
 
   return (
     <div className="flex flex-col">
         {/* Hero Section */}
         <section className="relative flex items-center justify-center min-h-[700px] text-center text-white bg-black">
-          {content.heroBackgroundImageUrl && (
+          {heroImage && (
             <Image
-              src={content.heroBackgroundImageUrl ?? defaultContent.heroBackgroundImageUrl}
-              alt="Fondo abstracto legal"
+              src={content.heroBackgroundImageUrl ?? heroImage.imageUrl}
+              alt={heroImage.description}
               fill
               className="object-cover opacity-20"
-              data-ai-hint="abstract legal"
+              data-ai-hint={heroImage.imageHint}
               priority
             />
           )}
