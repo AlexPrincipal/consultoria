@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
+import { useActionState } from 'react';
 import { login } from '@/app/(auth)/admin/login/actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -22,11 +22,13 @@ export default function LoginPage() {
     const formData = new FormData(event.currentTarget);
 
     if(isDevLogin(formData)) {
-        // Set a session storage item for the dev bypass
+        // Set a session storage item for the dev bypass. This is checked on the client
+        // in the AdminLayout and AdminToolbar to enable edit mode.
         sessionStorage.setItem('dev-admin', 'true');
     } else {
         sessionStorage.removeItem('dev-admin');
     }
+    // The server action will handle the redirect.
     formAction(formData);
   };
 
