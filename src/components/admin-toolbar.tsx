@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useUser } from '@/firebase';
@@ -9,8 +8,6 @@ import { Edit, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useEffect } from 'react';
 
-const isDevBypassEnabled = process.env.NEXT_PUBLIC_DEV_ADMIN_BYPASS === 'true';
-
 export default function AdminToolbar() {
   const { user, isUserLoading } = useUser();
   const { isEditing, setIsEditing } = useStore((state: AppState) => ({
@@ -18,7 +15,7 @@ export default function AdminToolbar() {
     setIsEditing: state.setIsEditing,
   }));
 
-  const isAuthenticated = user || isDevBypassEnabled;
+  const isAuthenticated = !!user;
 
   useEffect(() => {
     // If user logs out, disable editing mode

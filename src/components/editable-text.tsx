@@ -1,4 +1,3 @@
-
 'use client';
 
 import { AppState, useStore } from '@/lib/store';
@@ -17,8 +16,6 @@ interface EditableTextProps extends React.HTMLAttributes<HTMLDivElement> {
   isLoading?: boolean;
   as?: 'input' | 'textarea';
 }
-
-const isDevBypassEnabled = process.env.NEXT_PUBLIC_DEV_ADMIN_BYPASS === 'true';
 
 export default function EditableText({
   field,
@@ -42,7 +39,7 @@ export default function EditableText({
   );
   const { data: homePageData } = useDoc(homePageContentRef);
 
-  const isAuthenticated = user || isDevBypassEnabled;
+  const isAuthenticated = !!user;
 
   useEffect(() => {
     if (homePageData && homePageData[field]) {
