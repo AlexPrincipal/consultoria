@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, null);
@@ -64,6 +65,12 @@ export default function LoginPage() {
               {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
+            <div className="mt-4 text-center text-sm">
+                ¿Necesita crear el usuario admin de desarrollo?{' '}
+                <Link href="/admin/setup" className="underline text-primary">
+                    Ir a la página de configuración
+                </Link>
+            </div>
         </CardContent>
       </Card>
     </div>

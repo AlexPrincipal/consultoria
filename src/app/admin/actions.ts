@@ -5,9 +5,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { auth, db } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
-import { doc, getDoc, serverTimestamp, setDoc, writeBatch } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
-import { defaultTeamMembers } from '@/lib/team';
 
 async function isUserAdmin(uid: string): Promise<boolean> {
   try {
@@ -16,7 +15,6 @@ async function isUserAdmin(uid: string): Promise<boolean> {
     return adminRoleDoc.exists();
   } catch (error) {
      if (error instanceof Error && error.message.includes('permission-denied')) {
-        // This is likely a security rule issue. We can throw a more specific error.
          const permissionError = new Error(`Permission denied when checking admin status for UID: ${uid}. Ensure Firestore rules allow this read.`);
          (permissionError as any).code = 'ADMIN_CHECK_PERMISSION_DENIED';
          throw permissionError;
@@ -81,11 +79,12 @@ export async function logout() {
   redirect('/admin');
 }
 
-
 export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean; message: string; }> {
     try {
-        const batch = writeBatch(db);
+        const batch = db.batch();
 
+        const { defaultTeamMembers } = await import('@/lib/team');
+        
         defaultTeamMembers.forEach(member => {
             const docRef = doc(db, 'teamMembers', member.slug);
             // We need to remove the 'id' field as it's the document ID, not part of the data.
