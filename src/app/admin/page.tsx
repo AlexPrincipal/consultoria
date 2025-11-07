@@ -19,10 +19,10 @@ export default function LoginPage() {
   
   useEffect(() => {
     // If the user is already an admin (checked by the useUser hook), redirect them.
-    if (isAdmin) {
+    if (!isUserLoading && isAdmin) {
       router.push('/'); 
     }
-  }, [isAdmin, router]);
+  }, [isAdmin, isUserLoading, router]);
   
   // This handles the successful login from the form action
   useEffect(() => {
@@ -34,7 +34,17 @@ export default function LoginPage() {
       // A full page refresh is more reliable to ensure all providers re-evaluate auth state
       window.location.href = '/';
     }
-  }, [state, router]);
+  }, [state]);
+
+  // If user is loading or already admin, don't render the form to avoid flashes.
+  if (isUserLoading || isAdmin) {
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-background">
+            <p className="text-white">Verificando sesión...</p>
+        </div>
+    );
+  }
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -72,7 +82,7 @@ export default function LoginPage() {
                   </AlertDescription>
                 </Alert>
             )}
-            <Button type="submit" className="w-full" disabled={isPending || isUserLoading}>
+            <Button type="submit" className="w-full" disabled={isPending}>
               {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
