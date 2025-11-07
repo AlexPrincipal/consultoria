@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -10,10 +9,13 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
 import { teamMembers } from '@/lib/team';
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function ServiceCard({
   icon,
@@ -73,43 +75,21 @@ const officeImages = [
 
 
 function OfficeCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-    emblaApi.on('select', onSelect);
-    return () => emblaApi.off('select', onSelect);
-  }, [emblaApi]);
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })]);
 
   return (
     <div className="relative aspect-video rounded-lg overflow-hidden shadow-lg" ref={emblaRef}>
       <div className="flex h-full">
         {officeImages.map((img, index) => (
           <div className="relative flex-[0_0_100%] h-full" key={index}>
-             <AnimatePresence>
-                {selectedIndex === index && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1 }}
-                        className="w-full h-full"
-                    >
-                        <Image
-                            src={img.src}
-                            alt={img.alt}
-                            fill
-                            className="object-cover"
-                            data-ai-hint={img.hint}
-                            priority={index === 0}
-                        />
-                     </motion.div>
-                )}
-            </AnimatePresence>
+            <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                className="object-cover"
+                data-ai-hint={img.hint}
+                priority={index === 0}
+            />
           </div>
         ))}
       </div>
@@ -119,8 +99,17 @@ function OfficeCarousel() {
 
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
+  const firestore = useFirestore();
   const mainTeamMembers = teamMembers.slice(0, 2);
+
+  const homePageContentRef = useMemoFirebase(
+    () => (firestore ? doc(firestore, 'homePageContent', 'main') : null),
+    [firestore]
+  );
+  
+  const { data: homePageData, isLoading } = useDoc(homePageContentRef);
+
+  const heroImage = PlaceHolderImages.find((p) => p.id === 'hero-background');
 
   return (
     <div className="flex flex-col">
@@ -128,7 +117,7 @@ export default function Home() {
         <section className="relative flex items-center justify-center min-h-[700px] text-center text-white bg-black">
           {heroImage && (
             <Image
-              src={heroImage.imageUrl}
+              src={homePageData?.heroBackgroundImageUrl || heroImage.imageUrl}
               alt={heroImage.description}
               fill
               className="object-cover opacity-20"
@@ -137,18 +126,18 @@ export default function Home() {
             />
           )}
           <div className="relative z-10 p-4 space-y-8 container mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">
-              C+ Consultoría Legal
-            </h1>
-            <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
-              Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza.
-            </p>
+            {isLoading ? <Skeleton className="h-16 w-[700px] mx-auto" /> : <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">
+              {homePageData?.heroHeadline || 'C+ Consultoría Legal'}
+            </h1>}
+            {isLoading ? <Skeleton className="h-8 w-[800px] mx-auto" /> : <p className="text-lg md:text-xl max-w-3xl mx-auto text-gray-300">
+              {homePageData?.heroSubhead || 'Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza.'}
+            </p>}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
                <Button size="lg" asChild>
-                <Link href="/contacto">Agendar una Consulta</Link>
+                <Link href="/contacto">{homePageData?.heroPrimaryCtaText || 'Agendar una Consulta'}</Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="/servicios">Nuestros Servicios</Link>
+                <Link href="/servicios">{homePageData?.heroSecondaryCtaText || 'Nuestros Servicios'}</Link>
               </Button>
             </div>
           </div>
@@ -158,30 +147,30 @@ export default function Home() {
         <AnimatedSection id="servicios" className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
-                Nuestras Áreas de Práctica
-              </h2>
-              <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+              {isLoading ? <Skeleton className="h-12 w-96 mx-auto mb-4" /> : <h2 className="text-4xl md:text-5xl font-bold font-headline text-white">
+                {homePageData?.servicesOverviewTitle || 'Nuestras Áreas de Práctica'}
+              </h2>}
+               {isLoading ? <Skeleton className="h-6 w-[700px] mx-auto" /> : <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                 Ofrecemos asesoramiento y representación experta en las áreas cruciales del derecho corporativo para proteger y potenciar su negocio.
-              </p>
+              </p>}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <ServiceCard
                 icon={<Briefcase className="h-10 w-10 text-primary" />}
-                title="Asesoría y Consultoría"
-                description="Orientación estratégica para la resolución de problemas complejos y el diseño de proyectos empresariales a largo plazo."
+                title={homePageData?.service1Title || "Asesoría y Consultoría"}
+                description={homePageData?.service1Description || "Orientación estratégica para la resolución de problemas complejos y el diseño de proyectos empresariales a largo plazo."}
                 href="/servicios/asesoria-consultoria-legal"
               />
               <ServiceCard
                 icon={<Scale className="h-10 w-10 text-primary" />}
-                title="Representación y Defensa"
-                description="Defensa experta en negociaciones y litigios mercantiles, laborales y administrativos ante diversas instancias."
+                title={homePageData?.service2Title || "Representación y Defensa"}
+                description={homePageData?.service2Description || "Defensa experta en negociaciones y litigios mercantiles, laborales y administrativos ante diversas instancias."}
                  href="/servicios/representacion-defensa"
               />
               <ServiceCard
                 icon={<ShieldCheck className="h-10 w-10 text-primary" />}
-                title="Compliance"
-                description="Implementamos programas de cumplimiento para mitigar riesgos, asegurar el marco legal y proteger la reputación de su empresa."
+                title={homePageData?.service3Title || "Compliance"}
+                description={homePageData?.service3Description || "Implementamos programas de cumplimiento para mitigar riesgos, asegurar el marco legal y proteger la reputación de su empresa."}
                  href="/servicios/compliance"
               />
               <ServiceCard
@@ -325,8 +314,21 @@ export default function Home() {
             </div>
           </div>
         </AnimatedSection>
+        
+        {/* Call to Action */}
+        <AnimatedSection className="py-20 md:py-28 bg-black">
+            <div className="container mx-auto px-4 md:px-6 text-center">
+            <h2 className="text-3xl font-bold font-headline text-white">{homePageData?.contactUsTitle || '¿Listo para Fortalecer su Empresa?'}</h2>
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+                Los servicios legales no deberían ser un gasto, sino una inversión en tu éxito. Hablemos de cómo podemos generar valor para tu empresa.
+            </p>
+            <div className="mt-8">
+                <Button size="lg" asChild>
+                <Link href="/contacto">Agendar una Consulta Estratégica</Link>
+                </Button>
+            </div>
+            </div>
+        </AnimatedSection>
     </div>
   );
 }
-
-    
