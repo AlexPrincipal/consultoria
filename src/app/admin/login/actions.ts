@@ -2,7 +2,7 @@
 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/firebase/server';
-import { redirect }s from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
 
 export async function login(prevState: { error: string | null } | null, formData: FormData) {
