@@ -8,19 +8,27 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Logo from '@/components/logo';
 
+// --- TEMPORARY DEVELOPMENT MODE ---
+// This allows access to the admin panel without a real Firebase user
+// by using the "admin/admin" credentials. This should be disabled in production.
+const isDevBypassEnabled = process.env.NEXT_PUBLIC_DEV_ADMIN_BYPASS === 'true';
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
   const pathname = usePathname();
 
+  // Determine if the user is authenticated, either through Firebase or the dev bypass
+  const isAuthenticated = user || isDevBypassEnabled;
+
   useEffect(() => {
-    // If loading is finished and there is no user, redirect to login.
-    if (!isUserLoading && !user && pathname !== '/admin/login') {
+    // If loading is finished and user is not authenticated (and bypass is off), redirect.
+    if (!isUserLoading && !isAuthenticated && pathname !== '/admin/login') {
       redirect('/admin/login');
     }
-  }, [user, isUserLoading, pathname]);
+  }, [isAuthenticated, isUserLoading, pathname]);
 
-  // While loading, you can show a loader or null.
-  if (isUserLoading) {
+  // While loading Firebase auth state, show a loader.
+  if (isUserLoading && !isDevBypassEnabled) {
     return (
         <div className="flex items-center justify-center min-h-screen bg-background text-white">
             <p>Verificando autenticación...</p>
@@ -28,8 +36,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  // If user is authenticated, render the children with a basic admin layout.
-  if (user) {
+  // If user is authenticated (Firebase or bypass), render the admin layout.
+  if (isAuthenticated) {
     return (
         <div className="min-h-screen bg-background text-white">
             <header className="bg-card border-b border-border/50">
@@ -49,8 +57,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  // Fallback in case redirect hasn't happened yet (e.g., for /admin/login page itself).
-  // If we are on the login page, we don't want to render the protected layout.
+  // Fallback for login page or if redirect hasn't executed yet.
   if (pathname === '/admin/login') {
       return <>{children}</>;
   }
