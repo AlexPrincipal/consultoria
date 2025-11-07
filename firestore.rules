@@ -35,8 +35,8 @@ service cloud.firestore {
 
     // This rule allows an admin to assign another user (or themselves) an admin role.
     // It's secure because only an existing admin can perform this write.
-    // It also allows an unauthenticated or non-admin user to read the roles for client-side checks,
-    // though in this specific case, we'll be doing checks based on the logged-in user's UID.
+    // It allows any signed-in user (including anonymous) to read the roles collection,
+    // which is necessary for the client-side logic to check if a user is an admin.
     match /roles_admin/{userId} {
       allow read: if isSignedIn();
       allow write: if isAdmin(); 
