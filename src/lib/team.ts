@@ -34,7 +34,7 @@ export const defaultTeamMembers = [
         'Ha revertido clausuras y sanciones impuestas por diversas autoridades.',
         'Especialista en la elaboración de estrategias preventivas para evitar contingencias legales.'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYWxlJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxODUyOTAyfDA&ixlib=rb-4.1.0&q=80&w=400',
+    imageUrl: '/jose-luis-pineda-nunez.jpg',
     imageHint: 'male professional portrait',
     imagePosition: "object-top",
     linkedinUrl: 'https://www.linkedin.com/in/jose-luis-pineda-nunez/',

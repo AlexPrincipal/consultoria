@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "HomePage": {
@@ -54,6 +55,28 @@
       },
       "required": ["id"]
     },
+    "TeamMember": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "TeamMember",
+      "type": "object",
+      "description": "Represents a single member of the law firm's team.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier, usually the slug." },
+        "name": { "type": "string", "description": "Full name of the team member." },
+        "title": { "type": "string", "description": "Job title or role (e.g., 'Socio, Especialista en...')." },
+        "slug": { "type": "string", "description": "URL-friendly slug for the member's profile page." },
+        "imageUrl": { "type": "string", "format": "uri", "description": "URL for the member's profile picture." },
+        "imageHint": { "type": "string", "description": "AI hint for the image." },
+        "imagePosition": { "type": "string", "description": "CSS object-position property for the image." },
+        "bio": { "type": "string", "description": "Short biography displayed on the team page." },
+        "homeSummary": { "type": "string", "description": "Very short summary for the homepage preview." },
+        "fullBio": { "type": "string", "description": "Complete, detailed biography for the profile page." },
+        "achievements": { "type": "array", "items": { "type": "string" }, "description": "A list of key achievements." },
+        "linkedinUrl": { "type": "string", "format": "uri", "description": "URL to the member's LinkedIn profile." },
+        "order": { "type": "number", "description": "Sort order for displaying team members." }
+      },
+      "required": ["id", "name", "title", "slug", "fullBio"]
+    },
     "role_admin": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "role_admin",
@@ -106,6 +129,15 @@
           "schema": { "$ref": "#/backend/entities/HomePage" },
           "description": "Stores the content for the homepage. Only admins can modify the content.",
           "params": [{ "name": "homePageId", "description": "The ID of the homepage document. Should be a single, well-known ID (e.g., 'main')." }]
+        }
+      },
+       {
+        "path": "/teamMembers/{memberId}",
+        "definition": {
+          "entityName": "TeamMember",
+          "schema": { "$ref": "#/backend/entities/TeamMember" },
+          "description": "Stores profiles for each team member.",
+          "params": [{ "name": "memberId", "description": "The unique ID for the team member, often a slug." }]
         }
       },
       {

@@ -5,24 +5,87 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { CheckCircle, Landmark, Shield, Star, Handshake, Sparkles, ShieldCheck } from 'lucide-react';
+import { CheckCircle, Landmark, Shield, Star, Handshake, Sparkles, ShieldCheck, DatabaseSync, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AnimatedSection from '@/components/animated-section';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import EditableText from '@/components/editable-text';
-import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
-import { doc } from 'firebase/firestore';
+import { useCollection, useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, doc } from 'firebase/firestore';
 import { defaultTeamMembers } from '@/lib/team';
+import { useAdminStore } from '@/lib/store';
+import { useTransition } from 'react';
+import { useToast } from '@/hooks/use-toast';
+import { syncTeamMembersWithFirestore } from '@/app/admin/actions';
+
+function AdminTeamSync() {
+  const { isEditMode } = useAdminStore();
+  const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+
+  const handleSync = () => {
+    startTransition(async () => {
+      const result = await syncTeamMembersWithFirestore();
+      if (result.success) {
+        toast({
+          title: "Éxito",
+          description: result.message,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error de Sincronización",
+          description: result.message,
+        });
+      }
+    });
+  };
+
+  if (!isEditMode) return null;
+
+  return (
+    <AnimatedSection className="py-12 bg-secondary/30 border-y border-primary/50">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <h3 className="font-headline text-2xl text-white flex items-center gap-3"><DatabaseSync className="h-8 w-8 text-primary" /> Módulo de Administración de Equipo</h3>
+                <p className="text-muted-foreground mt-2 max-w-2xl">
+                    Utilice esta herramienta para sincronizar la información de los miembros del equipo desde el archivo local (`src/lib/team.ts`) a la base de datos de Firestore. Esto asegura que los perfiles estén actualizados y permite la edición en vivo.
+                </p>
+                 <div className="mt-4 p-4 bg-yellow-900/50 border border-yellow-400/50 rounded-lg text-sm text-yellow-200 flex items-start gap-3">
+                    <AlertTriangle className="h-5 w-5 mt-0.5 flex-shrink-0"/>
+                    <span>
+                        <strong>Atención:</strong> Al sincronizar, se sobrescribirán los datos existentes en Firestore con la información del archivo local. Asegúrese de que el archivo contenga la información correcta antes de proceder.
+                    </span>
+                 </div>
+            </div>
+            <Button onClick={handleSync} disabled={isPending} size="lg">
+            {isPending ? 'Sincronizando...' : 'Sincronizar Equipo con la Base de Datos'}
+            </Button>
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+}
+
 
 export default function QuienesSomosPage() {
   const firestore = useFirestore();
+
   const contentRef = useMemoFirebase(
     () => (firestore ? doc(firestore, 'pageContent', 'quienes-somos') : null),
     [firestore]
   );
   const { data: pageData, isLoading: isPageLoading } = useDoc(contentRef);
   
-  const isLoading = isPageLoading;
+  const teamMembersRef = useMemoFirebase(
+    () => (firestore ? collection(firestore, 'teamMembers') : null),
+    [firestore]
+  );
+  const { data: teamMembers, isLoading: isTeamLoading } = useCollection(teamMembersRef);
+
+  const isLoading = isPageLoading || isTeamLoading;
+  const displayTeamMembers = (teamMembers && teamMembers.length > 0) ? teamMembers.sort((a, b) => a.order - b.order) : defaultTeamMembers;
   
   const defaultContent = {
     id: 'quienes-somos',
@@ -69,6 +132,8 @@ export default function QuienesSomosPage() {
           </div>
         </div>
       </AnimatedSection>
+      
+      <AdminTeamSync />
 
       {/* Misión y Visión */}
        <AnimatedSection className="relative py-20 md:py-28 overflow-hidden">
@@ -162,7 +227,7 @@ export default function QuienesSomosPage() {
             </div>
           </div>
           <div className="space-y-16">
-            {defaultTeamMembers.map((member, index) => (
+            {displayTeamMembers.map((member, index) => (
               <div key={member.slug}>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
                   <div className={cn("relative aspect-[4/5] w-full max-w-sm mx-auto", index % 2 !== 0 && "md:order-last")}>
@@ -189,7 +254,7 @@ export default function QuienesSomosPage() {
                     </Button>
                   </div>
                 </div>
-                {index < defaultTeamMembers.length - 1 && (
+                {index < displayTeamMembers.length - 1 && (
                   <hr className="mt-16 border-white/10" />
                 )}
               </div>

@@ -9,15 +9,30 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Skeleton } from '@/components/ui/skeleton';
 import { defaultTeamMembers } from '@/lib/team';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import EditableText from '@/components/editable-text';
 
 export default function TeamMemberPage() {
   const params = useParams();
   const slug = params.slug as string;
 
-  const member = defaultTeamMembers.find((m) => m.slug === slug);
-  const isLoading = false; // Data is now static from lib/team.ts
+  // Find the default member data from the static file first.
+  const defaultMember = defaultTeamMembers.find((m) => m.slug === slug);
 
-  if (!member) {
+  const firestore = useFirestore();
+  const memberRef = useMemoFirebase(
+    () => (firestore && slug ? doc(firestore, 'teamMembers', slug) : null),
+    [firestore, slug]
+  );
+  const { data: memberData, isLoading: isMemberLoading } = useDoc(memberRef);
+
+  // Use data from Firestore if available, otherwise fall back to default static data.
+  const member = memberData || defaultMember;
+  const isLoading = isMemberLoading && !memberData;
+
+
+  if (!isLoading && !member) {
     notFound();
   }
 
@@ -35,7 +50,7 @@ export default function TeamMemberPage() {
               <Skeleton className="h-96 w-full" />
             </div>
           </div>
-        ) : (
+        ) : member ? (
           <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             {/* Columna Izquierda - Foto y Datos */}
             <div className="md:col-span-1 flex flex-col items-center">
@@ -49,10 +64,10 @@ export default function TeamMemberPage() {
                 />
               </div>
               <h1 className="text-3xl font-bold font-headline text-center">
-                  {member.name}
+                 <EditableText field="name" defaultText={member.name} isLoading={isLoading} collectionId="teamMembers" docId={slug} />
               </h1>
               <div className="text-primary text-lg font-medium text-center">
-                  {member.title}
+                 <EditableText field="title" defaultText={member.title} isLoading={isLoading} collectionId="teamMembers" docId={slug} />
               </div>
               {member.linkedinUrl && <div className="mt-4">
                 <Button variant="ghost" size="icon" asChild>
@@ -73,7 +88,7 @@ export default function TeamMemberPage() {
                   <div>
                     <h3 className="font-semibold text-lg text-primary mb-2">Biografía</h3>
                     <div className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                      {member.fullBio}
+                      <EditableText field="fullBio" defaultText={member.fullBio} isLoading={isLoading} collectionId="teamMembers" docId={slug} multiline />
                     </div>
                   </div>
                   {member.achievements && member.achievements.length > 0 && (
@@ -101,7 +116,7 @@ export default function TeamMemberPage() {
               </div>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
