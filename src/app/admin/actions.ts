@@ -1,18 +1,21 @@
 
 'use server';
 
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 
 async function isUserAdmin(uid: string): Promise<boolean> {
+  console.log(`Verificando estado de admin para UID: ${uid}`);
   try {
     const adminRoleDocRef = doc(db, 'roles_admin', uid);
     const adminRoleDoc = await getDoc(adminRoleDocRef);
-    return adminRoleDoc.exists();
+    const isAdmin = adminRoleDoc.exists();
+    console.log(`El usuario ${uid} ${isAdmin ? 'es' : 'no es'} administrador.`);
+    return isAdmin;
   } catch (error) {
      if (error instanceof Error && error.message.includes('permission-denied')) {
          const permissionError = new Error(`Permission denied when checking admin status for UID: ${uid}. Ensure Firestore rules allow this read.`);
@@ -31,50 +34,57 @@ async function isUserAdmin(uid: string): Promise<boolean> {
 export async function login(prevState: { error: string | null; success?: boolean } | null, formData: FormData): Promise<{ error: string | null; success?: boolean; }> {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
+  console.log(`Intento de inicio de sesión para: ${email}`);
 
   if (!email || !password) {
     return { error: 'Email y contraseña son requeridos.' };
   }
   
   try {
+    console.log('Intentando iniciar sesión con Firebase Auth...');
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
+    console.log(`Inicio de sesión exitoso para UID: ${user.uid}`);
 
     const isAdmin = await isUserAdmin(user.uid);
     if (!isAdmin) {
-        await signOut(auth);
+        console.log(`El usuario ${user.uid} no es admin. Cerrando sesión.`);
+        await auth.signOut(); // Use the server-side auth instance
         return { error: 'No tienes los permisos de administrador necesarios.' };
     }
+     console.log(`El usuario ${user.uid} es admin. Redireccionando...`);
      return { error: null, success: true };
 
   } catch (e) {
+    console.error('--- ERROR DETECTADO EN EL LOGIN ---');
     if (e instanceof FirebaseError) {
+        console.error(`Código de error de Firebase: ${e.code}`);
+        console.error(`Mensaje de error de Firebase: ${e.message}`);
         switch (e.code) {
             case 'auth/invalid-credential':
             case 'auth/user-not-found':
             case 'auth/wrong-password':
                 return { error: 'Las credenciales proporcionadas no son válidas.' };
             default:
-                console.error(`Unexpected Firebase error: ${e.code}`, e);
                 return { error: `Ocurrió un error inesperado de Firebase: ${e.message}` };
         }
     }
     
     if (e instanceof Error) {
-      // Catch custom errors from isUserAdmin
       if ((e as any).code === 'ADMIN_CHECK_PERMISSION_DENIED') {
+          console.error(`Error de permisos al verificar el rol: ${e.message}`);
           return { error: `Error de permisos: ${e.message}` };
       }
-      console.error("Generic error in login action:", e);
+      console.error("Error genérico en la acción de login:", e);
       return { error: e.message };
     }
-
+    console.error("Error desconocido en la acción de login:", e);
     return { error: 'Un error inesperado ocurrió durante el inicio de sesión.' };
   }
 }
 
 export async function logout() {
-  await signOut(auth);
+  await auth.signOut();
   revalidatePath('/');
   redirect('/admin');
 }
@@ -87,14 +97,11 @@ export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean
         
         defaultTeamMembers.forEach(member => {
             const docRef = doc(db, 'teamMembers', member.slug);
-            // We need to remove the 'id' field as it's the document ID, not part of the data.
             const { id, ...memberData } = member;
             batch.set(docRef, memberData, { merge: true });
         });
 
         await batch.commit();
-
-        // Revalidate the path to ensure the page shows the latest data.
         revalidatePath('/quienes-somos');
 
         return { success: true, message: 'Los miembros del equipo se han sincronizado con Firestore.' };
