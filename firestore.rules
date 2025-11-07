@@ -7,16 +7,13 @@
  *
  * Data Structure:
  * - `/homePageContent/{homePageId}`: Stores the content for the homepage.
- *   There should be a single, well-known ID (e.g., 'main') for the homepage document.
- * - `/roles_admin/{userId}`: Indicates admin status. If a document exists for a user's ID, they are an admin.
+ * - `/pageContent/{pageId}`: Stores content for other static pages.
+ * - `/roles_admin/{userId}`: Indicates admin status.
  *
  * Key Security Decisions:
- * - Only authenticated admins can create, update, or delete homepage content.
- * - Any user (authenticated or not) can read the homepage content.
- * - The rules explicitly deny write access to the `/roles_admin` collection itself to prevent privilege escalation.
- *
- * Denormalization for Authorization:
- * The `/roles_admin/{userId}` collection is used to denormalize admin status. The rules check for the existence of a document in this collection to grant admin privileges, avoiding the need to read data from other documents to determine permissions.
+ * - Only authenticated admins can create, update, or delete content.
+ * - Any user (authenticated or not) can read the content.
+ * - The rules explicitly deny write access to the `/roles_admin` collection to prevent privilege escalation.
  */
 rules_version = '2';
 service cloud.firestore {
@@ -39,29 +36,25 @@ service cloud.firestore {
     }
 
     /**
-     * @description
-     *  Rules for the `/homePageContent/{homePageId}` collection.
-     *  Only admins can create, update, or delete the homepage content.
-     *  Anyone can read the homepage content.
-     * @path /homePageContent/{homePageId}
-     * @allow (get, list) - Anyone can read the homepage content.
-     * @allow (create, update, delete) - Only admins can modify the homepage content.
-     * @principle Enforces admin-only access for writes to the homepage content.
+     * @description Rules for the `/homePageContent/{homePageId}` collection.
      */
     match /homePageContent/{homePageId} {
       allow get: if true;
       allow list: if true;
       allow write: if isSignedIn() && isAdmin();
     }
+    
+    /**
+     * @description Rules for the `/pageContent/{pageId}` collection.
+     */
+    match /pageContent/{pageId} {
+      allow get: if true;
+      allow list: if true;
+      allow write: if isSignedIn() && isAdmin();
+    }
 
     /**
-     * @description
-     *  Rules for the `/roles_admin/{userId}` collection.
-     *  Direct client-side manipulation of admin roles is prohibited to prevent privilege escalation.
-     *  Admin roles should only be managed through a secure backend or the Firebase Console.
-     * @path /roles_admin/{userId}
-     * @allow (read, write) - All direct client access is denied.
-     * @principle Restricts direct manipulation of admin roles via Firestore clients.
+     * @description Rules for the `/roles_admin/{userId}` collection.
      */
     match /roles_admin/{userId} {
       allow read: if false;
