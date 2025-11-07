@@ -10,16 +10,18 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
+import { useUser } from '@/firebase';
 
 export default function LoginPage() {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(login, null);
+  const { user } = useUser();
   
   useEffect(() => {
     if (state?.success) {
-      // If the server action was successful, redirect on the client.
-      router.push('/');
-      router.refresh(); // This forces a refresh to re-evaluate auth state in layouts.
+      // If the server action was successful, refresh the page.
+      // The new admin role will be picked up by the layout, which will redirect home.
+      router.refresh(); 
     }
   }, [state, router]);
 
@@ -34,19 +36,9 @@ export default function LoginPage() {
           <CardDescription>Ingrese sus credenciales para administrar el contenido.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form 
-            action={(formData) => {
-              const email = formData.get('email');
-              const password = formData.get('password');
-              if (email === 'admin@example.com' && password === 'admin') {
-                  sessionStorage.setItem('dev-admin', 'true');
-              } else {
-                  sessionStorage.removeItem('dev-admin');
-              }
-              formAction(formData);
-            }} 
-            className="space-y-4"
-          >
+          <form action={formAction} className="space-y-4">
+             {/* Hidden input to pass the current user's UID to the server action */}
+            {user && <input type="hidden" name="uid" value={user.uid} />}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -71,7 +63,7 @@ export default function LoginPage() {
                   </AlertDescription>
                 </Alert>
             )}
-            <Button type="submit" className="w-full" disabled={isPending}>
+            <Button type="submit" className="w-full" disabled={isPending || !user}>
               {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>

@@ -9,24 +9,22 @@ import { Switch } from './ui/switch';
 import { Edit, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 export default function AdminToolbar() {
-  const { user, isUserLoading } = useUser();
   const { isEditMode, toggleEditMode } = useAdminStore();
-  const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-  
-  const isDevBypass = isClient && sessionStorage.getItem('dev-admin') === 'true';
-
-  if (isUserLoading) {
-    return null; // Don't show anything while checking auth status
-  }
-
-  if (!user && !isDevBypass) {
-    return null; // Not an admin, don't render the toolbar
+  const handleLogout = async () => {
+    // Disable edit mode on logout
+    if (isEditMode) {
+      toggleEditMode();
+    }
+    await logout();
+    // No need to redirect here, the server action handles it.
+    // But we refresh to ensure all client-side state is cleared.
+    router.refresh();
   }
 
   return (
@@ -49,12 +47,7 @@ export default function AdminToolbar() {
             </Label>
           </div>
         </div>
-        <form action={() => {
-            if (isClient) {
-              sessionStorage.removeItem('dev-admin');
-            }
-            logout();
-        }}>
+        <form action={handleLogout}>
           <Button variant="ghost" size="sm" type="submit">
             <LogOut className="h-4 w-4 mr-2" />
             Cerrar Sesión

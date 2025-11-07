@@ -1,20 +1,25 @@
 'use client';
 
-import { useUser } from '@/firebase';
+import { useUser, useDoc, useFirestore, useMemoFirebase } from '@/firebase';
 import AdminToolbar from './admin-toolbar';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { doc } from 'firebase/firestore';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, isUserLoading } = useUser();
-  const [isClient, setIsClient] = useState(false);
+  const firestore = useFirestore();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  // Create a memoized reference to the admin role document
+  const adminRoleRef = useMemoFirebase(
+    () => (firestore && user ? doc(firestore, 'roles_admin', user.uid) : null),
+    [firestore, user]
+  );
+  
+  // Use the useDoc hook to check for the existence of the admin role document
+  const { data: adminRoleDoc, isLoading: isAdminRoleLoading } = useDoc(adminRoleRef);
 
-  const isDevBypass = isClient && sessionStorage.getItem('dev-admin') === 'true';
-  const isAdmin = !isUserLoading && (user || isDevBypass);
+  // The user is an admin if they are logged in and their admin role document exists
+  const isAdmin = !isUserLoading && !isAdminRoleLoading && user && !!adminRoleDoc;
 
   return (
     <>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAdminStore } from '@/lib/store';
-import { useUser, useFirestore, FirestorePermissionError, errorEmitter } from '@/firebase';
+import { useUser, useFirestore, FirestorePermissionError, errorEmitter, useDoc, useMemoFirebase } from '@/firebase';
 import { useState, useEffect, useRef, useTransition } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -31,31 +31,35 @@ export default function EditableText({
   docId
 }: EditableTextProps) {
   const { isEditMode } = useAdminStore();
-  const { user } = useUser();
+  const { user, isUserLoading } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
-
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => setIsClient(true), []);
 
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(defaultText);
   const [isPending, startTransition] = useTransition();
-
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
-  
-  const isDevBypass = isClient && sessionStorage.getItem('dev-admin') === 'true';
+
+  // Check for admin role
+  const adminRoleRef = useMemoFirebase(
+    () => (firestore && user ? doc(firestore, 'roles_admin', user.uid) : null),
+    [firestore, user]
+  );
+  const { data: adminRoleDoc, isLoading: isAdminRoleLoading } = useDoc(adminRoleRef);
+  const isAdmin = !isUserLoading && !isAdminRoleLoading && user && !!adminRoleDoc;
+  const canEdit = isEditMode && isAdmin;
+
 
   useEffect(() => {
     setValue(defaultText);
   }, [defaultText]);
 
   useEffect(() => {
-    if (isEditing) {
+    if (isEditing && canEdit) {
       inputRef.current?.focus();
       inputRef.current?.select();
     }
-  }, [isEditing]);
+  }, [isEditing, canEdit]);
 
   const handleSave = () => {
     if (!firestore) {
@@ -65,6 +69,10 @@ export default function EditableText({
         description: 'No se pudo conectar a la base de datos.',
       });
       return;
+    }
+     if (value === defaultText) {
+      setIsEditing(false);
+      return; // No-op if value hasn't changed
     }
 
     startTransition(() => {
@@ -123,8 +131,6 @@ export default function EditableText({
   if (isLoading) {
     return <Skeleton className={cn("h-6 w-48 inline-block", className)} />;
   }
-  
-  const canEdit = isEditMode && (user || isDevBypass);
 
   if (canEdit && isEditing) {
     return (

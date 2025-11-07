@@ -9,12 +9,13 @@ service cloud.firestore {
 
     // Check if the user's UID exists in the admin roles collection.
     function isExistingAdmin() {
-      return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+      // Important: Ensure request.auth is not null before trying to access .uid
+      return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
     }
     
     // An admin is someone who is signed in AND is a registered admin.
     function isAdmin() {
-      return isSignedIn() && isExistingAdmin();
+      return isExistingAdmin();
     }
 
     match /homePageContent/{docId} {
@@ -32,10 +33,13 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
-    // Admin roles document should only be manageable from the Firebase Console
-    // for security reasons. Nobody can write to it from the client-side app.
+    // This rule allows an admin to assign another user (or themselves) an admin role.
+    // It's secure because only an existing admin can perform this write.
+    // It also allows an unauthenticated or non-admin user to read the roles for client-side checks,
+    // though in this specific case, we'll be doing checks based on the logged-in user's UID.
     match /roles_admin/{userId} {
-      allow read, write: if false; 
+      allow read: if isSignedIn();
+      allow write: if isAdmin(); 
     }
   }
 }
