@@ -27,16 +27,12 @@ export default function LoginPage() {
   // This handles the successful login from the form action
   useEffect(() => {
      if (state?.success) {
-      // In dev mode, we just need to refresh to allow the useUser hook to re-evaluate with the new state.
-      if ((document.getElementById('email') as HTMLInputElement)?.value === 'admin@example.com') {
-         // A simple way to signal dev login is to set a session storage item and reload.
-         // The `useUser` hook will handle the rest. This is a bit of a hack for dev convenience.
+      // For dev login, set a flag for the provider to handle role assignment
+      if (state.devAdmin) {
          sessionStorage.setItem('dev-admin', 'true');
-         router.push('/');
-         // window.location.href = '/'; // Or a full reload
-      } else {
-        router.push('/');
       }
+      // A full page refresh is more reliable to ensure all providers re-evaluate auth state
+      window.location.href = '/';
     }
   }, [state, router]);
 

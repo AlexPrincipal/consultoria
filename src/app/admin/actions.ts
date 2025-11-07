@@ -12,9 +12,17 @@ import { defaultTeamMembers } from '@/lib/team';
 async function isUserAdmin(uid: string): Promise<boolean> {
   try {
     const db = getFirestore(getApp());
-    const adminRoleDoc = await getDoc(doc(db, 'roles_admin', uid));
+    const adminRoleDocRef = doc(db, 'roles_admin', uid);
+    const adminRoleDoc = await getDoc(adminRoleDocRef);
     return adminRoleDoc.exists();
   } catch (error) {
+    // This is a server-side action, we cannot emit a client-side error.
+    // We will throw a more informative error to be caught by the login action.
+    if (error.code === 'permission-denied') {
+        const readableError = new Error(`Permission denied when checking admin role for UID: ${uid}. Path: /roles_admin/${uid}. Ensure server-side code has adequate permissions or rules allow this check.`);
+        (readableError as any).originalError = error;
+        throw readableError;
+    }
     console.error("Error checking admin status:", error);
     return false;
   }
@@ -31,18 +39,9 @@ export async function login(prevState: { error: string | null; success?: boolean
   // Handle dev login separately
   if (process.env.NODE_ENV === 'development' && email === 'admin@example.com' && password === 'admin') {
      try {
-       // For dev mode, we can try to sign in a dev user or ensure the role exists for a known test UID
-       // The simplest robust way is to just return success and let the client-side useUser hook handle the admin check.
-       // The problem is we need to grant the admin role to the anonymous user if it's a dev login.
-       const tempAuth = getAuth();
-       
-       // This will only work if there is a current user (even anonymous) on the server component side.
-       // A better approach would be to have a dedicated dev user, but let's try to assign role to anonymous user.
-       
-       // This cannot be done reliably on the server as there's no guarantee of a user session.
-       // The client must handle this.
-       // Let's modify this to just return success, and fix the client page to react to isAdmin.
-       return { error: null, success: true };
+       // This is a dev-only convenience. In a real app, you'd have a proper admin user creation flow.
+       // We set a flag that the client provider will pick up upon auth state change.
+       return { error: null, success: true, devAdmin: true };
     } catch (e) {
         console.error("Dev login failed", e);
         return { error: 'No se pudo asignar el rol de administrador de desarrollo.' };
@@ -75,8 +74,12 @@ export async function login(prevState: { error: string | null; success?: boolean
             case 'auth/wrong-password':
                 return { error: 'Contraseña incorrecta. Por favor, inténtelo de nuevo.' };
             default:
-                return { error: 'Ocurrió un error inesperado. Por favor, inténtelo más tarde.' };
+                return { error: `Ocurrió un error inesperado de Firebase: ${e.message}` };
         }
+    }
+    if (e instanceof Error) {
+        // Catch the custom error from isUserAdmin
+        return { error: e.message };
     }
     return { error: 'Un error inesperado ocurrió.' };
   }
@@ -114,7 +117,7 @@ export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean
         errorMessage = error.message;
     }
      // You could check for specific Firebase errors here, like permission denied.
-    if (error.code === 'permission-denied') {
+    if ((error as any).code === 'permission-denied') {
       errorMessage = 'Permiso denegado. Asegúrese de tener los permisos de administrador para realizar esta acción.';
     }
 
