@@ -1,11 +1,12 @@
+
 'use server';
 
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
 
-export async function login(prevState: { error: string | null } | null, formData: FormData) {
+export async function login(prevState: { error: string | null; success?: boolean } | null, formData: FormData): Promise<{ error: string | null; success?: boolean }> {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
@@ -45,4 +46,9 @@ export async function login(prevState: { error: string | null } | null, formData
     }
     return { error: 'Un error inesperado ocurrió.' };
   }
+}
+
+export async function logout() {
+    await signOut(auth);
+    redirect('/admin/login');
 }

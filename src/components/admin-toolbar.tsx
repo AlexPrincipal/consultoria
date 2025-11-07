@@ -3,7 +3,7 @@
 import { useAdminStore } from '@/lib/store';
 import { useUser } from '@/firebase';
 import { Button } from './ui/button';
-import { logout } from '@/app/(protected)/admin/actions';
+import { logout } from '@/app/(auth)/admin/login/actions';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 import { Edit, LogOut } from 'lucide-react';
