@@ -10,41 +10,21 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
-import { useUser } from '@/firebase';
 
 export default function LoginPage() {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(login, null);
-  const { user, isUserLoading, isAdmin } = useUser();
-  
+
   useEffect(() => {
-    // If the user is already an admin (checked by the useUser hook), redirect them.
-    if (!isUserLoading && isAdmin) {
-      router.push('/'); 
-    }
-  }, [isAdmin, isUserLoading, router]);
-  
-  // This handles the successful login from the form action
-  useEffect(() => {
-     if (state?.success) {
-      // For dev login, set a flag for the provider to handle role assignment
+    if (state?.success) {
       if (state.devAdmin) {
-         sessionStorage.setItem('dev-admin', 'true');
+        // Set a flag for the provider to handle role assignment on auth state change
+        sessionStorage.setItem('dev-admin', 'true');
       }
-      // A full page refresh is more reliable to ensure all providers re-evaluate auth state
+      // A full page refresh is more reliable to ensure all providers and layouts re-evaluate auth state.
       window.location.href = '/';
     }
-  }, [state]);
-
-  // If user is loading or already admin, don't render the form to avoid flashes.
-  if (isUserLoading || isAdmin) {
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-background">
-            <p className="text-white">Verificando sesión...</p>
-        </div>
-    );
-  }
-
+  }, [state, router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
