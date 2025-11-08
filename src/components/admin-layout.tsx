@@ -10,11 +10,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { isAdmin } = useUser();
   const { isEditMode } = useAdminStore();
   
-  const showToolbar = isAdmin && isEditMode;
+  const showToolbar = isAdmin;
 
   return (
     <>
-      {isAdmin && <AdminToolbar />}
+      {showToolbar && <AdminToolbar />}
       <div className={cn(isAdmin && isEditMode && 'pt-14')}>{children}</div>
     </>
   );
