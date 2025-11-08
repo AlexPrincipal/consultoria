@@ -60,8 +60,8 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
   auth,
 }) => {
   const [userAuthState, setUserAuthState] = useState<UserAuthState>({
-    user: auth.currentUser, // Initialize with current user if available
-    isUserLoading: true,      // Always start as loading until first onAuthStateChanged call
+    user: auth.currentUser, 
+    isUserLoading: true,      
     userError: null,
   });
 
@@ -74,7 +74,6 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     const unsubscribe = onAuthStateChanged(
       auth,
       (firebaseUser) => {
-        // When auth state changes (login/logout), update user and set loading to false.
         setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
       },
       (error) => {
@@ -83,13 +82,12 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       }
     );
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, [auth]);
   
-  // A user is admin if a user exists and is not anonymous.
-  // This logic is now robust because it directly depends on the userAuthState.
-  const isAdmin = !!userAuthState.user && !userAuthState.user.isAnonymous;
+  // Logic as requested: if a user exists, they are an admin.
+  // This works because anonymous auth is disabled.
+  const isAdmin = !!userAuthState.user;
   const isAdminLoading = userAuthState.isUserLoading;
 
 
@@ -170,14 +168,15 @@ export const useUser = (): UserHookResult => {
   if (context === undefined) {
     throw new Error('useUser must be used within a FirebaseProvider.');
   }
-   // A user is an admin if they exist and are not anonymous.
-  const isAdmin = !!context.user && !context.user.isAnonymous;
+  
+  const isAdmin = !!context.user;
+  const isAdminLoading = context.isUserLoading;
   
   return { 
     user: context.user, 
     isUserLoading: context.isUserLoading, 
     userError: context.userError, 
     isAdmin: isAdmin, 
-    isAdminLoading: context.isUserLoading // isAdminLoading is the same as isUserLoading now
+    isAdminLoading: isAdminLoading
   };
 };
