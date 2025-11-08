@@ -47,7 +47,7 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="mx-auto max-w-sm w-full bg-card border-border/50">
         <CardHeader className="text-center">
-            <div className="w-32 h-28 mx-auto relative mb-4">
+            <div className="w-40 h-32 mx-auto relative mb-4">
                 <Logo />
             </div>
           <CardTitle className="text-2xl font-headline">Admin Login</CardTitle>

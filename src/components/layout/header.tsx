@@ -80,8 +80,8 @@ export function Header() {
         show ? 'translate-y-0' : '-translate-y-full'
       )}
     >
-      <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="relative w-32 h-28">
+      <div className="container mx-auto flex h-32 items-center justify-between px-4 md:px-6">
+        <Link href="/" className="relative w-40 h-32">
           <Logo />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
@@ -126,12 +126,12 @@ export function Header() {
                 <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw]">
                     <SheetHeader className="p-4 border-b border-border flex flex-row items-center justify-between">
                         <SheetTitle asChild>
-                           <Link href="/" onClick={() => setOpen(false)} className="relative w-28 h-14 block">
+                           <Link href="/" onClick={() => setOpen(false)} className="relative w-28 h-24 block">
                                 <Logo />
                             </Link>
                         </SheetTitle>
                     </SheetHeader>
-                <div className="flex flex-col h-[calc(100%-73px)]">
+                <div className="flex flex-col h-[calc(100%-113px)]">
                     <nav className="flex flex-col space-y-2 p-4">
                     {navLinks.map((link) => (
                         link.isDropdown && link.items ? (
