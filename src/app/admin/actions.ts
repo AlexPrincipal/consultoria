@@ -1,11 +1,11 @@
 
 'use server';
 
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
-import { doc, getDoc } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 
 async function isUserAdmin(uid: string): Promise<boolean> {
@@ -49,11 +49,10 @@ export async function login(prevState: { error: string | null; success?: boolean
     const isAdmin = await isUserAdmin(user.uid);
     if (!isAdmin) {
         console.log(`El usuario ${user.uid} no es admin. Cerrando sesión.`);
-        await auth.signOut(); // Use the server-side auth instance
+        await auth.signOut();
         return { error: 'No tienes los permisos de administrador necesarios.' };
     }
      console.log(`El usuario ${user.uid} es admin. Redireccionando...`);
-     return { error: null, success: true };
 
   } catch (e) {
     console.error('--- ERROR DETECTADO EN EL LOGIN ---');
@@ -81,6 +80,9 @@ export async function login(prevState: { error: string | null; success?: boolean
     console.error("Error desconocido en la acción de login:", e);
     return { error: 'Un error inesperado ocurrió durante el inicio de sesión.' };
   }
+
+  // Si todo es exitoso, redirigir del lado del servidor
+  redirect('/');
 }
 
 export async function logout() {

@@ -18,10 +18,10 @@ export default function LoginPage() {
   const router = useRouter();
 
   useEffect(() => {
+    // This effect might still be useful for client-side feedback or alternative flows,
+    // but the primary redirection is now handled by the server action.
     if (state?.success) {
-      // On successful login, redirect to the homepage.
-      // The AdminLayout and other components will then pick up the new auth state.
-      router.push('/');
+      router.replace('/');
     }
   }, [state, router]);
 

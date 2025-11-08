@@ -3,8 +3,8 @@
 
 import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
 import { FirebaseApp } from 'firebase/app';
-import { Firestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { Auth, User, onAuthStateChanged, signInAnonymously, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Firestore, doc } from 'firebase/firestore';
+import { Auth, User, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
 import { useDoc } from './firestore/use-doc';
 
@@ -72,20 +72,12 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       return;
     }
 
-    setUserAuthState({ user: null, isUserLoading: true, userError: null });
+    setUserAuthState({ user: auth.currentUser, isUserLoading: true, userError: null });
 
     const unsubscribe = onAuthStateChanged(
       auth,
       (firebaseUser) => {
-        if (firebaseUser) {
-          setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
-        } else {
-            // If no user is logged in, sign in anonymously.
-            signInAnonymously(auth).catch((error) => {
-                 console.error("FirebaseProvider: Anonymous sign-in failed:", error);
-                 setUserAuthState({ user: null, isUserLoading: false, userError: error });
-            });
-        }
+        setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
       },
       (error) => {
         console.error("FirebaseProvider: onAuthStateChanged error:", error);
@@ -93,9 +85,9 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       }
     );
     return () => unsubscribe();
-  }, [auth, firestore]);
+  }, [auth]);
 
-  const adminRoleRef = useMemo(
+  const adminRoleRef = useMemoFirebase(
     () => (firestore && userAuthState.user ? doc(firestore, 'roles_admin', userAuthState.user.uid) : null),
     [firestore, userAuthState.user]
   );
