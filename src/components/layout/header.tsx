@@ -81,7 +81,7 @@ export function Header() {
       )}
     >
       <div className="container mx-auto flex h-28 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="relative w-32 h-28">
+        <Link href="/" className="relative w-24 h-20">
           <Logo />
         </Link>
         <nav className="hidden md:flex items-center space-x-8">
@@ -126,7 +126,7 @@ export function Header() {
                 <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw]">
                     <SheetHeader className="p-4 border-b border-border flex flex-row items-center justify-between">
                         <SheetTitle asChild>
-                           <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-10 block">
+                           <Link href="/" onClick={() => setOpen(false)} className="relative w-24 h-10 block">
                                 <Logo />
                             </Link>
                         </SheetTitle>
