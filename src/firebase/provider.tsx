@@ -92,12 +92,15 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     [firestore, userAuthState.user]
   );
   
-  const { data: adminRoleDoc, isLoading: isAdminRoleCheckLoading } = useDoc(adminRoleRef);
+  const { data: adminRoleDoc, isLoading: isRoleCheckLoading } = useDoc(adminRoleRef);
   
-  const isAdmin = !!adminRoleDoc;
-  
-  // The user is loading OR if there is a user, we are still checking their admin role.
-  const isAdminLoading = userAuthState.isUserLoading || (!!userAuthState.user && isAdminRoleCheckLoading);
+  // The user auth state must have finished loading.
+  const isAuthReady = !userAuthState.isUserLoading;
+  // An admin check can only happen if there is a user.
+  const isAdminCheckInProgress = !!userAuthState.user && isRoleCheckLoading;
+
+  const isAdmin = isAuthReady && !!userAuthState.user && !!adminRoleDoc;
+  const isAdminLoading = userAuthState.isUserLoading || isAdminCheckInProgress;
 
 
   const contextValue = useMemo((): FirebaseContextState => {

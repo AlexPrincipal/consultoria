@@ -16,15 +16,15 @@ import { useUser } from '@/firebase';
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, null);
   const router = useRouter();
-  const { user, isUserLoading, isAdmin, isAdminLoading } = useUser();
+  const { user, isAdmin, isAdminLoading } = useUser();
 
   useEffect(() => {
     // This effect handles redirection based on auth state.
     // It will redirect a logged-in admin away from the login page.
-    if (!isUserLoading && !isAdminLoading && user && isAdmin) {
+    if (!isAdminLoading && user && isAdmin) {
       router.replace('/');
     }
-  }, [user, isUserLoading, isAdmin, isAdminLoading, router]);
+  }, [user, isAdmin, isAdminLoading, router]);
 
 
   return (
@@ -63,7 +63,7 @@ export default function LoginPage() {
                   </AlertDescription>
                 </Alert>
             )}
-            <Button type="submit" className="w-full" disabled={isPending || isUserLoading || isAdminLoading}>
+            <Button type="submit" className="w-full" disabled={isPending || isAdminLoading}>
               {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
