@@ -1,13 +1,19 @@
 
 'use server';
 
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '@/firebase/server';
 import { redirect } from 'next/navigation';
 import { FirebaseError } from 'firebase/app';
 import { revalidatePath } from 'next/cache';
 
+/**
+ * Checks if a user has an admin role document in Firestore.
+ * This function is for server-side checks if needed elsewhere, but is no longer used for login.
+ * @param uid The user's ID.
+ * @returns A boolean indicating if the user is an admin.
+ */
 async function isUserAdmin(uid: string): Promise<boolean> {
   console.log(`Verificando estado de admin para UID: ${uid}`);
   try {
@@ -42,17 +48,10 @@ export async function login(prevState: { error: string | null; success?: boolean
   
   try {
     console.log('Intentando iniciar sesión con Firebase Auth...');
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    console.log(`Inicio de sesión exitoso para UID: ${user.uid}`);
-
-    const isAdmin = await isUserAdmin(user.uid);
-    if (!isAdmin) {
-        console.log(`El usuario ${user.uid} no es admin. Cerrando sesión.`);
-        await auth.signOut();
-        return { error: 'No tienes los permisos de administrador necesarios.' };
-    }
-     console.log(`El usuario ${user.uid} es admin. Redireccionando...`);
+    // The login action's only job is to sign the user in.
+    // The client-side will determine if the logged-in user is an admin.
+    await signInWithEmailAndPassword(auth, email, password);
+    console.log(`Inicio de sesión de Firebase exitoso para: ${email}`);
 
   } catch (e) {
     console.error('--- ERROR DETECTADO EN EL LOGIN ---');
@@ -70,10 +69,6 @@ export async function login(prevState: { error: string | null; success?: boolean
     }
     
     if (e instanceof Error) {
-      if ((e as any).code === 'ADMIN_CHECK_PERMISSION_DENIED') {
-          console.error(`Error de permisos al verificar el rol: ${e.message}`);
-          return { error: `Error de permisos: ${e.message}` };
-      }
       console.error("Error genérico en la acción de login:", e);
       return { error: e.message };
     }
@@ -81,7 +76,8 @@ export async function login(prevState: { error: string | null; success?: boolean
     return { error: 'Un error inesperado ocurrió durante el inicio de sesión.' };
   }
 
-  // Si todo es exitoso, redirigir del lado del servidor
+  // If everything is successful, revalidate the home page and redirect.
+  revalidatePath('/');
   redirect('/');
 }
 

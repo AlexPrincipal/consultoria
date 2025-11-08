@@ -12,18 +12,19 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 import Logo from '@/components/logo';
 import Link from 'next/link';
+import { useUser } from '@/firebase';
 
 export default function LoginPage() {
   const [state, formAction, isPending] = useActionState(login, null);
   const router = useRouter();
+  const { user, isUserLoading } = useUser();
 
   useEffect(() => {
-    // This effect might still be useful for client-side feedback or alternative flows,
-    // but the primary redirection is now handled by the server action.
-    if (state?.success) {
+    // If user is already logged in, redirect them away from login page.
+    if (!isUserLoading && user) {
       router.replace('/');
     }
-  }, [state, router]);
+  }, [user, isUserLoading, router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
