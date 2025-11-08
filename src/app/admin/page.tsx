@@ -50,7 +50,7 @@ export default function LoginPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" name="password" type="password" required defaultValue="admin"/>
+              <Input id="password" name="password" type="password" required defaultValue="admin123"/>
             </div>
             {state?.error && (
                <Alert variant="destructive">
@@ -66,7 +66,7 @@ export default function LoginPage() {
             </Button>
           </form>
             <div className="mt-4 text-center text-sm">
-                ¿Necesita crear el usuario admin de desarrollo?{' '}
+                ¿Necesita crear el usuario admin?{' '}
                 <Link href="/admin/setup" className="underline text-primary">
                     Ir a la página de configuración
                 </Link>

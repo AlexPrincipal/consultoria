@@ -23,7 +23,7 @@ export async function setupDevAdmin(): Promise<SetupResult> {
     }
 
     const email = 'admin@example.com';
-    const password = 'admin';
+    const password = 'admin123';
 
     try {
         // 1. Try to create the user
@@ -38,7 +38,7 @@ export async function setupDevAdmin(): Promise<SetupResult> {
         await setDoc(adminRoleRef, { uid: user.uid, assignedAt: serverTimestamp() });
         console.log(`¡Éxito! Rol de administrador asignado a ${user.uid}`);
 
-        return { success: true, message: '¡Éxito! El usuario admin@example.com ha sido creado. Ahora puede iniciar sesión.' };
+        return { success: true, message: '¡Éxito! El usuario admin@example.com ha sido creado con la contraseña "admin123". Ahora puede iniciar sesión.' };
 
     } catch (error) {
         console.error("--- ERROR DETECTADO EN SETUPDEVADMIN ---");

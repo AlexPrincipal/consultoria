@@ -91,7 +91,7 @@ export async function logout() {
 
 export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean; message: string; }> {
     try {
-        const { batch } = await import('firebase/firestore');
+        const { batch, doc } = await import('firebase/firestore');
         const firestoreBatch = batch(db);
 
         const { defaultTeamMembers } = await import('@/lib/team');

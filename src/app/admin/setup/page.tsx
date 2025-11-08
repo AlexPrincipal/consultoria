@@ -68,7 +68,7 @@ export default function SetupAdminPage() {
             )
           ) : (
              <p className="text-sm text-center text-muted-foreground">
-                Haz clic en el botón para crear el usuario administrador con la contraseña "admin". 
+                Haz clic en el botón para crear el usuario administrador con la contraseña "admin123". 
                 Solo necesitas hacer esto una vez.
             </p>
           )}
