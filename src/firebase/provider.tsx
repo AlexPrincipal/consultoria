@@ -85,9 +85,8 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     return () => unsubscribe();
   }, [auth]);
   
-  // Logic as requested: if a user exists, they are an admin.
-  // This works because anonymous auth is disabled.
-  const isAdmin = !!userAuthState.user;
+  // As per the user's logic, if a user exists (and they are not anonymous), they are an admin.
+  const isAdmin = !!userAuthState.user && !userAuthState.user.isAnonymous;
   const isAdminLoading = userAuthState.isUserLoading;
 
 
@@ -169,7 +168,7 @@ export const useUser = (): UserHookResult => {
     throw new Error('useUser must be used within a FirebaseProvider.');
   }
   
-  const isAdmin = !!context.user;
+  const isAdmin = !!context.user && !context.user.isAnonymous;
   const isAdminLoading = context.isUserLoading;
   
   return { 

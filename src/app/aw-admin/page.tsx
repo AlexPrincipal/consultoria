@@ -65,7 +65,7 @@ export default function LoginPage() {
                 </Alert>
             )}
             <Button type="submit" className="w-full" disabled={isPending || isAdminLoading}>
-              {isPending || isAdminLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+              {isPending || isAdminLoading ? 'Verificando...' : 'Iniciar Sesión'}
             </Button>
           </form>
             <div className="mt-4 text-center text-sm">
