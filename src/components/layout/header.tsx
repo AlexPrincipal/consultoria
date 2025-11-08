@@ -80,42 +80,53 @@ export function Header() {
         show ? 'translate-y-0' : '-translate-y-full'
       )}
     >
-      <div className="container mx-auto flex h-48 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="relative w-80 h-48">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6 relative">
+        <Link href="/" className="absolute left-1/2 -translate-x-1/2 top-0 z-20 w-80 h-48">
           <Logo />
         </Link>
-        <nav className="hidden md:flex items-center space-x-8">
-        {navLinks.map((link) => (
-            link.isDropdown && link.items ? (
-            <DropdownMenu key={link.label}>
-                <DropdownMenuTrigger className={cn("flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none",
-                  isServiceRouteActive && "text-primary"
-                )}>
-                {link.label}
-                <ChevronDown className="ml-1 h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='bg-background border-border/50'>
-                {link.items.map((item) => (
-                    <DropdownMenuItem key={item.label} asChild>
-                    <Link href={item.href} className={cn("cursor-pointer", pathname === item.href ? "text-primary" : "text-white")}>{item.label}</Link>
-                    </DropdownMenuItem>
-                ))}
-                </DropdownMenuContent>
-            </DropdownMenu>
-            ) : (
-            <Link key={link.label} href={link.href!} className={cn("text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors", pathname === link.href && "text-primary")}>
-                {link.label}
-            </Link>
-            )
-        ))}
-        </nav>
-        <div className="flex items-center space-x-2">
-            <div className="hidden md:block">
-                <Button asChild size="sm">
-                    <Link href="/contacto">Consulta</Link>
-                </Button>
-            </div>
-            <div className="md:hidden">
+        <div className="flex-1">
+            <nav className="hidden md:flex items-center space-x-8">
+            {navLinks.slice(0, 3).map((link) => (
+                link.isDropdown && link.items ? (
+                <DropdownMenu key={link.label}>
+                    <DropdownMenuTrigger className={cn("flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none",
+                    isServiceRouteActive && "text-primary"
+                    )}>
+                    {link.label}
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className='bg-background border-border/50'>
+                    {link.items.map((item) => (
+                        <DropdownMenuItem key={item.label} asChild>
+                        <Link href={item.href} className={cn("cursor-pointer", pathname === item.href ? "text-primary" : "text-white")}>{item.label}</Link>
+                        </DropdownMenuItem>
+                    ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                ) : (
+                <Link key={link.label} href={link.href!} className={cn("text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors", pathname === link.href && "text-primary")}>
+                    {link.label}
+                </Link>
+                )
+            ))}
+            </nav>
+        </div>
+
+        <div className="flex-1 flex justify-end">
+            <nav className="hidden md:flex items-center space-x-8">
+            {navLinks.slice(3).map((link) => (
+                 <Link key={link.label} href={link.href!} className={cn("text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors", pathname === link.href && "text-primary")}>
+                    {link.label}
+                </Link>
+            ))}
+             <Button asChild size="sm">
+                <Link href="/contacto">Consulta</Link>
+            </Button>
+            </nav>
+        </div>
+
+
+        <div className="md:hidden flex items-center justify-end w-full">
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -158,7 +169,6 @@ export function Header() {
                 </div>
                 </SheetContent>
             </Sheet>
-            </div>
         </div>
       </div>
     </header>
