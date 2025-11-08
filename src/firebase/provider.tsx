@@ -71,11 +71,13 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       return;
     }
 
-    setUserAuthState({ user: auth.currentUser, isUserLoading: true, userError: null });
+    // Set initial loading state, but check if there's already a user from server-side render
+    setUserAuthState({ user: auth.currentUser, isUserLoading: !auth.currentUser, userError: null });
 
     const unsubscribe = onAuthStateChanged(
       auth,
       (firebaseUser) => {
+        // When auth state changes, update user and set loading to false.
         setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
       },
       (error) => {
@@ -86,8 +88,9 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     return () => unsubscribe();
   }, [auth]);
   
-  // Simplified admin logic: if a user is logged in, they are an admin.
-  const isAdmin = !userAuthState.isUserLoading && !!userAuthState.user;
+  // A user is considered an admin if they exist and are not anonymous.
+  // The login flow is restricted to the admin user, so any authenticated, non-anonymous user is the admin.
+  const isAdmin = !!userAuthState.user && !userAuthState.user.isAnonymous;
   const isAdminLoading = userAuthState.isUserLoading;
 
 

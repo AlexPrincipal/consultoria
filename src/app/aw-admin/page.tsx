@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useActionState, useEffect } from 'react';
@@ -64,7 +65,7 @@ export default function LoginPage() {
                 </Alert>
             )}
             <Button type="submit" className="w-full" disabled={isPending || isAdminLoading}>
-              {isPending ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+              {isPending || isAdminLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </form>
             <div className="mt-4 text-center text-sm">

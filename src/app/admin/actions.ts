@@ -84,7 +84,7 @@ export async function login(prevState: { error: string | null; success?: boolean
 export async function logout() {
   await auth.signOut();
   revalidatePath('/');
-  redirect('/admin');
+  redirect('/aw-admin');
 }
 
 export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean; message: string; }> {
