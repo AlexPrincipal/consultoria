@@ -1,4 +1,5 @@
 
+
 export const defaultTeamMembers = [
   {
     id: 'rene-casillas-gallardo',
@@ -14,7 +15,7 @@ export const defaultTeamMembers = [
       'Consejero en múltiples consejos de administración de empresas de alto perfil.',
       'Autor de diversas publicaciones sobre derecho corporativo y arbitraje comercial.'
     ],
-    imageUrl: '/rene-casillas-gallardo.jpg',
+    imageUrl: 'https://picsum.photos/seed/rene/400/400',
     imageHint: 'professional male portrait',
     imagePosition: "object-top",
     linkedinUrl: 'https://www.linkedin.com/in/rene-casillas-gallardo/',
@@ -34,7 +35,7 @@ export const defaultTeamMembers = [
         'Ha revertido clausuras y sanciones impuestas por diversas autoridades.',
         'Especialista en la elaboración de estrategias preventivas para evitar contingencias legales.'
     ],
-    imageUrl: '/jose-luis-pineda-nunez.jpg',
+    imageUrl: 'https://picsum.photos/seed/jose/400/400',
     imageHint: 'male professional portrait',
     imagePosition: "object-top",
     linkedinUrl: 'https://www.linkedin.com/in/jose-luis-pineda-nunez/',
