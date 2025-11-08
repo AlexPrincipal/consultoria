@@ -80,13 +80,16 @@ export function Header() {
         show ? 'translate-y-0' : '-translate-y-full'
       )}
     >
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6 relative">
-        <Link href="/" className="absolute left-1/2 -translate-x-1/2 top-0 z-20 w-80 h-48">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
+        {/* Logo on the left */}
+        <Link href="/" className="relative z-20 w-32 h-24">
           <Logo />
         </Link>
-        <div className="flex-1">
-            <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.slice(0, 3).map((link) => (
+        
+        {/* Desktop Navigation on the right */}
+        <div className="hidden md:flex flex-1 justify-end items-center space-x-6">
+            <nav className="flex items-center space-x-6">
+            {navLinks.map((link) => (
                 link.isDropdown && link.items ? (
                 <DropdownMenu key={link.label}>
                     <DropdownMenuTrigger className={cn("flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none",
@@ -110,23 +113,14 @@ export function Header() {
                 )
             ))}
             </nav>
-        </div>
-
-        <div className="flex-1 flex justify-end">
-            <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.slice(3).map((link) => (
-                 <Link key={link.label} href={link.href!} className={cn("text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors", pathname === link.href && "text-primary")}>
-                    {link.label}
-                </Link>
-            ))}
-             <Button asChild size="sm">
+            <Button asChild size="sm">
                 <Link href="/contacto">Consulta</Link>
             </Button>
-            </nav>
         </div>
 
 
-        <div className="md:hidden flex items-center justify-end w-full">
+        {/* Mobile Menu */}
+        <div className="md:hidden flex items-center">
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
