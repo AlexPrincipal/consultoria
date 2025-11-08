@@ -3,10 +3,9 @@
 
 import React, { DependencyList, createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
 import { FirebaseApp } from 'firebase/app';
-import { Firestore, doc } from 'firebase/firestore';
+import { Firestore } from 'firebase/firestore';
 import { Auth, User, onAuthStateChanged } from 'firebase/auth';
 import { FirebaseErrorListener } from '@/components/FirebaseErrorListener';
-import { useDoc } from './firestore/use-doc';
 
 interface FirebaseProviderProps {
   children: ReactNode;
@@ -86,21 +85,10 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
     );
     return () => unsubscribe();
   }, [auth]);
-
-  const adminRoleRef = useMemoFirebase(
-    () => (firestore && userAuthState.user ? doc(firestore, 'roles_admin', userAuthState.user.uid) : null),
-    [firestore, userAuthState.user]
-  );
   
-  const { data: adminRoleDoc, isLoading: isRoleCheckLoading } = useDoc(adminRoleRef);
-  
-  // The user auth state must have finished loading.
-  const isAuthReady = !userAuthState.isUserLoading;
-  // An admin check can only happen if there is a user.
-  const isAdminCheckInProgress = !!userAuthState.user && isRoleCheckLoading;
-
-  const isAdmin = isAuthReady && !!userAuthState.user && !!adminRoleDoc;
-  const isAdminLoading = userAuthState.isUserLoading || isAdminCheckInProgress;
+  // Simplified admin logic: if a user is logged in, they are an admin.
+  const isAdmin = !userAuthState.isUserLoading && !!userAuthState.user;
+  const isAdminLoading = userAuthState.isUserLoading;
 
 
   const contextValue = useMemo((): FirebaseContextState => {

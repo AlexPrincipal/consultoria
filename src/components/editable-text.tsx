@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useAdminStore } from '@/lib/store';
-import { useUser, useFirestore, FirestorePermissionError, errorEmitter, useDoc, useMemoFirebase } from '@/firebase';
+import { useUser, useFirestore, FirestorePermissionError, errorEmitter } from '@/firebase';
 import { useState, useEffect, useRef, useTransition } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -31,7 +32,7 @@ export default function EditableText({
   docId
 }: EditableTextProps) {
   const { isEditMode } = useAdminStore();
-  const { user, isUserLoading } = useUser();
+  const { isAdmin } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
 
@@ -40,13 +41,6 @@ export default function EditableText({
   const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
-  // Check for admin role
-  const adminRoleRef = useMemoFirebase(
-    () => (firestore && user ? doc(firestore, 'roles_admin', user.uid) : null),
-    [firestore, user]
-  );
-  const { data: adminRoleDoc, isLoading: isAdminRoleLoading } = useDoc(adminRoleRef);
-  const isAdmin = !isUserLoading && !isAdminRoleLoading && user && !!adminRoleDoc;
   const canEdit = isEditMode && isAdmin;
 
 
