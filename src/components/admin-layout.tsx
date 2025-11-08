@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useUser } from '@/firebase';
@@ -10,13 +11,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { isAdmin } = useUser();
   const { isEditMode } = useAdminStore();
   
-  // The toolbar is only shown if a user is logged in (and is therefore an admin).
+  // The toolbar is only shown if a user is logged in and is therefore an admin.
   const showToolbar = isAdmin;
 
   return (
     <>
       {showToolbar && <AdminToolbar />}
-      <div className={cn(isAdmin && isEditMode && 'pt-14')}>{children}</div>
+      <div className={cn(showToolbar && isEditMode && 'pt-14')}>{children}</div>
     </>
   );
 }

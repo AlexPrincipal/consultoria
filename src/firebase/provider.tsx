@@ -166,6 +166,18 @@ export function useMemoFirebase<T>(factory: () => T, deps: DependencyList): T | 
 }
 
 export const useUser = (): UserHookResult => {
-  const { user, isUserLoading, userError, isAdmin, isAdminLoading } = useFirebase();
-  return { user, isUserLoading, userError, isAdmin, isAdminLoading };
+  const context = useContext(FirebaseContext);
+  if (context === undefined) {
+    throw new Error('useUser must be used within a FirebaseProvider.');
+  }
+   // A user is an admin if they exist and are not anonymous.
+  const isAdmin = !!context.user && !context.user.isAnonymous;
+  
+  return { 
+    user: context.user, 
+    isUserLoading: context.isUserLoading, 
+    userError: context.userError, 
+    isAdmin: isAdmin, 
+    isAdminLoading: context.isUserLoading // isAdminLoading is the same as isUserLoading now
+  };
 };
