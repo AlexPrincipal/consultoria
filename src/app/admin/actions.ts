@@ -9,34 +9,12 @@ import { FirebaseError } from 'firebase/app';
 import { revalidatePath } from 'next/cache';
 
 /**
- * Checks if a user has an admin role document in Firestore.
- * This function is for server-side checks if needed elsewhere, but is no longer used for login.
- * @param uid The user's ID.
- * @returns A boolean indicating if the user is an admin.
+ * Función de inicio de sesión que se ejecuta en el servidor.
+ * Es una "Server Action" de Next.js.
+ * @param prevState - El estado anterior de la acción, útil para mostrar errores en el formulario.
+ * @param formData - Los datos del formulario enviados por el cliente.
+ * @returns Un objeto que indica si hubo un error o si fue exitoso.
  */
-async function isUserAdmin(uid: string): Promise<boolean> {
-  console.log(`Verificando estado de admin para UID: ${uid}`);
-  try {
-    const adminRoleDocRef = doc(db, 'roles_admin', uid);
-    const adminRoleDoc = await getDoc(adminRoleDocRef);
-    const isAdmin = adminRoleDoc.exists();
-    console.log(`El usuario ${uid} ${isAdmin ? 'es' : 'no es'} administrador.`);
-    return isAdmin;
-  } catch (error) {
-     if (error instanceof Error && error.message.includes('permission-denied')) {
-         const permissionError = new Error(`Permission denied when checking admin status for UID: ${uid}. Ensure Firestore rules allow this read.`);
-         (permissionError as any).code = 'ADMIN_CHECK_PERMISSION_DENIED';
-         throw permissionError;
-     }
-     if (error instanceof Error) {
-        const customError = new Error(`Error checking admin status: ${error.message}`);
-        (customError as any).code = 'ADMIN_CHECK_FAILED';
-        throw customError;
-    }
-    throw new Error("An unknown error occurred while checking admin status.");
-  }
-}
-
 export async function login(prevState: { error: string | null; success?: boolean } | null, formData: FormData): Promise<{ error: string | null; success?: boolean; }> {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
@@ -47,13 +25,13 @@ export async function login(prevState: { error: string | null; success?: boolean
   }
   
   try {
-    console.log('Intentando iniciar sesión con Firebase Auth...');
-    // The login action's only job is to sign the user in.
-    // The client-side will determine if the logged-in user is an admin.
+    // Se intenta iniciar sesión con las credenciales proporcionadas usando Firebase Auth.
+    // Esta función establece una cookie de sesión en el navegador del cliente.
     await signInWithEmailAndPassword(auth, email, password);
     console.log(`Inicio de sesión de Firebase exitoso para: ${email}`);
 
   } catch (e) {
+    // Manejo de errores específicos de Firebase.
     console.error('--- ERROR DETECTADO EN EL LOGIN ---');
     if (e instanceof FirebaseError) {
         console.error(`Código de error de Firebase: ${e.code}`);
@@ -68,6 +46,7 @@ export async function login(prevState: { error: string | null; success?: boolean
         }
     }
     
+    // Manejo de errores genéricos.
     if (e instanceof Error) {
       console.error("Error genérico en la acción de login:", e);
       return { error: e.message };
@@ -76,17 +55,33 @@ export async function login(prevState: { error: string | null; success?: boolean
     return { error: 'Un error inesperado ocurrió durante el inicio de sesión.' };
   }
 
-  // If everything is successful, revalidate the home page and redirect.
+  // Si el inicio de sesión es exitoso, se revalida la caché de la página de inicio.
+  // Esto asegura que la próxima vez que se cargue, obtenga los datos más recientes.
   revalidatePath('/');
-  redirect('/');
+  
+  // ¡Importante! La redirección ahora es manejada por el lado del cliente en `aw-admin/page.tsx`.
+  // La acción del servidor solo se encarga de la autenticación. Se comenta el redirect aquí.
+  // redirect('/');
+  // Devolvemos un estado de éxito, aunque el cliente ya no depende directamente de él para redirigir.
+  return { error: null, success: true };
 }
 
+/**
+ * Función de cierre de sesión. También es una "Server Action".
+ */
 export async function logout() {
+  // Llama a Firebase Auth para invalidar la sesión actual.
   await auth.signOut();
+  // Se revalida la caché para asegurar que la próxima carga no muestre contenido de administrador.
   revalidatePath('/');
+  // Se redirige al usuario a la página de login.
   redirect('/aw-admin');
 }
 
+/**
+ * Sincroniza los miembros del equipo desde un archivo local a la base de datos de Firestore.
+ * Esto es útil para la configuración inicial.
+ */
 export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean; message: string; }> {
     try {
         const { batch, doc } = await import('firebase/firestore');
@@ -97,11 +92,13 @@ export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean
         defaultTeamMembers.forEach(member => {
             const docRef = doc(db, 'teamMembers', member.slug);
             const { id, ...memberData } = member;
+            // `set` con `merge: true` crea el documento si no existe o actualiza los campos si ya existe.
             firestoreBatch.set(docRef, memberData, { merge: true });
         });
 
+        // Ejecuta todas las operaciones de escritura en un solo lote.
         await firestoreBatch.commit();
-        revalidatePath('/quienes-somos');
+        revalidatePath('/quienes-somos'); // Revalida la página del equipo.
 
         return { success: true, message: 'Los miembros del equipo se han sincronizado con Firestore.' };
     } catch (error) {

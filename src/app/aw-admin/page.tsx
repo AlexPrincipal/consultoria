@@ -15,17 +15,32 @@ import Link from 'next/link';
 import { useUser } from '@/firebase';
 
 export default function LoginPage() {
+  // `useActionState` es un hook de React para manejar el estado de las acciones de formulario.
+  // `state` contiene la respuesta de la acción (éxito o error).
+  // `formAction` es la función que se pasa al prop `action` del formulario.
+  // `isPending` es un booleano que indica si la acción está en curso.
   const [state, formAction, isPending] = useActionState(login, null);
+  
+  // `useRouter` para manejar la redirección del lado del cliente.
   const router = useRouter();
+  
+  // `useUser` nos da el estado actual del usuario: si está logueado, si es admin, y si se está cargando.
   const { user, isAdmin, isAdminLoading } = useUser();
 
+  // `useEffect` se ejecuta cuando cambian las dependencias `user`, `isAdmin`, etc.
+  // Es crucial para la redirección DESPUÉS de un inicio de sesión exitoso.
   useEffect(() => {
-    // This effect handles redirection based on auth state.
-    // It will redirect a logged-in admin away from the login page.
+    // Esta es la condición de redirección:
+    // 1. La comprobación de administrador NO debe estar en curso (`!isAdminLoading`).
+    // 2. Debe existir un objeto `user` (la sesión está activa).
+    // 3. `isAdmin` debe ser `true`.
+    // Si todo esto se cumple, significa que el inicio de sesión fue exitoso y se ha confirmado el rol.
     if (!isAdminLoading && user && isAdmin) {
+      // `router.replace('/')` redirige al usuario a la página de inicio.
+      // Se usa `replace` en lugar de `push` para que el usuario no pueda volver a la página de login con el botón "atrás" del navegador.
       router.replace('/');
     }
-  }, [user, isAdmin, isAdminLoading, router]);
+  }, [user, isAdmin, isAdminLoading, router]); // El efecto se vuelve a ejecutar si alguno de estos valores cambia.
 
 
   return (
@@ -39,6 +54,8 @@ export default function LoginPage() {
           <CardDescription>Ingrese sus credenciales para administrar el contenido.</CardDescription>
         </CardHeader>
         <CardContent>
+          {/* El `action` del formulario está vinculado a `formAction` del hook `useActionState`.
+              Esto ejecuta la acción `login` del servidor cuando se envía el formulario. */}
           <form action={formAction} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -55,6 +72,8 @@ export default function LoginPage() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" name="password" type="password" required defaultValue="admin123"/>
             </div>
+            
+            {/* Muestra un mensaje de error si el `state` de la acción del formulario contiene un error. */}
             {state?.error && (
                <Alert variant="destructive">
                   <Terminal className="h-4 w-4" />
@@ -64,6 +83,9 @@ export default function LoginPage() {
                   </AlertDescription>
                 </Alert>
             )}
+            
+            {/* El botón de envío se deshabilita mientras la acción de inicio de sesión (`isPending`) o
+                la comprobación del rol de administrador (`isAdminLoading`) están en curso. */}
             <Button type="submit" className="w-full" disabled={isPending || isAdminLoading}>
               {isPending || isAdminLoading ? 'Verificando...' : 'Iniciar Sesión'}
             </Button>
