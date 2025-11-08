@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useTransition, useState } from 'react';
@@ -81,7 +82,7 @@ export default function SetupAdminPage() {
 
           <div className="text-center">
             <Button variant="link" asChild>
-              <Link href="/admin">Ir a Iniciar Sesión &rarr;</Link>
+              <Link href="/aw-admin">Ir a Iniciar Sesión &rarr;</Link>
             </Button>
           </div>
         </CardContent>

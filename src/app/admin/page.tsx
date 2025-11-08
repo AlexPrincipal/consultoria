@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useActionState, useEffect } from 'react';
@@ -20,11 +21,17 @@ export default function LoginPage() {
   const { user, isUserLoading } = useUser();
 
   useEffect(() => {
-    // If user is already logged in, redirect them away from login page.
+    // If user is already logged in and they are an admin, redirect them away from login page.
     if (!isUserLoading && user) {
       router.replace('/');
     }
   }, [user, isUserLoading, router]);
+
+  useEffect(() => {
+    if (state?.success) {
+      router.replace('/');
+    }
+  }, [state, router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -68,7 +75,7 @@ export default function LoginPage() {
           </form>
             <div className="mt-4 text-center text-sm">
                 ¿Necesita crear el usuario admin?{' '}
-                <Link href="/admin/setup" className="underline text-primary">
+                <Link href="/aw-admin/setup" className="underline text-primary">
                     Ir a la página de configuración
                 </Link>
             </div>
