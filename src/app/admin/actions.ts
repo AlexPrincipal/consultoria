@@ -91,17 +91,18 @@ export async function logout() {
 
 export async function syncTeamMembersWithFirestore(): Promise<{ success: boolean; message: string; }> {
     try {
-        const batch = db.batch();
+        const { batch } = await import('firebase/firestore');
+        const firestoreBatch = batch(db);
 
         const { defaultTeamMembers } = await import('@/lib/team');
         
         defaultTeamMembers.forEach(member => {
             const docRef = doc(db, 'teamMembers', member.slug);
             const { id, ...memberData } = member;
-            batch.set(docRef, memberData, { merge: true });
+            firestoreBatch.set(docRef, memberData, { merge: true });
         });
 
-        await batch.commit();
+        await firestoreBatch.commit();
         revalidatePath('/quienes-somos');
 
         return { success: true, message: 'Los miembros del equipo se han sincronizado con Firestore.' };
