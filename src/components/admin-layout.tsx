@@ -6,7 +6,6 @@ import AdminToolbar from './admin-toolbar';
 import { cn } from '@/lib/utils';
 import { useAdminStore } from '@/lib/store';
 
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { isAdmin } = useUser();
   const { isEditMode } = useAdminStore();
