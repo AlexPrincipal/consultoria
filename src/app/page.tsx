@@ -11,11 +11,64 @@ import AnimatedSection from '@/components/animated-section';
 import React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { useDoc, useFirestore, useMemoFirebase }from '@/firebase';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import EditableText from '@/components/editable-text';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { defaultTeamMembers } from '@/lib/team';
+import Script from 'next/script';
+import { getOrganizationSchema, getServicesItemListSchema } from '@/lib/seo';
+import type { TeamMember } from '@/lib/data-validation';
+
+type HomePageContentField =
+  | 'heroHeadline'
+  | 'heroSubhead'
+  | 'heroPrimaryCtaText'
+  | 'heroSecondaryCtaText'
+  | 'heroBackgroundImageUrl'
+  | 'servicesOverviewTitle'
+  | 'servicesOverviewSubhead'
+  | 'service1Title'
+  | 'service1Description'
+  | 'service2Title'
+  | 'service2Description'
+  | 'service3Title'
+  | 'service3Description'
+  | 'service4Title'
+  | 'service4Description'
+  | 'service5Title'
+  | 'service5Description'
+  | 'service6Title'
+  | 'service6Description'
+  | 'service7Title'
+  | 'service7Description'
+  | 'service8Title'
+  | 'service8Description'
+  | 'whyUsTitle'
+  | 'whyUsSubhead'
+  | 'whyUsFeature1Title'
+  | 'whyUsFeature1Desc'
+  | 'whyUsFeature2Title'
+  | 'whyUsFeature2Desc'
+  | 'whyUsFeature3Title'
+  | 'whyUsFeature3Desc'
+  | 'whyUsCtaText'
+  | 'teamTitle'
+  | 'teamSubhead'
+  | 'teamCtaText'
+  | 'officeTitle'
+  | 'officeSubhead'
+  | 'officeCtaText'
+  | 'aboutTitle'
+  | 'aboutSubhead'
+  | 'aboutCtaText'
+  | 'contactUsTitle'
+  | 'contactUsSubhead'
+  | 'contactUsCtaText';
+
+type HomePageContentDoc = Partial<Record<HomePageContentField, string>>;
+
+type HomePageContent = Record<HomePageContentField, string>;
 
 function ServiceCard({
   icon,
@@ -32,8 +85,8 @@ function ServiceCard({
   description: string;
   href: string;
   className?: string;
-  titleField: string;
-  descriptionField: string;
+  titleField: HomePageContentField;
+  descriptionField: HomePageContentField;
   isLoading: boolean;
 }) {
   return (
@@ -94,16 +147,16 @@ export default function Home() {
     [firestore]
   );
   
-  const { data: homePageData, isLoading: isHomePageLoading } = useDoc(homePageContentRef);
+  const { data: homePageData, isLoading: isHomePageLoading } = useDoc<HomePageContentDoc>(homePageContentRef);
   
-  const mainTeamMembers = defaultTeamMembers.slice(0, 2);
+  const mainTeamMembers: TeamMember[] = defaultTeamMembers.slice(0, 3);
   
-  const defaultContent = {
+  const defaultContent: HomePageContent = {
       heroHeadline: "C+ Consultoría Legal",
       heroSubhead: "Transformamos la complejidad legal en seguridad para su negocio. Brindamos asesoría integral y representación experta para que su empresa opere con total confianza.",
       heroPrimaryCtaText: "Agendar una Consulta",
       heroSecondaryCtaText: "Nuestros Servicios",
-      heroBackgroundImageUrl: "https://images.unsplash.com/photo-1730629689669-5567c3d00ad5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGxlZ2FsfGVufDB8fHx8MTc2MTAxODk4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      heroBackgroundImageUrl: "/estatuadelajusticia.jpg",
       servicesOverviewTitle: "Nuestras Áreas de Práctica",
       servicesOverviewSubhead: "Ofrecemos asesoramiento y representación experta en las áreas cruciales del derecho corporativo para proteger y potenciar su negocio.",
       service1Title: "Asesoría y Consultoría",
@@ -143,26 +196,39 @@ export default function Home() {
       contactUsTitle: "¿Listo para Fortalecer su Empresa?",
       contactUsSubhead: "Los servicios legales no deberían ser un gasto, sino una inversión en tu éxito. Hablemos de cómo podemos generar valor para tu empresa.",
       contactUsCtaText: "Agendar una Consulta Estratégica"
-  }
+  };
   
   const isLoading = isHomePageLoading;
-  const content = homePageData || {};
-  const heroImage = PlaceHolderImages.find(p => p.id === 'hero-background');
+  const content: HomePageContent = { ...defaultContent };
+  if (homePageData) {
+    const fields = Object.keys(defaultContent) as HomePageContentField[];
+    for (const field of fields) {
+      const value = homePageData[field];
+      if (typeof value === 'string') {
+        content[field] = value;
+      }
+    }
+  }
+
+  const organizationSchema = getOrganizationSchema();
+  const servicesSchema = getServicesItemListSchema();
 
   return (
     <div className="flex flex-col">
+        <Script id="ld-json-organization" type="application/ld+json" strategy="afterInteractive">
+          {JSON.stringify(organizationSchema)}
+        </Script>
+        <Script id="ld-json-services" type="application/ld+json" strategy="afterInteractive">
+          {JSON.stringify(servicesSchema)}
+        </Script>
         {/* Hero Section */}
         <section className="relative flex items-center justify-center min-h-[700px] text-center text-white bg-black">
-          {heroImage && (
-            <Image
-              src={content.heroBackgroundImageUrl ?? heroImage.imageUrl}
-              alt={heroImage.description}
-              fill
-              className="object-cover opacity-20"
-              data-ai-hint={heroImage.imageHint}
-              priority
-            />
-          )}
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20"
+            style={{
+              backgroundImage: `url(${content.heroBackgroundImageUrl})`
+            }}
+          />
           <div className="relative z-10 p-4 space-y-8 container mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">
                <EditableText field="heroHeadline" defaultText={content.heroHeadline ?? defaultContent.heroHeadline} isLoading={isLoading} collectionId="homePageContent" docId="main" />
@@ -334,7 +400,7 @@ export default function Home() {
                  <EditableText field="teamSubhead" defaultText={content.teamSubhead ?? defaultContent.teamSubhead} isLoading={isLoading} multiline collectionId="homePageContent" docId="main" />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {mainTeamMembers.map((member) => (
                 <div key={member.slug} className="flex flex-col items-center text-center">
                   <div className="relative w-48 h-48 mb-4">
@@ -344,7 +410,7 @@ export default function Home() {
                       fill
                       className={cn(
                         "rounded-full object-cover border-4 border-primary/50",
-                        (member as any).imagePosition || ''
+                        member.imagePosition ?? ''
                       )}
                       data-ai-hint={member.imageHint}
                     />

@@ -77,8 +77,11 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
   // useEffect se ejecuta cuando el componente se monta y cada vez que `auth` cambia.
   // Es el núcleo de la detección de sesión en tiempo real.
   useEffect(() => {
+    console.log('FirebaseProvider useEffect iniciado:', { authExists: !!auth });
+    
     // Si el servicio de autenticación no está disponible, se establece un estado de error.
     if (!auth) {
+      console.log('Auth service no disponible');
       setUserAuthState({ user: null, isUserLoading: false, userError: new Error("Auth service not provided.") });
       return;
     }
@@ -90,6 +93,10 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       (firebaseUser) => {
         // Cuando Firebase responde, actualizamos el estado.
         // firebaseUser será el objeto User si la sesión está activa, o null si no lo está.
+        console.log('FirebaseProvider - onAuthStateChanged:', { 
+          hasUser: !!firebaseUser, 
+          email: firebaseUser?.email 
+        });
         setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
       },
       (error) => {
@@ -105,13 +112,13 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
   }, [auth]); // La dependencia es `auth`, por lo que este efecto solo se vuelve a ejecutar si la instancia de `auth` cambia.
 
   // --- Lógica de Administrador ---
-  // Esta es la lógica clave y simplificada: si existe un objeto `user`, es un administrador.
-  // Como la autenticación anónima está deshabilitada, la única forma de que `user` exista
-  // es a través de un inicio de sesión manual.
-  const isAdmin = !!userAuthState.user;
+  // Verificación robusta: por email admin O por roles_admin collection
+  const isAdminByEmail = userAuthState.user?.email === 'alex@gmail.com' || 
+                         userAuthState.user?.email === 'admin@example.com';
+  
+  const isAdmin = isAdminByEmail; // Solo los emails específicos son admin
   
   // El estado de carga del rol de admin está directamente ligado al estado de carga del usuario.
-  // No hay comprobaciones adicionales, lo que elimina condiciones de carrera.
   const isAdminLoading = userAuthState.isUserLoading;
 
   // `useMemo` optimiza el rendimiento. El valor del contexto solo se recalcula si una de

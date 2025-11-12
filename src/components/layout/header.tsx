@@ -1,12 +1,12 @@
-
 "use client";
 
-import { useState, useEffect } from 'react';
+import type { MouseEvent } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from 'lucide-react';
 import Logo from '@/components/logo';
+import { useAdminStore } from '@/lib/store';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -46,6 +47,68 @@ export function Header() {
   const pathname = usePathname();
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { isEditMode } = useAdminStore();
+  // Controlled open state for Servicios dropdown (desktop only)
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const closeTimeoutRef = useRef<number | null>(null);
+
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const openServices = useCallback(() => {
+    clearCloseTimeout();
+    setServicesOpen(true);
+  }, []);
+
+  const scheduleCloseServices = useCallback((delay = 150) => {
+    clearCloseTimeout();
+    closeTimeoutRef.current = window.setTimeout(() => {
+      setServicesOpen(false);
+      closeTimeoutRef.current = null;
+    }, delay);
+  }, []);
+
+  const handleTriggerMouseEnter = () => {
+    openServices();
+  };
+
+  const handleTriggerMouseLeave = (event: MouseEvent<HTMLButtonElement>) => {
+    const nextTarget = event.relatedTarget;
+    if (nextTarget instanceof Node && contentRef.current?.contains(nextTarget)) return;
+    scheduleCloseServices();
+  };
+
+  const handleContentMouseEnter = () => {
+    openServices();
+  };
+
+  const handleContentMouseLeave = (event: MouseEvent<HTMLDivElement>) => {
+    const nextTarget = event.relatedTarget;
+    if (nextTarget instanceof Node && (contentRef.current?.contains(nextTarget) || triggerRef.current?.contains(nextTarget))) return;
+    scheduleCloseServices();
+  };
+
+  // Close on escape or route change
+  useEffect(() => {
+    setServicesOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setServicesOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Safety: clear timeout on unmount
+  useEffect(() => () => clearCloseTimeout(), []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +130,9 @@ export function Header() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [lastScrollY]);
 
   const isServiceRouteActive = pathname.startsWith('/servicios');
@@ -75,30 +140,45 @@ export function Header() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full transition-all duration-300',
+        'sticky w-full transition-all duration-300 z-50',
+        isEditMode ? 'top-14' : 'top-0', // Ajustar posición cuando está en modo edición
         isScrolled ? 'bg-background/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent',
         show ? 'translate-y-0' : '-translate-y-full'
       )}
     >
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
+      <div className="container mx-auto flex h-20 items-center px-4 md:px-6">
         {/* Logo on the left */}
         <Link href="/" className="relative z-20 w-32 h-24">
           <Logo />
         </Link>
         
-        {/* Desktop Navigation on the right */}
-        <div className="hidden md:flex flex-1 justify-end items-center space-x-6">
+        {/* Desktop Navigation centered */}
+        <div className="hidden md:flex flex-1 justify-center items-center">
             <nav className="flex items-center space-x-6">
             {navLinks.map((link) => (
                 link.isDropdown && link.items ? (
-                <DropdownMenu key={link.label}>
-                    <DropdownMenuTrigger className={cn("flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none",
+                <DropdownMenu key={link.label} modal={false} open={servicesOpen} onOpenChange={(o)=> { if (!o) setServicesOpen(false); }}>
+                    <DropdownMenuTrigger
+                      ref={triggerRef}
+                      className={cn("flex items-center text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors focus:outline-none",
                     isServiceRouteActive && "text-primary"
-                    )}>
+                    )}
+                      onMouseEnter={handleTriggerMouseEnter}
+                      onMouseLeave={handleTriggerMouseLeave}
+                      
+                    >
                     {link.label}
                     <ChevronDown className="ml-1 h-4 w-4" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className='bg-background border-border/50'>
+                    <DropdownMenuContent
+                      ref={contentRef}
+                      className='bg-background border-border/50'
+                      onMouseEnter={handleContentMouseEnter}
+                      onMouseLeave={handleContentMouseLeave}
+                      onPointerDownOutside={() => setServicesOpen(false)}
+                      
+                      align="start"
+                    >
                     {link.items.map((item) => (
                         <DropdownMenuItem key={item.label} asChild>
                         <Link href={item.href} className={cn("cursor-pointer", pathname === item.href ? "text-primary" : "text-white")}>{item.label}</Link>
@@ -107,12 +187,16 @@ export function Header() {
                     </DropdownMenuContent>
                 </DropdownMenu>
                 ) : (
-                <Link key={link.label} href={link.href!} className={cn("text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors", pathname === link.href && "text-primary")}>
-                    {link.label}
-                </Link>
+        <Link key={link.label} href={link.href!} className={cn("text-sm font-medium uppercase tracking-widest text-gray-300 hover:text-primary transition-colors", pathname === link.href && "text-primary")}>
+          {link.label}
+        </Link>
                 )
             ))}
             </nav>
+        </div>
+
+        {/* Button on the right */}
+        <div className="hidden md:flex">
             <Button asChild size="sm">
                 <Link href="/contacto">Consulta</Link>
             </Button>

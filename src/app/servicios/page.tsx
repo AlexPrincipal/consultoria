@@ -8,6 +8,11 @@ import Logo from '@/components/logo';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
+import EditableText from '@/components/editable-text';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
+import Script from 'next/script';
+import { getServicesItemListSchema } from '@/lib/seo';
 
 const services = [
   {
@@ -59,8 +64,10 @@ function CircularMenu() {
         <div className="relative w-[700px] h-[700px]">
         {/* Center Logo */}
         <div className="absolute inset-0 flex justify-center items-center z-10 pointer-events-none">
-          <div className="w-56 h-56 bg-card flex justify-center items-center rounded-lg shadow-2xl p-4">
-            <Logo />
+          <div className="w-56 h-56 bg-card flex justify-center items-center rounded-lg shadow-2xl p-8">
+            <div className="relative w-full h-full">
+              <Logo />
+            </div>
           </div>
         </div>
         
@@ -102,20 +109,56 @@ function CircularMenu() {
 
 export default function ServicesPage() {
   const [isClient, setIsClient] = useState(false);
+  const firestore = useFirestore();
+
+  const contentRef = useMemoFirebase(
+    () => (firestore ? doc(firestore, 'content', 'servicios') : null),
+    [firestore]
+  );
+  const { data: content, isLoading } = useDoc(contentRef);
+
+  // Contenido por defecto
+  const defaultContent = {
+    title: "Nuestras Prácticas",
+    subtitle: "Brindamos soluciones legales integrales, diseñadas para proteger y fortalecer su empresa en cada etapa de su desarrollo. Explore nuestras áreas de especialización.",
+    ctaTitle: "¿Listo para Fortalecer su Empresa?",
+    ctaDescription: "Nuestro equipo está preparado para ofrecerle la asesoría estratégica que su negocio necesita. Contáctenos hoy para una evaluación de su caso.",
+  };
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  const servicesSchema = getServicesItemListSchema();
+
   return (
     <div className="bg-background min-h-screen">
+      <Script id="services-directory-schema" type="application/ld+json" strategy="afterInteractive">
+        {JSON.stringify(servicesSchema)}
+      </Script>
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-            <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">Nuestras Prácticas</h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Brindamos soluciones legales integrales, diseñadas para proteger y fortalecer su empresa en cada etapa de su desarrollo. Explore nuestras áreas de especialización.
-            </p>
+            <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">
+              <EditableText
+                field="title"
+                defaultText={content?.title ?? defaultContent.title}
+                isLoading={isLoading}
+                className="text-4xl md:text-5xl font-bold font-headline text-white"
+                collectionId="content"
+                docId="servicios"
+              />
+            </h1>
+            <div className="mt-4 text-lg text-muted-foreground"><EditableText
+                field="subtitle"
+                defaultText={content?.subtitle ?? defaultContent.subtitle}
+                isLoading={isLoading}
+                multiline
+                className="mt-4 text-lg text-muted-foreground"
+                collectionId="content"
+                docId="servicios"
+              />
+            </div>
           </div>
 
           {/* Desktop Circular Menu */}
@@ -159,10 +202,27 @@ export default function ServicesPage() {
 
       <section className="py-20 md:py-28 bg-black">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl font-bold font-headline text-white">¿Listo para Fortalecer su Empresa?</h2>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Nuestro equipo está preparado para ofrecerle la asesoría estratégica que su negocio necesita. Contáctenos hoy para una evaluación de su caso.
-          </p>
+          <h2 className="text-3xl font-bold font-headline text-white">
+            <EditableText
+              field="ctaTitle"
+              defaultText={content?.ctaTitle ?? defaultContent.ctaTitle}
+              isLoading={isLoading}
+              className="text-3xl font-bold font-headline text-white"
+              collectionId="content"
+              docId="servicios"
+            />
+          </h2>
+          <div className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+            <EditableText
+              field="ctaDescription"
+              defaultText={content?.ctaDescription ?? defaultContent.ctaDescription}
+              isLoading={isLoading}
+              multiline
+              className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto"
+              collectionId="content"
+              docId="servicios"
+            />
+          </div>
           <div className="mt-8">
             <Button size="lg" asChild>
               <Link href="/contacto">Agendar una Consulta</Link>

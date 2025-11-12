@@ -1,16 +1,12 @@
-
-'use client';
+﻿'use client';
 
 import { useAdminStore } from '@/lib/store';
-import { useUser, useFirestore, FirestorePermissionError, errorEmitter } from '@/firebase';
-import { useState, useEffect, useRef, useTransition } from 'react';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Skeleton } from './ui/skeleton';
-import { cn } from '@/lib/utils';
-import { useToast } from '@/hooks/use-toast';
-import { Check, Loader } from 'lucide-react';
+import { useUser, useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
+import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { Loader2 } from 'lucide-react';
 
 interface EditableTextProps {
   field: string;
@@ -31,148 +27,290 @@ export default function EditableText({
   collectionId,
   docId
 }: EditableTextProps) {
+  // Validación inicial de props
+  const safeField = field || 'defaultField';
+  const safeDefaultText = defaultText || '';
+  const safeCollectionId = collectionId || 'defaultCollection';
+  const safeDocId = docId || 'defaultDoc';
+
   const { isEditMode } = useAdminStore();
-  const { isAdmin } = useUser();
+  const { user, isUserLoading } = useUser();
   const firestore = useFirestore();
   const { toast } = useToast();
-
+  const [content, setContent] = useState(safeDefaultText);
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState(defaultText);
-  const [isPending, startTransition] = useTransition();
-  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
+  const adminRoleRef = useMemoFirebase(
+    () => {
+      try {
+        return (firestore && user ? doc(firestore, 'roles_admin', user.uid) : null);
+      } catch (error) {
+        return null;
+      }
+    },
+    [firestore, user]
+  );
+  
+  const { data: adminRoleDoc, isLoading: isAdminRoleLoading } = useDoc(adminRoleRef);
+  const isAdmin = !isUserLoading && !isAdminRoleLoading && user && !!adminRoleDoc;
   const canEdit = isEditMode && isAdmin;
 
+  const saveToFirestore = useCallback(async (newContent: string) => {
+    try {
+      // Validaciones robustas
+      if (!firestore || !safeField || !safeCollectionId || !safeDocId || !canEdit) {
+        return;
+      }
 
-  useEffect(() => {
-    setValue(defaultText);
-  }, [defaultText]);
-
-  useEffect(() => {
-    if (isEditing && canEdit) {
-      inputRef.current?.focus();
-      inputRef.current?.select();
-    }
-  }, [isEditing, canEdit]);
-
-  const handleSave = () => {
-    if (!firestore) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'No se pudo conectar a la base de datos.',
-      });
-      return;
-    }
-     if (value === defaultText) {
-      setIsEditing(false);
-      return; // No-op if value hasn't changed
-    }
-
-    startTransition(() => {
-      const data = { [field]: value };
-      const docRef = doc(firestore, collectionId, docId);
+      const trimmedContent = (newContent || '').trim();
+      const trimmedDefault = safeDefaultText.trim();
       
-      // Use non-blocking write with structured error handling
-      setDoc(docRef, data, { merge: true })
-        .then(() => {
-            toast({
-              title: 'Guardado',
-              description: `El campo se ha actualizado correctamente.`,
-              action: <Check className="h-5 w-5 text-green-500" />,
-            });
-        })
-        .catch((serverError) => {
-            const permissionError = new FirestorePermissionError({
-              path: docRef.path,
-              operation: 'update', // or 'create' if applicable
-              requestResourceData: data,
-            });
-            
-            // This will be caught by the FirebaseErrorListener and displayed in the dev overlay
-            errorEmitter.emit('permission-error', permissionError);
+      if (trimmedContent === trimmedDefault) {
+        return;
+      }
 
-            // Also show a user-friendly toast
-            toast({
-              variant: 'destructive',
-              title: 'Error de Permiso',
-              description: 'No tienes permiso para guardar estos cambios.',
-            });
+      setIsSaving(true);
+      
+      const docRef = doc(firestore, safeCollectionId, safeDocId);
+      await setDoc(docRef, { [safeField]: trimmedContent }, { merge: true });
+      
+      if (toast) {
+        toast({
+          title: 'Guardado',
+          description: 'Cambios guardados automáticamente.',
         });
+      }
+    } catch (error) {
+      if (toast) {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'No se pudo guardar el cambio.',
+        });
+      }
+      // Restaurar contenido original en caso de error
+      setContent(safeDefaultText);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [firestore, safeDefaultText, canEdit, safeCollectionId, safeDocId, safeField, toast]);
 
-      setIsEditing(false);
-    });
-  };
+  // Sincronizar contenido cuando cambie defaultText
+  useEffect(() => {
+    const newSafeText = defaultText || '';
+    if (newSafeText !== content && !isEditing) {
+      setContent(newSafeText);
+    }
+  }, [defaultText, content, isEditing]);
 
-  const handleCancel = () => {
-    setValue(defaultText);
+  // Debounce para guardado automático
+  useEffect(() => {
+    if (!canEdit || isEditing) return;
+    
+    const trimmedContent = content.trim();
+    const trimmedDefault = safeDefaultText.trim();
+    
+    if (trimmedContent !== trimmedDefault) {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+      
+      debounceRef.current = setTimeout(() => {
+        saveToFirestore(content);
+      }, 1000);
+      
+      return () => {
+        if (debounceRef.current) {
+          clearTimeout(debounceRef.current);
+        }
+      };
+    }
+  }, [content, safeDefaultText, canEdit, isEditing, saveToFirestore]);
+
+  const handleClick = useCallback(() => {
+    if (canEdit && !isEditing && !isSaving) {
+      setIsEditing(true);
+    }
+  }, [canEdit, isEditing, isSaving]);
+
+  const handleChange = useCallback((evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    try {
+      const value = evt.target.value || '';
+      setContent(value);
+    } catch (error) {
+      // En caso de error, mantener el contenido actual
+    }
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    if (!isEditing) return;
+    
     setIsEditing(false);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !multiline && !e.shiftKey) {
-      e.preventDefault();
-      handleSave();
+    
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
     }
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      handleCancel();
+    
+    const trimmedContent = content.trim();
+    const trimmedDefault = safeDefaultText.trim();
+    
+    if (trimmedContent !== trimmedDefault && canEdit) {
+      saveToFirestore(content);
     }
-  };
+  }, [isEditing, content, safeDefaultText, canEdit, saveToFirestore]);
 
-  const Component = multiline ? Textarea : Input;
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    try {
+      if (e.key === 'Enter' && !multiline) {
+        e.preventDefault();
+        handleBlur();
+      }
+      if (e.key === 'Escape') {
+        setContent(safeDefaultText);
+        setIsEditing(false);
+      }
+    } catch (error) {
+      // Continuar normalmente si hay error en el manejo de teclas
+    }
+  }, [multiline, handleBlur, safeDefaultText]);
 
+  // Auto-focus cuando entra en modo edición
+  useEffect(() => {
+    if (isEditing) {
+      try {
+        const ref = multiline ? textareaRef.current : inputRef.current;
+        if (ref) {
+          setTimeout(() => {
+            ref.focus();
+            ref.select();
+          }, 10);
+        }
+      } catch (error) {
+        // Si hay error con el focus, continuar sin problema
+      }
+    }
+  }, [isEditing, multiline]);
+
+  // Cleanup al desmontar
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, []);
+
+  // Estados de carga
   if (isLoading) {
-    return <Skeleton className={cn("h-6 w-48 inline-block", className)} />;
+    return (
+      <div className={cn("h-6 w-48 bg-gray-200 animate-pulse rounded", className)} />
+    );
   }
 
-  if (canEdit && isEditing) {
+  // Modo lectura
+  if (!canEdit) {
+    const displayContent = content || safeDefaultText || 'Contenido no disponible';
+    return multiline ? (
+      <span className={cn("whitespace-pre-wrap", className)}>
+        {displayContent}
+      </span>
+    ) : (
+      <span className={className}>{displayContent}</span>
+    );
+  }
+
+  // Modo edición activo
+  if (isEditing) {
     return (
-      <div className="relative">
-        <Component
-          // @ts-ignore
-          ref={inputRef}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onBlur={handleSave}
-          onKeyDown={handleKeyDown}
-          className={cn("w-full p-1 h-auto text-base", className)}
-          disabled={isPending}
-        />
-        {isPending && <Loader className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin" />}
+      <div className="relative inline-block w-full">
+        {multiline ? (
+          <textarea
+            ref={textareaRef}
+            value={content}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            className={cn(
+              "w-full p-3 bg-black/80 text-white border border-blue-400/50 rounded-md", 
+              "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+              "placeholder-gray-300 backdrop-blur-sm shadow-lg",
+              "resize-none transition-all duration-200",
+              className
+            )}
+            placeholder="Escribe aquí..."
+            rows={3}
+            disabled={isSaving}
+          />
+        ) : (
+          <input
+            ref={inputRef}
+            type="text"
+            value={content}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            className={cn(
+              "w-full p-2 bg-black/80 text-white border border-blue-400/50 rounded", 
+              "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+              "placeholder-gray-300 backdrop-blur-sm shadow-lg",
+              "transition-all duration-200",
+              className
+            )}
+            placeholder="Escribe aquí..."
+            disabled={isSaving}
+          />
+        )}
+        {isSaving && (
+          <Loader2 className="absolute -right-6 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-blue-400" />
+        )}
       </div>
     );
   }
+
+  // Modo edición disponible (hover)
+  const displayContent = content || safeDefaultText || 'Haz clic para editar';
   
-  const renderedValue = value || defaultText;
+  const sharedProps = {
+    onClick: handleClick,
+    className: cn(
+      'transition-all duration-200 cursor-pointer hover:bg-blue-500/20 p-1 rounded-md',
+      'border border-transparent hover:border-blue-400/50',
+      'hover:shadow-md hover:shadow-blue-500/25',
+      multiline && 'whitespace-pre-wrap',
+      isSaving && 'bg-blue-500/10 border-blue-400/30 pointer-events-none',
+      className
+    ),
+    role: "button" as const,
+    tabIndex: 0,
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        handleClick();
+      }
+    }
+  };
 
-  // For multiline, we need to render newlines correctly
-  if (multiline) {
-    return (
-        <div
-            onClick={() => canEdit && setIsEditing(true)}
-            className={cn(
-                'transition-all whitespace-pre-wrap',
-                canEdit && 'cursor-pointer hover:bg-primary/10 p-1 rounded-md border border-transparent hover:border-primary/50',
-                className
-            )}
-        >
-            {renderedValue}
-        </div>
-    );
-  }
-
-
-  return (
-    <span
-      onClick={() => canEdit && setIsEditing(true)}
-      className={cn(
-        'transition-all',
-        canEdit && 'cursor-pointer hover:bg-primary/10 p-1 rounded-md border border-transparent hover:border-primary/50',
-        className
+  const content_with_loader = (
+    <>
+      {displayContent}
+      {isSaving && (
+        <Loader2 className="inline ml-2 h-4 w-4 animate-spin text-blue-400" />
       )}
-    >
-      {renderedValue}
+    </>
+  );
+  
+  // Usar span para contenido inline para evitar errores de hidratación
+  return multiline ? (
+    <div {...sharedProps}>
+      {content_with_loader}
+    </div>
+  ) : (
+    <span {...sharedProps}>
+      {content_with_loader}
     </span>
   );
 }

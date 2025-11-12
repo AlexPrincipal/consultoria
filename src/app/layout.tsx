@@ -7,10 +7,45 @@ import { Cinzel, Lato } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { FirebaseClientProvider } from '@/firebase';
 import AdminLayout from '@/components/admin-layout';
+import { SITE_NAME, SITE_URL, seoConfig } from '@/lib/seo';
+
+const defaultDescription = seoConfig.pages.home.description;
 
 export const metadata: Metadata = {
-  title: 'C+ Consultoría Legal',
-  description: 'Estrategias legales sólidas para la tranquilidad de su empresa.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} | Estrategias legales empresariales`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: defaultDescription,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: `${SITE_NAME} | Estrategias legales empresariales`,
+    description: defaultDescription,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: 'es_MX',
+    type: 'website',
+    images: [
+      {
+        url: `${SITE_URL}/logo.png`,
+        width: 512,
+        height: 512,
+        alt: `${SITE_NAME} logotipo`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE_NAME} | Estrategias legales empresariales`,
+    description: defaultDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const cinzel = Cinzel({

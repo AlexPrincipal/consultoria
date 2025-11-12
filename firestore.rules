@@ -7,15 +7,17 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    // Check if the user's UID exists in the admin roles collection.
-    function isExistingAdmin() {
-      // Important: Ensure request.auth is not null before trying to access .uid
-      return isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    // Lista de emails que son admin - SOLUCIÓN ROBUSTA
+    function isAdminEmail() {
+      return isSignedIn() && request.auth.token.email in [
+        'alex@gmail.com',
+        'admin@example.com'
+      ];
     }
     
-    // An admin is someone who is signed in AND is a registered admin.
+    // Verificación combinada: email admin O existe en roles_admin
     function isAdmin() {
-      return isExistingAdmin();
+      return isAdminEmail() || (isSignedIn() && exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid)));
     }
 
     match /homePageContent/{docId} {
@@ -28,18 +30,20 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    match /content/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     match /teamMembers/{docId} {
       allow read: if true;
       allow write: if isAdmin();
     }
 
-    // This rule allows an admin to assign another user (or themselves) an admin role.
-    // It's secure because only an existing admin can perform this write.
-    // It allows any signed-in user (including anonymous) to read the roles collection,
-    // which is necessary for the client-side logic to check if a user is an admin.
+    // Permitir que los admin gestionen roles
     match /roles_admin/{userId} {
       allow read: if isSignedIn();
-      allow write: if isAdmin(); 
+      allow write: if isAdmin();
     }
   }
 }

@@ -51,8 +51,12 @@ export interface InternalQuery extends Query<DocumentData> {
  * The Firestore CollectionReference or Query. Waits if null/undefined.
  * @returns {UseCollectionResult<T>} Object with data, isLoading, error.
  */
-export function useCollection<T = any>(
-    memoizedTargetRefOrQuery: ((CollectionReference<DocumentData> | Query<DocumentData>) & {__memo?: boolean})  | null | undefined,
+type MemoizedCollectionTarget = (
+  CollectionReference<DocumentData> | Query<DocumentData>
+) & { __memo?: boolean };
+
+export function useCollection<T = DocumentData>(
+  memoizedTargetRefOrQuery: MemoizedCollectionTarget | null | undefined,
 ): UseCollectionResult<T> {
   type ResultItemType = WithId<T>;
   type StateDataType = ResultItemType[] | null;
@@ -62,34 +66,44 @@ export function useCollection<T = any>(
   const [error, setError] = useState<FirestoreError | Error | null>(null);
 
   useEffect(() => {
+    console.log('🔥 USECOLLECTION - Effect triggered');
+    console.log('📊 memoizedTargetRefOrQuery:', memoizedTargetRefOrQuery);
+    
     if (!memoizedTargetRefOrQuery) {
+      console.log('❌ USECOLLECTION - No query provided, resetting state');
       setData(null);
       setIsLoading(false);
       setError(null);
       return;
     }
 
+    console.log('🚀 USECOLLECTION - Starting to listen for changes');
     setIsLoading(true);
     setError(null);
 
     // Directly use memoizedTargetRefOrQuery as it's assumed to be the final query
     const unsubscribe = onSnapshot(
       memoizedTargetRefOrQuery,
-      (snapshot: QuerySnapshot<DocumentData>) => {
-        const results: ResultItemType[] = [];
-        for (const doc of snapshot.docs) {
-          results.push({ ...(doc.data() as T), id: doc.id });
-        }
+  (snapshot: QuerySnapshot<DocumentData>) => {
+        console.log('📨 USECOLLECTION - Snapshot received');
+        console.log('📊 snapshot.docs.length:', snapshot.docs.length);
+        const results: ResultItemType[] = snapshot.docs.map((docSnapshot) => ({
+          ...(docSnapshot.data() as T),
+          id: docSnapshot.id,
+        }));
+        console.log('✅ USECOLLECTION - Data processed, results:', results);
         setData(results);
         setError(null);
         setIsLoading(false);
+        console.log('🎯 USECOLLECTION - State updated, isLoading set to false');
       },
       (error: FirestoreError) => {
+        console.log('❌ USECOLLECTION - Error occurred:', error);
         // This logic extracts the path from either a ref or a query
         const path: string =
           memoizedTargetRefOrQuery.type === 'collection'
             ? (memoizedTargetRefOrQuery as CollectionReference).path
-            : (memoizedTargetRefOrQuery as unknown as InternalQuery)._query.path.canonicalString()
+            : (memoizedTargetRefOrQuery as unknown as InternalQuery)._query.path.canonicalString();
 
         const contextualError = new FirestorePermissionError({
           operation: 'list',

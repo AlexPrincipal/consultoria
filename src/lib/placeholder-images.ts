@@ -1,5 +1,3 @@
-import data from './placeholder-images.json';
-
 export type ImagePlaceholder = {
   id: string;
   description: string;
@@ -7,4 +5,124 @@ export type ImagePlaceholder = {
   imageHint: string;
 };
 
-export const PlaceHolderImages: ImagePlaceholder[] = data.placeholderImages;
+// Switched from importing JSON (which caused a Turbopack HMR pattern error)
+// to exporting a typed constant. Update here when changing placeholders.
+export const PlaceHolderImages: ImagePlaceholder[] = [
+  {
+    id: 'hero-background',
+    description: 'Estatua de la Justicia - Imagen de fondo legal',
+    imageUrl: '/estatuadelajusticia.jpg',
+    imageHint: 'justice statue legal background',
+  },
+  {
+    id: 'oficina-1',
+    description: 'Recepción de nuestras oficinas',
+    imageUrl: '/oficina1.png',
+    imageHint: 'modern office reception',
+  },
+  {
+    id: 'oficina-2',
+    description: 'Sala de juntas principal',
+    imageUrl: '/oficina2.png',
+    imageHint: 'conference room meeting',
+  },
+  {
+    id: 'oficina-3',
+    description: 'Área de trabajo colaborativo',
+    imageUrl: '/oficina3.png',
+    imageHint: 'collaborative workspace office',
+  },
+  {
+    id: 'oficina-4',
+    description: 'Oficina privada con vista',
+    imageUrl: '/oficina4.png',
+    imageHint: 'private office city',
+  },
+  {
+    id: 'servicio-asesoria',
+    description: 'Imagen para servicio de Asesoría y Consultoría Legal',
+    imageUrl:
+      'https://images.unsplash.com/photo-1758691736764-2a88e313b1f2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnVzaW5lc3MlMjBzdHJhdGVneSUyMG1lZXRpbmd8ZW58MHx8fHwxNzYxNzA4MjM2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'business strategy meeting',
+  },
+  {
+    id: 'servicio-representacion',
+    description: 'Imagen para servicio de Representación y Defensa',
+    imageUrl:
+      'https://images.unsplash.com/photo-1624638299925-6966fac6914f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb3VydHJvb20lMjBsZWdhbCUyMGFyZ3VtZW50fGVufDB8fHx8MTc2MTcwODIzNnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'courtroom legal argument',
+  },
+  {
+    id: 'servicio-masc',
+    description:
+      'Imagen para servicio de Mecanismos Alternativos de Solución de Conflictos',
+    imageUrl:
+      'https://images.unsplash.com/photo-1758519288417-d359ac3c494d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxuZWdvdGlhdGlvbiUyMGhhbmRzaGFrZSUyMGRlYWx8ZW58MHx8fHwxNzYxNzA4MjM2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'negotiation handshake deal',
+  },
+  {
+    id: 'servicio-gestion',
+    description: 'Imagen para servicio de Gestión y Trámites',
+    imageUrl:
+      'https://images.unsplash.com/photo-1758518731462-d091b0b4ed0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkb2N1bWVudHMlMjBjb250cmFjdCUyMHNpZ25pbmd8ZW58MHx8fHwxNzYxNzA4MjM2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'documents contract signing',
+  },
+  {
+    id: 'servicio-area-empresarial',
+    description: 'Imagen para servicio de Área Empresarial Específica',
+    imageUrl:
+      'https://images.unsplash.com/photo-1698414392317-2697b2e276e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb3Jwb3JhdGUlMjBidWlsZGluZyUyMGNpdHlzY2FwZXxlbnwwfHx8fDE3NjE3MDgyMzZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'corporate building cityscape',
+  },
+  {
+    id: 'servicio-compliance',
+    description:
+      'Imagen para servicio de Cumplimiento Normativo (Compliance)',
+    imageUrl:
+      'https://images.unsplash.com/photo-1704969724221-8b7361b61f75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaGVja2xpc3QlMjByZWd1bGF0aW9ucyUyMGNvbXBsaWFuY2V8ZW58MHx8fHwxNzYxNzA4MjM2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'checklist regulations compliance',
+  },
+  {
+    id: 'servicio-comercio',
+    description: 'Imagen para servicio de Comercio Internacional y Aduanas',
+    imageUrl:
+      'https://images.unsplash.com/photo-1712578581350-be4b46cef626?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYXJnbyUyMHNoaXAlMjBwb3J0fGVufDB8fHx8MTc2MTcwODIzNnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'cargo ship port',
+  },
+  {
+    id: 'why-us-strategy',
+    description:
+      'Business professionals analyzing data on a screen, representing a focus on results.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxidXNpbmVzcyUyMHN0cmF0ZWd5fGVufDB8fHx8MTc2MTcwMDkzMHww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'business strategy',
+  },
+  {
+    id: 'why-us-experience',
+    description:
+      'Experienced professionals in a modern office collaborating on a project.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB0ZWFtJTIwbWVldGluZ3xlbnwwfHx8fDE3NjE4NTQxODd8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'professional team meeting',
+  },
+  {
+    id: 'why-us-commitment',
+    description:
+      'A firm handshake sealing a business deal, symbolizing a strategic partnership.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1549923746-c502d488b3ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxidXNpbmVzcyUyMHBhcnRuZXJzaGlwJTIwaGFuZHNoYWtlfGVufDB8fHx8MTc2MTcwODIzNnww&ixlib=rb-4.1.0&q=80&w=1080',
+    imageHint: 'business partnership handshake',
+  },
+  {
+    id: 'quienes-somos-team',
+    description: 'Nuestro equipo de abogados expertos',
+    imageUrl: '/quienes-somos-team.jpg',
+    imageHint: 'business professionals serious discussion',
+  },
+  {
+    id: 'quienes-somos-mision-vision',
+    description: 'Estatua de la justicia',
+    imageUrl: '/estatuadelajusticia.jpg',
+    imageHint: 'lady justice statue',
+  },
+];

@@ -7,21 +7,63 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/animated-section';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import EditableText from '@/components/editable-text';
+import { useDoc, useFirestore, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
 
 const officeImageIds = ['oficina-1', 'oficina-2', 'oficina-3', 'oficina-4'];
 const officeImages = PlaceHolderImages.filter(p => officeImageIds.includes(p.id)).map(image => ({
     src: image.imageUrl,
     alt: image.description,
     hint: image.imageHint,
-    title: image.id === 'oficina-1' ? 'Una Bienvenida Profesional' :
-           image.id === 'oficina-2' ? 'Decisiones Estratégicas' :
-           image.id === 'oficina-3' ? 'Innovación y Colaboración' :
-           'Confidencialidad y Enfoque'
+    id: image.id
 }));
+
+const defaultContent = {
+  title: 'Un Espacio a la Altura de sus Negocios',
+  subhead: 'Le invitamos a un recorrido virtual por nuestras instalaciones, diseñadas para la excelencia, la confidencialidad y la colaboración estratégica.',
+  sectionTitle: 'Nuestros Espacios',
+  office1Title: 'Una Bienvenida Profesional',
+  office1Desc: 'Nuestro lobby recibe a clientes con elegancia y profesionalismo.',
+  office2Title: 'Decisiones Estratégicas', 
+  office2Desc: 'Salas de conferencias equipadas para negociaciones importantes.',
+  office3Title: 'Innovación y Colaboración',
+  office3Desc: 'Espacios modernos que fomentan el trabajo en equipo.',
+  office4Title: 'Confidencialidad y Enfoque',
+  office4Desc: 'Oficinas privadas para consultas delicadas.'
+};
 
 
 export default function NuestrasOficinasPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  
+  const firestore = useFirestore();
+  const contentRef = useMemoFirebase(
+    () => (firestore ? doc(firestore, 'pageContent', 'oficinas') : null),
+    [firestore]
+  );
+  const { data: pageData, isLoading } = useDoc(contentRef);
+  const content = pageData || defaultContent;
+
+  const getOfficeTitle = (index: number) => {
+    switch(index) {
+      case 0: return content.office1Title ?? defaultContent.office1Title;
+      case 1: return content.office2Title ?? defaultContent.office2Title;
+      case 2: return content.office3Title ?? defaultContent.office3Title;
+      case 3: return content.office4Title ?? defaultContent.office4Title;
+      default: return 'Oficina';
+    }
+  };
+
+  const getOfficeDesc = (index: number) => {
+    switch(index) {
+      case 0: return content.office1Desc ?? defaultContent.office1Desc;
+      case 1: return content.office2Desc ?? defaultContent.office2Desc;
+      case 2: return content.office3Desc ?? defaultContent.office3Desc;
+      case 3: return content.office4Desc ?? defaultContent.office4Desc;
+      default: return 'Descripción de oficina';
+    }
+  };
 
   return (
     <div className="bg-background text-white min-h-[calc(100vh-7rem)]">
@@ -29,11 +71,11 @@ export default function NuestrasOficinasPage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h1 className="text-4xl md:text-5xl font-bold font-headline text-white">
-              Un Espacio a la Altura de sus Negocios
+              <EditableText field="title" defaultText={content.title} isLoading={isLoading} collectionId="pageContent" docId="oficinas" />
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Le invitamos a un recorrido virtual por nuestras instalaciones, diseñadas para la excelencia, la confidencialidad y la colaboración estratégica.
-            </p>
+            <div className="mt-4 text-lg text-muted-foreground">
+              <EditableText field="subhead" defaultText={content.subhead} isLoading={isLoading} collectionId="pageContent" docId="oficinas" multiline />
+            </div>
           </div>
 
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
@@ -64,7 +106,9 @@ export default function NuestrasOficinasPage() {
             {/* Thumbnails and Description */}
             <div className="lg:w-1/3 flex flex-col justify-between">
               <div>
-                <h2 className="font-headline text-3xl text-primary mb-4">Nuestros Espacios</h2>
+                <h2 className="font-headline text-3xl text-primary mb-4">
+                  <EditableText field="sectionTitle" defaultText={content.sectionTitle} isLoading={isLoading} collectionId="pageContent" docId="oficinas" />
+                </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-4">
                   {officeImages.map((image, index) => (
                     <button
@@ -97,10 +141,24 @@ export default function NuestrasOficinasPage() {
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.4, ease: 'easeInOut' }}
                     >
-                      <h3 className="font-headline text-2xl text-white mb-2">{officeImages[activeIndex].title}</h3>
-                      <p className="text-muted-foreground">
-                        {officeImages[activeIndex].alt}.
-                      </p>
+                      <h3 className="font-headline text-2xl text-white mb-2">
+                        <EditableText 
+                          field={`office${activeIndex + 1}Title`} 
+                          defaultText={getOfficeTitle(activeIndex)} 
+                          isLoading={isLoading} 
+                          collectionId="pageContent" 
+                          docId="oficinas" 
+                        />
+                      </h3>
+                      <div className="text-muted-foreground">
+                        <EditableText 
+                          field={`office${activeIndex + 1}Desc`} 
+                          defaultText={getOfficeDesc(activeIndex)} 
+                          isLoading={isLoading} 
+                          collectionId="pageContent" 
+                          docId="oficinas" 
+                        />
+                      </div>
                     </motion.div>
                   </AnimatePresence>
               </div>

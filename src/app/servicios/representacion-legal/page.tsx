@@ -1,8 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Briefcase, ShieldCheck, Scale, FileText, Building, GitBranch, Anchor } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Script from 'next/script';
+import { getServiceSchema } from '@/lib/seo';
 
 const services = [
   {
@@ -50,8 +54,13 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const serviceSchema = getServiceSchema('representacion-legal');
+
   return (
     <div className="bg-background">
+      <Script id="service-schema-representacion-legal" type="application/ld+json" strategy="afterInteractive">
+        {JSON.stringify(serviceSchema)}
+      </Script>
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
