@@ -20,6 +20,12 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: defaultDescription,
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
   icons: [
     {
       rel: 'icon',
@@ -88,19 +94,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={cn('dark', cinzel.variable, lato.variable)}>
-      <body className="font-body bg-background text-foreground antialiased">
-        <FirebaseClientProvider>
-          <AdminLayout>
-            <Header />
-            <main>{children}</main>
-          </AdminLayout>
-          <Footer />
-          <Toaster />
-          <CookieConsent />
-          <Script id="org-schema" type="application/ld+json" strategy="afterInteractive">
-            {JSON.stringify(getOrganizationSchema())}
-          </Script>
-        </FirebaseClientProvider>
+      <body className="font-body bg-background text-foreground antialiased overflow-x-hidden min-h-screen">
+        <div className="min-h-screen overflow-x-hidden relative">
+          <FirebaseClientProvider>
+            <AdminLayout>
+              <Header />
+              <main className="overflow-x-hidden">{children}</main>
+            </AdminLayout>
+            <Footer />
+            <Toaster />
+            <CookieConsent />
+            <Script id="org-schema" type="application/ld+json" strategy="afterInteractive">
+              {JSON.stringify(getOrganizationSchema())}
+            </Script>
+          </FirebaseClientProvider>
+        </div>
       </body>
     </html>
   );
