@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { Facebook, Linkedin } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
+import CookiePreferencesLink from '@/components/cookie-preferences-link';
 
 
 export function Footer() {
@@ -58,6 +59,9 @@ export function Footer() {
                 <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-primary transition-colors"><Linkedin /></a>
               </div>
               <Link href="#" className="text-sm hover:text-primary transition-colors">Aviso de Privacidad</Link>
+              <div className="mt-2">
+                <CookiePreferencesLink className="text-sm hover:text-primary transition-colors" />
+              </div>
             </div>
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8 text-center text-sm">

@@ -7,7 +7,9 @@ import { Cinzel, Lato } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { FirebaseClientProvider } from '@/firebase';
 import AdminLayout from '@/components/admin-layout';
-import { SITE_NAME, SITE_URL, seoConfig } from '@/lib/seo';
+import { SITE_NAME, SITE_URL, seoConfig, getOrganizationSchema } from '@/lib/seo';
+import Script from 'next/script';
+import CookieConsent from '@/components/cookie-consent';
 
 const defaultDescription = seoConfig.pages.home.description;
 
@@ -18,6 +20,23 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: defaultDescription,
+  icons: [
+    {
+      rel: 'icon',
+      url: '/favicon.png',
+      type: 'image/png',
+    },
+    {
+      rel: 'shortcut icon',
+      url: '/favicon.png',
+      type: 'image/png',
+    },
+    {
+      rel: 'apple-touch-icon',
+      url: '/favicon.png',
+      type: 'image/png',
+    },
+  ],
   alternates: {
     canonical: SITE_URL,
   },
@@ -77,6 +96,10 @@ export default function RootLayout({
           </AdminLayout>
           <Footer />
           <Toaster />
+          <CookieConsent />
+          <Script id="org-schema" type="application/ld+json" strategy="afterInteractive">
+            {JSON.stringify(getOrganizationSchema())}
+          </Script>
         </FirebaseClientProvider>
       </body>
     </html>
