@@ -204,43 +204,45 @@ export function Header() {
 
 
         {/* Mobile Menu */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center ml-auto">
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="ml-2">
                     <Menu className="h-6 w-6 text-white" />
                     <span className="sr-only">Abrir menú</span>
                 </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="bg-background border-l-stone-800 w-[80vw]">
-                    <SheetHeader className="p-4 border-b border-border flex flex-row items-center justify-between">
+                <SheetContent side="right" className="bg-background border-l-stone-800 w-[85vw] max-w-sm">
+                    <SheetHeader className="pb-6 border-b border-border/50">
                         <SheetTitle asChild>
-                           <Link href="/" onClick={() => setOpen(false)} className="relative w-40 h-32 block">
+                           <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-20 block mx-auto">
                                 <Logo />
                             </Link>
                         </SheetTitle>
                     </SheetHeader>
-                <div className="flex flex-col h-[calc(100%-145px)]">
-                    <nav className="flex flex-col space-y-2 p-4">
+                <div className="flex flex-col h-[calc(100%-120px)] pt-6">
+                    <nav className="flex flex-col space-y-4 px-6">
                     {navLinks.map((link) => (
                         link.isDropdown && link.items ? (
-                        <div key={link.label} className="flex flex-col space-y-2">
-                            <span className={cn("text-lg font-semibold text-white uppercase tracking-wider", isServiceRouteActive && "text-primary")}>{link.label}</span>
+                        <div key={link.label} className="flex flex-col space-y-3">
+                            <span className={cn("text-base font-semibold text-white uppercase tracking-wider border-b border-border/30 pb-2", isServiceRouteActive && "text-primary")}>{link.label}</span>
+                            <div className="space-y-2">
                             {link.items.map(item => (
-                            <Link key={item.label} href={item.href} className={cn("text-gray-400 hover:text-primary pl-4", pathname === item.href && "text-primary font-semibold")} onClick={() => setOpen(false)}>
+                            <Link key={item.label} href={item.href} className={cn("block text-sm text-gray-400 hover:text-primary pl-3 py-1 transition-colors", pathname === item.href && "text-primary font-semibold")} onClick={() => setOpen(false)}>
                                 {item.label}
                             </Link>
                             ))}
+                            </div>
                         </div>
                         ) : (
-                        <Link key={link.label} href={link.href!} className={cn("text-lg text-gray-300 hover:text-primary uppercase tracking-wider", pathname === link.href && "text-primary")} onClick={() => setOpen(false)}>
+                        <Link key={link.label} href={link.href!} className={cn("text-base text-gray-300 hover:text-primary uppercase tracking-wider py-2 border-b border-border/20 transition-colors", pathname === link.href && "text-primary font-semibold")} onClick={() => setOpen(false)}>
                             {link.label}
                         </Link>
                         )
                     ))}
                     </nav>
-                    <div className="mt-auto p-4 border-t border-border">
-                    <Button className="w-full" asChild>
+                    <div className="mt-auto px-6 pb-6 pt-4 border-t border-border/50">
+                    <Button className="w-full" size="lg" asChild>
                         <Link href="/contacto" onClick={() => setOpen(false)}>Agenda Consulta</Link>
                     </Button>
                     </div>
