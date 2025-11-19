@@ -212,16 +212,16 @@ export function Header() {
                     <span className="sr-only">Abrir menú</span>
                 </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="bg-background border-l-stone-800 w-[85vw] max-w-sm">
-                    <SheetHeader className="pb-6 border-b border-border/50">
+                <SheetContent side="right" className="bg-background border-l-stone-800 w-[85vw] max-w-sm overflow-hidden flex flex-col">
+                    <SheetHeader className="pb-6 border-b border-border/50 flex-shrink-0">
                         <SheetTitle asChild>
                            <Link href="/" onClick={() => setOpen(false)} className="relative w-32 h-20 block mx-auto">
                                 <Logo />
                             </Link>
                         </SheetTitle>
                     </SheetHeader>
-                <div className="flex flex-col h-[calc(100%-120px)] pt-6">
-                    <nav className="flex flex-col space-y-4 px-6">
+                <div className="flex flex-col flex-1 min-h-0">
+                    <nav className="flex flex-col space-y-4 px-6 py-6 overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-border/50 scrollbar-track-transparent">
                     {navLinks.map((link) => (
                         link.isDropdown && link.items ? (
                         <div key={link.label} className="flex flex-col space-y-3">
@@ -241,7 +241,7 @@ export function Header() {
                         )
                     ))}
                     </nav>
-                    <div className="mt-auto px-6 pb-6 pt-4 border-t border-border/50">
+                    <div className="px-6 pb-6 pt-4 border-t border-border/50 flex-shrink-0">
                     <Button className="w-full" size="lg" asChild>
                         <Link href="/contacto" onClick={() => setOpen(false)}>Agenda Consulta</Link>
                     </Button>
