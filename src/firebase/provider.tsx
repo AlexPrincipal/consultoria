@@ -77,11 +77,8 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
   // useEffect se ejecuta cuando el componente se monta y cada vez que `auth` cambia.
   // Es el núcleo de la detección de sesión en tiempo real.
   useEffect(() => {
-    console.log('FirebaseProvider useEffect iniciado:', { authExists: !!auth });
-    
     // Si el servicio de autenticación no está disponible, se establece un estado de error.
     if (!auth) {
-      console.log('Auth service no disponible');
       setUserAuthState({ user: null, isUserLoading: false, userError: new Error("Auth service not provided.") });
       return;
     }
@@ -93,15 +90,10 @@ export const FirebaseProvider: React.FC<FirebaseProviderProps> = ({
       (firebaseUser) => {
         // Cuando Firebase responde, actualizamos el estado.
         // firebaseUser será el objeto User si la sesión está activa, o null si no lo está.
-        console.log('FirebaseProvider - onAuthStateChanged:', { 
-          hasUser: !!firebaseUser, 
-          email: firebaseUser?.email 
-        });
         setUserAuthState({ user: firebaseUser, isUserLoading: false, userError: null });
       },
       (error) => {
         // Si hay un error con el oyente, se captura aquí.
-        console.error("FirebaseProvider: onAuthStateChanged error:", error);
         setUserAuthState({ user: null, isUserLoading: false, userError: error });
       }
     );

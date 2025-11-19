@@ -26,6 +26,17 @@ body {
   user-select: none;
   -ms-touch-action: pan-y;
   touch-action: pan-y;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Mobile viewport stability */
+.mobile-safe {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: none;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Allow text selection for content areas */

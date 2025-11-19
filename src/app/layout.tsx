@@ -10,6 +10,12 @@ import AdminLayout from '@/components/admin-layout';
 import { SITE_NAME, SITE_URL, seoConfig, getOrganizationSchema } from '@/lib/seo';
 import Script from 'next/script';
 import CookieConsent from '@/components/cookie-consent';
+import { configureConsole } from '@/lib/console-config';
+
+// Configure console logging
+if (typeof window !== 'undefined') {
+  configureConsole();
+}
 
 const defaultDescription = seoConfig.pages.home.description;
 
@@ -94,12 +100,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={cn('dark', cinzel.variable, lato.variable)}>
-      <body className="font-body bg-background text-foreground antialiased overflow-x-hidden min-h-screen">
-        <div className="min-h-screen overflow-x-hidden relative">
+      <body className="font-body bg-background text-foreground antialiased overflow-x-hidden min-h-screen mobile-safe">
+        <div className="min-h-screen overflow-x-hidden relative mobile-safe">
           <FirebaseClientProvider>
             <AdminLayout>
               <Header />
-              <main className="overflow-x-hidden">{children}</main>
+              <main className="overflow-x-hidden mobile-safe">{children}</main>
             </AdminLayout>
             <Footer />
             <Toaster />

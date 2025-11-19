@@ -66,18 +66,12 @@ export function useCollection<T = DocumentData>(
   const [error, setError] = useState<FirestoreError | Error | null>(null);
 
   useEffect(() => {
-    console.log('🔥 USECOLLECTION - Effect triggered');
-    console.log('📊 memoizedTargetRefOrQuery:', memoizedTargetRefOrQuery);
-    
     if (!memoizedTargetRefOrQuery) {
-      console.log('❌ USECOLLECTION - No query provided, resetting state');
       setData(null);
       setIsLoading(false);
       setError(null);
       return;
     }
-
-    console.log('🚀 USECOLLECTION - Starting to listen for changes');
     setIsLoading(true);
     setError(null);
 
@@ -85,20 +79,15 @@ export function useCollection<T = DocumentData>(
     const unsubscribe = onSnapshot(
       memoizedTargetRefOrQuery,
   (snapshot: QuerySnapshot<DocumentData>) => {
-        console.log('📨 USECOLLECTION - Snapshot received');
-        console.log('📊 snapshot.docs.length:', snapshot.docs.length);
         const results: ResultItemType[] = snapshot.docs.map((docSnapshot) => ({
           ...(docSnapshot.data() as T),
           id: docSnapshot.id,
         }));
-        console.log('✅ USECOLLECTION - Data processed, results:', results);
         setData(results);
         setError(null);
         setIsLoading(false);
-        console.log('🎯 USECOLLECTION - State updated, isLoading set to false');
       },
       (error: FirestoreError) => {
-        console.log('❌ USECOLLECTION - Error occurred:', error);
         // This logic extracts the path from either a ref or a query
         const path: string =
           memoizedTargetRefOrQuery.type === 'collection'
