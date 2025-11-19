@@ -16,11 +16,11 @@ export function middleware(request: NextRequest) {
   // Content Security Policy
   const csp = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://*.googleapis.com https://*.gstatic.com",
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://*.googleapis.com https://apis.google.com https://*.gstatic.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' https://images.unsplash.com https://storage.googleapis.com https://placehold.co https://picsum.photos data: blob:",
     "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://api.resend.com https://generativelanguage.googleapis.com",
+    "connect-src 'self' https://*.googleapis.com https://apis.google.com https://*.firebaseio.com wss://*.firebaseio.com https://api.resend.com https://generativelanguage.googleapis.com",
     "media-src 'self'",
     "object-src 'none'",
     "base-uri 'self'",
