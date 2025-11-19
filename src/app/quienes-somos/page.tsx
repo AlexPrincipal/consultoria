@@ -337,9 +337,12 @@ export default function QuienesSomosPage() {
               src={misionVisionImage.imageUrl}
               alt={misionVisionImage.description}
               fill
-              sizes="100vw"
+              sizes={misionVisionImage.sizes || "100vw"}
               className="object-cover opacity-10"
               data-ai-hint={misionVisionImage.imageHint}
+              placeholder={misionVisionImage.blurDataURL ? "blur" : "empty"}
+              blurDataURL={misionVisionImage.blurDataURL}
+              priority={misionVisionImage.priority}
             />}
           </div>
         <div className="container mx-auto px-4 md:px-6 relative z-10">

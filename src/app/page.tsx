@@ -130,6 +130,9 @@ function OfficeCarousel() {
                 className="object-cover"
                 data-ai-hint={img.imageHint}
                 priority={index === 0}
+                placeholder={img.blurDataURL ? "blur" : "empty"}
+                blurDataURL={img.blurDataURL}
+                sizes={img.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"}
             />
           </div>
         ))}
@@ -223,12 +226,29 @@ export default function Home() {
         </Script>
         {/* Hero Section */}
         <section className="relative flex items-center justify-center min-h-[700px] text-center text-white bg-black">
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-20"
-            style={{
-              backgroundImage: `url(${content.heroBackgroundImageUrl})`
-            }}
-          />
+          {(() => {
+            const heroImage = PlaceHolderImages.find(img => img.id === 'hero-background');
+            return heroImage ? (
+              <Image
+                src={heroImage.imageUrl}
+                alt={heroImage.description}
+                fill
+                className="object-cover opacity-20"
+                priority={heroImage.priority}
+                placeholder={heroImage.blurDataURL ? "blur" : "empty"}
+                blurDataURL={heroImage.blurDataURL}
+                sizes={heroImage.sizes || "100vw"}
+                data-ai-hint={heroImage.imageHint}
+              />
+            ) : (
+              <div 
+                className="absolute inset-0 bg-cover bg-center opacity-20"
+                style={{
+                  backgroundImage: `url(${content.heroBackgroundImageUrl})`
+                }}
+              />
+            );
+          })()}
           <div className="relative z-10 p-4 space-y-8 container mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold font-headline tracking-tight">
                <EditableText field="heroHeadline" defaultText={content.heroHeadline ?? defaultContent.heroHeadline} isLoading={isLoading} collectionId="homePageContent" docId="main" />

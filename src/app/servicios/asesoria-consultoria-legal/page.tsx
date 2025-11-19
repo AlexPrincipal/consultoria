@@ -80,6 +80,10 @@ export default function AsesoriaPage() {
                     fill
                     className="object-cover"
                     data-ai-hint={serviceImage.imageHint}
+                    placeholder={serviceImage.blurDataURL ? "blur" : "empty"}
+                    blurDataURL={serviceImage.blurDataURL}
+                    priority={serviceImage.priority}
+                    sizes={serviceImage.sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                     />
                 </div>
                 )}
