@@ -28,7 +28,7 @@ export const defaultTeamMembers = [
     title: 'Socio, Especialista en Litigio y Consultoría Legal',
     bio: 'Abogado con 10 años de experiencia en litigio y consultoría legal, enfocado en resultados. Experiencia probada en la dirección de juicios en las áreas civil, familiar y mercantil, con sólida trayectoria en asesoría corporativa y elaboración de contratos.',
     homeSummary: 'Especialista en litigio con 10 años de experiencia en áreas civil, familiar y mercantil, experto en Sistema de Justicia Oral.',
-    fullBio: 'Abogado con 10 años de experiencia en litigio y consultoría legal, enfocado en resultados. Experiencia probada en la dirección de juicios en las áreas civil, familiar y mercantil, logrando resoluciones favorables. Sólida trayectoria en asesoría corporativa y elaboración de contratos, protegiendo los intereses empresariales. Habilidad para negociar y mediar en conflictos complejos, buscando la solución más eficiente para el cliente. Dominio del Sistema de Justicia Oral y de las reformas legales recientes. Capacidad para elaborar estrategias procesales efectivas, manejar equipos legales y presentar argumentos sólidos en audiencia.',
+    fullBio: 'Abogado con 10 años de experiencia en litigio y consultoría legal, enfocado en resultados. Experiencia probada en la dirección de juicios en las áreas civil, familiar y mercantil, logrando resoluciones favorables. Sólida trayectoria en asesoría corporativa y elaboración de contratos, protegiendo los intereses empresariales. Habilidad para negociar y mediar en conflictos complejos, buscando la solución más eficiente para el cliente. Dominio del Sistema de Justicia Oral y de las reformas legales recientes. Capacidad para elaborar estratagemas procesales efectivas, manejar equipos legales y presentar argumentos sólidos en audiencia.',
     achievements: [
         'Experiencia probada en litigio civil, familiar y mercantil con resoluciones favorables.',
         'Experto en asesoría corporativa y elaboración de contratos empresariales.',
@@ -37,7 +37,7 @@ export const defaultTeamMembers = [
     ],
     imageUrl: '/luisPerfil.jpg',
     imageHint: 'male professional portrait',
-    imagePosition: "object-top",
+    imagePosition: "object-[center_20%]",
     linkedinUrl: 'https://www.linkedin.com/in/jose-luis-pineda-nunez/',
     order: 2,
   },
