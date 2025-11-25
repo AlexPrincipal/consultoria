@@ -432,10 +432,11 @@ export default function Home() {
                         "rounded-full object-cover border-4 border-primary/50",
                         member.imagePosition ?? ''
                       )}
+                      style={(member.slug === 'jose-luis-pineda-nunez' || member.id === 'jose-luis-pineda-nunez' || member.name?.includes('José Luis')) ? { objectPosition: 'center -20px' } : undefined}
                       data-ai-hint={member.imageHint}
                     />
                   </div>
-                  <h3 className="text-2xl font-bold font-headline text-white">{member.name}</h3>
+                  <h3 className="text-2xl font-bold font-headline text-white">Lic. {member.name}</h3>
                   <p className="text-primary font-medium">{member.title}</p>
                   <p className="text-muted-foreground mt-2 text-sm max-w-xs">{member.homeSummary}</p>
                   <Button variant="link" asChild className="mt-4 p-0 text-primary">

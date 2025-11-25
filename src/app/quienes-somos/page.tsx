@@ -447,6 +447,7 @@ export default function QuienesSomosPage() {
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className={cn("object-cover", member.imagePosition ?? "object-center")}
+                        style={(member.slug === 'jose-luis-pineda-nunez' || member.id === 'jose-luis-pineda-nunez' || member.name?.includes('José Luis')) ? { objectPosition: 'center -30px' } : undefined}
                         data-ai-hint={member.imageHint}
                       />
                     ) : (
@@ -457,7 +458,7 @@ export default function QuienesSomosPage() {
                   </div>
                   <div className="md:col-span-2 space-y-4 text-center md:text-left">
                     <h3 className="text-3xl font-bold font-headline text-primary">
-                      <EditableText field="name" defaultText={member.name ?? 'Nombre no disponible'} isLoading={isTeamLoading} collectionId="teamMembers" docId={member.slug} />
+                      Lic. <EditableText field="name" defaultText={member.name ?? 'Nombre no disponible'} isLoading={isTeamLoading} collectionId="teamMembers" docId={member.slug} />
                     </h3>
                      <div className="text-lg font-medium text-white">
                         <EditableText field="title" defaultText={member.title ?? 'Título no disponible'} isLoading={isTeamLoading} collectionId="teamMembers" docId={member.slug} />

@@ -68,6 +68,7 @@ export default function TeamMemberPage() {
                     alt={`Retrato de ${member.name || 'miembro del equipo'}`}
                     fill
                     className="object-cover object-top"
+                    style={(member.slug === 'jose-luis-pineda-nunez' || member.id === 'jose-luis-pineda-nunez' || member.name?.includes('José Luis')) ? { objectPosition: 'center -20px' } : undefined}
                     data-ai-hint={member.imageHint}
                     sizes="256px"
                   />

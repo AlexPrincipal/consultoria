@@ -37,7 +37,7 @@ export const defaultTeamMembers = [
     ],
     imageUrl: '/luisPerfil.jpg',
     imageHint: 'male professional portrait',
-    imagePosition: "object-[center_20%]",
+    imagePosition: "object-top",
     linkedinUrl: 'https://www.linkedin.com/in/jose-luis-pineda-nunez/',
     order: 2,
   },
